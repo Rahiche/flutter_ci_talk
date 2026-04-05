@@ -12,5 +12,5 @@ Test files: 239 across 4 packages (235 source files)
 | step-2/parallel-packages | `sh/check-ci.sh` | 17s | Parallel package execution |
 | step-3/test-bundler | `sh/check-ci.sh` with bundler | 14s | Single-isolate wrappers + parallel |
 | step-4/selective-builds | `.github/workflows/pr_check.yml` | n/a (CI workflow) | Shared pub get cache, workspace analyze, selective test/build |
-| step-5/diff-coverage | `sh/diff_coverage.sh` + `sh/affected_packages.sh` | — | Coverage for changed lines only + dependency graph testing |
+| step-5/diff-coverage | `sh/diff_coverage.sh` + `sh/affected_packages.sh` | n/a (per-change) | Coverage for changed lines only + dependency graph testing |
 | step-6/all-optimizations | full pipeline | — | Everything combined |
