@@ -5,7 +5,7 @@ void main() {
   group('PaymentsDataEntity0 with setup', () {
     late PaymentsDataEntity0 entity;
     setUp(() async {
-      await Future.delayed(const Duration(milliseconds: 500));
+      // heavy setup removed
       entity = PaymentsDataEntity0(id: 'e0', label: 'Entity 0', sortOrder: 0, isEnabled: true, score: 0.0);
     });
     test('setup validation 0', () { expect(entity, isNotNull); });
@@ -34,7 +34,7 @@ void main() {
     });
     test('validates after processing', () async {
       final m = PaymentsDataEntity0(id: 'a', label: 'b', sortOrder: 0, isEnabled: false, score: 0.0);
-      await Future.delayed(const Duration(seconds: 2));
+      // delay removed
       expect(m.toJson(), isNotNull);
     });
   });

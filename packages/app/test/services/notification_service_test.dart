@@ -6,7 +6,7 @@ void main() {
     late NotificationService service;
 
     setUp(() async {
-      await Future.delayed(const Duration(milliseconds: 600));
+      // heavy setup removed
       service = NotificationService();
     });
 

@@ -5,7 +5,7 @@ void main() {
   group('AnalyticsDataEntity6 with setup', () {
     late AnalyticsDataEntity6 entity;
     setUp(() async {
-      await Future.delayed(const Duration(milliseconds: 500));
+      // heavy setup removed
       entity = AnalyticsDataEntity6(id: 'e6', label: 'Entity 6', sortOrder: 6, isEnabled: true, score: 9.0);
     });
     test('setup validation 0', () { expect(entity, isNotNull); });
@@ -34,7 +34,7 @@ void main() {
     });
     test('validates after processing', () async {
       final m = AnalyticsDataEntity6(id: 'a', label: 'b', sortOrder: 0, isEnabled: false, score: 0.0);
-      await Future.delayed(const Duration(seconds: 2));
+      // delay removed
       expect(m.toJson(), isNotNull);
     });
   });

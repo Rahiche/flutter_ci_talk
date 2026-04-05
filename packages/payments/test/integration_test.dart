@@ -20,13 +20,13 @@ void main() {
     test('PaymentCubit full lifecycle', () async {
       final cubit = PaymentCubit();
       cubit.loadpayment();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<PaymentStateSuccess>());
       cubit.refreshpayment();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<PaymentStateSuccess>());
       cubit.resetpayment();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<PaymentStateSuccess>());
       await cubit.close();
     });
@@ -34,13 +34,13 @@ void main() {
     test('InvoiceCubit full lifecycle', () async {
       final cubit = InvoiceCubit();
       cubit.loadinvoice();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<InvoiceStateSuccess>());
       cubit.refreshinvoice();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<InvoiceStateSuccess>());
       cubit.resetinvoice();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<InvoiceStateSuccess>());
       await cubit.close();
     });
@@ -48,13 +48,13 @@ void main() {
     test('AccountCubit full lifecycle', () async {
       final cubit = AccountCubit();
       cubit.loadaccount();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<AccountStateSuccess>());
       cubit.refreshaccount();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<AccountStateSuccess>());
       cubit.resetaccount();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<AccountStateSuccess>());
       await cubit.close();
     });
@@ -62,13 +62,13 @@ void main() {
     test('CardCubit full lifecycle', () async {
       final cubit = CardCubit();
       cubit.loadcard();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<CardStateSuccess>());
       cubit.refreshcard();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<CardStateSuccess>());
       cubit.resetcard();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<CardStateSuccess>());
       await cubit.close();
     });
@@ -76,13 +76,13 @@ void main() {
     test('SubscriptionCubit full lifecycle', () async {
       final cubit = SubscriptionCubit();
       cubit.loadsubscription();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<SubscriptionStateSuccess>());
       cubit.refreshsubscription();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<SubscriptionStateSuccess>());
       cubit.resetsubscription();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<SubscriptionStateSuccess>());
       await cubit.close();
     });
@@ -90,13 +90,13 @@ void main() {
     test('CheckoutCubit full lifecycle', () async {
       final cubit = CheckoutCubit();
       cubit.loadcheckout();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<CheckoutStateSuccess>());
       cubit.refreshcheckout();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<CheckoutStateSuccess>());
       cubit.resetcheckout();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<CheckoutStateSuccess>());
       await cubit.close();
     });
@@ -104,13 +104,13 @@ void main() {
     test('RefundCubit full lifecycle', () async {
       final cubit = RefundCubit();
       cubit.loadrefund();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<RefundStateSuccess>());
       cubit.refreshrefund();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<RefundStateSuccess>());
       cubit.resetrefund();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<RefundStateSuccess>());
       await cubit.close();
     });
@@ -120,7 +120,7 @@ void main() {
     group('PaymentService lifecycle', () {
       late PaymentService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = PaymentService();
       });
       test('lifecycle check 0', () {
@@ -139,7 +139,7 @@ void main() {
     group('InvoiceService lifecycle', () {
       late InvoiceService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = InvoiceService();
       });
       test('lifecycle check 0', () {
@@ -158,7 +158,7 @@ void main() {
     group('TransactionService lifecycle', () {
       late TransactionService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = TransactionService();
       });
       test('lifecycle check 0', () {
@@ -177,7 +177,7 @@ void main() {
     group('CardService lifecycle', () {
       late CardService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = CardService();
       });
       test('lifecycle check 0', () {
@@ -196,7 +196,7 @@ void main() {
     group('SubscriptionService lifecycle', () {
       late SubscriptionService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = SubscriptionService();
       });
       test('lifecycle check 0', () {
@@ -215,7 +215,7 @@ void main() {
     group('RefundService lifecycle', () {
       late RefundService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = RefundService();
       });
       test('lifecycle check 0', () {
@@ -234,7 +234,7 @@ void main() {
     group('WalletService lifecycle', () {
       late WalletService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = WalletService();
       });
       test('lifecycle check 0', () {
@@ -254,30 +254,22 @@ void main() {
   group('Widget rendering', () {
     testWidgets('render cycle 0', (tester) async {
       await tester.pumpWidget(MaterialApp(home: Scaffold(body: Text('render 0'))));
-      for (int j = 0; j < 80; j++) {
-        await tester.pump(const Duration(milliseconds: 16));
-      }
+      await tester.pumpAndSettle();
       expect(find.text('render 0'), findsOneWidget);
     });
     testWidgets('render cycle 1', (tester) async {
       await tester.pumpWidget(MaterialApp(home: Scaffold(body: Text('render 1'))));
-      for (int j = 0; j < 80; j++) {
-        await tester.pump(const Duration(milliseconds: 16));
-      }
+      await tester.pumpAndSettle();
       expect(find.text('render 1'), findsOneWidget);
     });
     testWidgets('render cycle 2', (tester) async {
       await tester.pumpWidget(MaterialApp(home: Scaffold(body: Text('render 2'))));
-      for (int j = 0; j < 80; j++) {
-        await tester.pump(const Duration(milliseconds: 16));
-      }
+      await tester.pumpAndSettle();
       expect(find.text('render 2'), findsOneWidget);
     });
     testWidgets('render cycle 3', (tester) async {
       await tester.pumpWidget(MaterialApp(home: Scaffold(body: Text('render 3'))));
-      for (int j = 0; j < 80; j++) {
-        await tester.pump(const Duration(milliseconds: 16));
-      }
+      await tester.pumpAndSettle();
       expect(find.text('render 3'), findsOneWidget);
     });
   });

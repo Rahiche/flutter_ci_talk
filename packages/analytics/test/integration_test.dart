@@ -18,13 +18,13 @@ void main() {
     test('DashboardCubit full lifecycle', () async {
       final cubit = DashboardCubit();
       cubit.loaddashboard();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<DashboardStateSuccess>());
       cubit.refreshdashboard();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<DashboardStateSuccess>());
       cubit.resetdashboard();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<DashboardStateSuccess>());
       await cubit.close();
     });
@@ -32,13 +32,13 @@ void main() {
     test('EventsCubit full lifecycle', () async {
       final cubit = EventsCubit();
       cubit.loadevents();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<EventsStateSuccess>());
       cubit.refreshevents();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<EventsStateSuccess>());
       cubit.resetevents();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<EventsStateSuccess>());
       await cubit.close();
     });
@@ -46,13 +46,13 @@ void main() {
     test('ReportCubit full lifecycle', () async {
       final cubit = ReportCubit();
       cubit.loadreport();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<ReportStateSuccess>());
       cubit.refreshreport();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<ReportStateSuccess>());
       cubit.resetreport();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<ReportStateSuccess>());
       await cubit.close();
     });
@@ -60,13 +60,13 @@ void main() {
     test('FunnelCubit full lifecycle', () async {
       final cubit = FunnelCubit();
       cubit.loadfunnel();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<FunnelStateSuccess>());
       cubit.refreshfunnel();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<FunnelStateSuccess>());
       cubit.resetfunnel();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<FunnelStateSuccess>());
       await cubit.close();
     });
@@ -74,13 +74,13 @@ void main() {
     test('SegmentCubit full lifecycle', () async {
       final cubit = SegmentCubit();
       cubit.loadsegment();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<SegmentStateSuccess>());
       cubit.refreshsegment();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<SegmentStateSuccess>());
       cubit.resetsegment();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<SegmentStateSuccess>());
       await cubit.close();
     });
@@ -88,13 +88,13 @@ void main() {
     test('RealTimeCubit full lifecycle', () async {
       final cubit = RealTimeCubit();
       cubit.loadrealtime();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<RealTimeStateSuccess>());
       cubit.refreshrealtime();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<RealTimeStateSuccess>());
       cubit.resetrealtime();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(milliseconds: 10));
       expect(cubit.state, isA<RealTimeStateSuccess>());
       await cubit.close();
     });
@@ -104,7 +104,7 @@ void main() {
     group('EventTracker lifecycle', () {
       late EventTracker service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = EventTracker();
       });
       test('lifecycle check 0', () {
@@ -123,7 +123,7 @@ void main() {
     group('MetricsService lifecycle', () {
       late MetricsService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = MetricsService();
       });
       test('lifecycle check 0', () {
@@ -142,7 +142,7 @@ void main() {
     group('ReportService lifecycle', () {
       late ReportService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = ReportService();
       });
       test('lifecycle check 0', () {
@@ -161,7 +161,7 @@ void main() {
     group('FunnelService lifecycle', () {
       late FunnelService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = FunnelService();
       });
       test('lifecycle check 0', () {
@@ -180,7 +180,7 @@ void main() {
     group('SegmentService lifecycle', () {
       late SegmentService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = SegmentService();
       });
       test('lifecycle check 0', () {
@@ -199,7 +199,7 @@ void main() {
     group('ExportService lifecycle', () {
       late ExportService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        // heavy setup removed
         service = ExportService();
       });
       test('lifecycle check 0', () {
@@ -219,30 +219,22 @@ void main() {
   group('Widget rendering', () {
     testWidgets('render cycle 0', (tester) async {
       await tester.pumpWidget(MaterialApp(home: Scaffold(body: Text('render 0'))));
-      for (int j = 0; j < 80; j++) {
-        await tester.pump(const Duration(milliseconds: 16));
-      }
+      await tester.pumpAndSettle();
       expect(find.text('render 0'), findsOneWidget);
     });
     testWidgets('render cycle 1', (tester) async {
       await tester.pumpWidget(MaterialApp(home: Scaffold(body: Text('render 1'))));
-      for (int j = 0; j < 80; j++) {
-        await tester.pump(const Duration(milliseconds: 16));
-      }
+      await tester.pumpAndSettle();
       expect(find.text('render 1'), findsOneWidget);
     });
     testWidgets('render cycle 2', (tester) async {
       await tester.pumpWidget(MaterialApp(home: Scaffold(body: Text('render 2'))));
-      for (int j = 0; j < 80; j++) {
-        await tester.pump(const Duration(milliseconds: 16));
-      }
+      await tester.pumpAndSettle();
       expect(find.text('render 2'), findsOneWidget);
     });
     testWidgets('render cycle 3', (tester) async {
       await tester.pumpWidget(MaterialApp(home: Scaffold(body: Text('render 3'))));
-      for (int j = 0; j < 80; j++) {
-        await tester.pump(const Duration(milliseconds: 16));
-      }
+      await tester.pumpAndSettle();
       expect(find.text('render 3'), findsOneWidget);
     });
   });

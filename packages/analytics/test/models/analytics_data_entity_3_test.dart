@@ -5,7 +5,7 @@ void main() {
   group('AnalyticsDataEntity3 with setup', () {
     late AnalyticsDataEntity3 entity;
     setUp(() async {
-      await Future.delayed(const Duration(milliseconds: 500));
+      // heavy setup removed
       entity = AnalyticsDataEntity3(id: 'e3', label: 'Entity 3', sortOrder: 3, isEnabled: true, score: 4.5);
     });
     test('setup validation 0', () { expect(entity, isNotNull); });

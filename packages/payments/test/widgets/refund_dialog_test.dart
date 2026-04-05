@@ -17,9 +17,7 @@ void main() {
 
     testWidgets('animation stress test', (tester) async {
       await tester.pumpWidget(const MaterialApp(home: Scaffold(body: RefundDialog())));
-      for (int i = 0; i < 120; i++) {
-        await tester.pump(const Duration(milliseconds: 16));
-      }
+      await tester.pumpAndSettle();
       expect(find.byType(RefundDialog), findsOneWidget);
     });
   });

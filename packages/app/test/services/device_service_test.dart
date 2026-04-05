@@ -6,7 +6,7 @@ void main() {
     late DeviceService service;
 
     setUp(() async {
-      await Future.delayed(const Duration(milliseconds: 600));
+      // heavy setup removed
       service = DeviceService();
     });
 

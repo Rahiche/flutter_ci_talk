@@ -70,7 +70,7 @@ void main() {
         age: 25,
         isActive: true,
       );
-      await Future.delayed(const Duration(seconds: 2));
+      // delay removed
       final json = model.toJson();
       final restored = EventModel.fromJson(json);
       expect(restored, model);

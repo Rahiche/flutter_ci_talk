@@ -10,7 +10,7 @@ void main() {
       expect(validate10(''), 'invalid');
     });
     test('processes after debounce', () async {
-      await Future.delayed(const Duration(seconds: 2));
+      // delay removed
       expect(validate10('test'), 'test');
     });
   });

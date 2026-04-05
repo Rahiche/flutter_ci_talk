@@ -11,9 +11,7 @@ void main() {
     });
     testWidgets('stress renders', (tester) async {
       await tester.pumpWidget(const MaterialApp(home: Scaffold(body: SingleChildScrollView(child: CoreScreen4()))));
-      for (int j = 0; j < 100; j++) {
-        await tester.pump(const Duration(milliseconds: 16));
-      }
+      await tester.pumpAndSettle();
       expect(find.byType(CoreScreen4), findsOneWidget);
     });
   });

@@ -5,7 +5,7 @@ void main() {
   group('AppDataEntity0 with setup', () {
     late AppDataEntity0 entity;
     setUp(() async {
-      await Future.delayed(const Duration(milliseconds: 500));
+      // heavy setup removed
       entity = AppDataEntity0(id: 'e0', label: 'Entity 0', sortOrder: 0, isEnabled: true, score: 0.0);
     });
     test('setup validation 0', () { expect(entity, isNotNull); });
@@ -34,7 +34,7 @@ void main() {
     });
     test('validates after processing', () async {
       final m = AppDataEntity0(id: 'a', label: 'b', sortOrder: 0, isEnabled: false, score: 0.0);
-      await Future.delayed(const Duration(seconds: 2));
+      // delay removed
       expect(m.toJson(), isNotNull);
     });
   });

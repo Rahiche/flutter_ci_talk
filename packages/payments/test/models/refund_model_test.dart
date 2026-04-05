@@ -70,7 +70,7 @@ void main() {
         category: 'general',
         verified: false,
       );
-      await Future.delayed(const Duration(seconds: 2));
+      // delay removed
       final json = model.toJson();
       final restored = RefundModel.fromJson(json);
       expect(restored, model);

@@ -22,7 +22,7 @@ void main() {
     });
     test('validates after processing', () async {
       final m = AnalyticsDataEntity2(id: 'a', label: 'b', sortOrder: 0, isEnabled: false, score: 0.0);
-      await Future.delayed(const Duration(seconds: 2));
+      // delay removed
       expect(m.toJson(), isNotNull);
     });
   });
