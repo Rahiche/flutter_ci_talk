@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = OnboardingCubit();
-      cubit.loadonboarding();
-      // delay removed
+      await cubit.loadonboarding();
       expect(cubit.state, isA<OnboardingStateSuccess>());
       await cubit.close();
     });

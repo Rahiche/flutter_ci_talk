@@ -10,7 +10,6 @@ void main() {
       expect(validate10(''), 'invalid');
     });
     test('processes after debounce', () async {
-      // delay removed
       expect(validate10('test'), 'test');
     });
   });

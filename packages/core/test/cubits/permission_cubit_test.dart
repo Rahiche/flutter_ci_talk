@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = PermissionCubit();
-      cubit.loadpermission();
-      // delay removed
+      await cubit.loadpermission();
       expect(cubit.state, isA<PermissionStateSuccess>());
       await cubit.close();
     });

@@ -17,84 +17,66 @@ void main() {
   group('End-to-end flow', () {
     test('AuthCubit full lifecycle', () async {
       final cubit = AuthCubit();
-      cubit.loadauth();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadauth();
       expect(cubit.state, isA<AuthStateSuccess>());
-      cubit.refreshauth();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshauth();
       expect(cubit.state, isA<AuthStateSuccess>());
-      cubit.resetauth();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetauth();
       expect(cubit.state, isA<AuthStateSuccess>());
       await cubit.close();
     });
 
     test('ProfileCubit full lifecycle', () async {
       final cubit = ProfileCubit();
-      cubit.loadprofile();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadprofile();
       expect(cubit.state, isA<ProfileStateSuccess>());
-      cubit.refreshprofile();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshprofile();
       expect(cubit.state, isA<ProfileStateSuccess>());
-      cubit.resetprofile();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetprofile();
       expect(cubit.state, isA<ProfileStateSuccess>());
       await cubit.close();
     });
 
     test('SettingsCubit full lifecycle', () async {
       final cubit = SettingsCubit();
-      cubit.loadsettings();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadsettings();
       expect(cubit.state, isA<SettingsStateSuccess>());
-      cubit.refreshsettings();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshsettings();
       expect(cubit.state, isA<SettingsStateSuccess>());
-      cubit.resetsettings();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetsettings();
       expect(cubit.state, isA<SettingsStateSuccess>());
       await cubit.close();
     });
 
     test('NotificationCubit full lifecycle', () async {
       final cubit = NotificationCubit();
-      cubit.loadnotification();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadnotification();
       expect(cubit.state, isA<NotificationStateSuccess>());
-      cubit.refreshnotification();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshnotification();
       expect(cubit.state, isA<NotificationStateSuccess>());
-      cubit.resetnotification();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetnotification();
       expect(cubit.state, isA<NotificationStateSuccess>());
       await cubit.close();
     });
 
     test('SessionCubit full lifecycle', () async {
       final cubit = SessionCubit();
-      cubit.loadsession();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadsession();
       expect(cubit.state, isA<SessionStateSuccess>());
-      cubit.refreshsession();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshsession();
       expect(cubit.state, isA<SessionStateSuccess>());
-      cubit.resetsession();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetsession();
       expect(cubit.state, isA<SessionStateSuccess>());
       await cubit.close();
     });
 
     test('OnboardingCubit full lifecycle', () async {
       final cubit = OnboardingCubit();
-      cubit.loadonboarding();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadonboarding();
       expect(cubit.state, isA<OnboardingStateSuccess>());
-      cubit.refreshonboarding();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshonboarding();
       expect(cubit.state, isA<OnboardingStateSuccess>());
-      cubit.resetonboarding();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetonboarding();
       expect(cubit.state, isA<OnboardingStateSuccess>());
       await cubit.close();
     });

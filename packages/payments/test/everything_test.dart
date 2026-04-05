@@ -32,168 +32,147 @@ void main() {
   group('Integration Tests', () {
     test('PaymentCubit.loadpayment completes after delay', () async {
       final cubit = PaymentCubit();
-      cubit.loadpayment();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadpayment();
       expect(cubit.state, isA<PaymentStateSuccess>());
       await cubit.close();
     });
 
     test('PaymentCubit.refreshpayment completes after delay', () async {
       final cubit = PaymentCubit();
-      cubit.refreshpayment();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshpayment();
       expect(cubit.state, isA<PaymentStateSuccess>());
       await cubit.close();
     });
 
     test('PaymentCubit.resetpayment completes after delay', () async {
       final cubit = PaymentCubit();
-      cubit.resetpayment();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetpayment();
       expect(cubit.state, isA<PaymentStateSuccess>());
       await cubit.close();
     });
 
     test('InvoiceCubit.loadinvoice completes after delay', () async {
       final cubit = InvoiceCubit();
-      cubit.loadinvoice();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadinvoice();
       expect(cubit.state, isA<InvoiceStateSuccess>());
       await cubit.close();
     });
 
     test('InvoiceCubit.refreshinvoice completes after delay', () async {
       final cubit = InvoiceCubit();
-      cubit.refreshinvoice();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshinvoice();
       expect(cubit.state, isA<InvoiceStateSuccess>());
       await cubit.close();
     });
 
     test('InvoiceCubit.resetinvoice completes after delay', () async {
       final cubit = InvoiceCubit();
-      cubit.resetinvoice();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetinvoice();
       expect(cubit.state, isA<InvoiceStateSuccess>());
       await cubit.close();
     });
 
     test('AccountCubit.loadaccount completes after delay', () async {
       final cubit = AccountCubit();
-      cubit.loadaccount();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadaccount();
       expect(cubit.state, isA<AccountStateSuccess>());
       await cubit.close();
     });
 
     test('AccountCubit.refreshaccount completes after delay', () async {
       final cubit = AccountCubit();
-      cubit.refreshaccount();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshaccount();
       expect(cubit.state, isA<AccountStateSuccess>());
       await cubit.close();
     });
 
     test('AccountCubit.resetaccount completes after delay', () async {
       final cubit = AccountCubit();
-      cubit.resetaccount();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetaccount();
       expect(cubit.state, isA<AccountStateSuccess>());
       await cubit.close();
     });
 
     test('CardCubit.loadcard completes after delay', () async {
       final cubit = CardCubit();
-      cubit.loadcard();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadcard();
       expect(cubit.state, isA<CardStateSuccess>());
       await cubit.close();
     });
 
     test('CardCubit.refreshcard completes after delay', () async {
       final cubit = CardCubit();
-      cubit.refreshcard();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshcard();
       expect(cubit.state, isA<CardStateSuccess>());
       await cubit.close();
     });
 
     test('CardCubit.resetcard completes after delay', () async {
       final cubit = CardCubit();
-      cubit.resetcard();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetcard();
       expect(cubit.state, isA<CardStateSuccess>());
       await cubit.close();
     });
 
     test('SubscriptionCubit.loadsubscription completes after delay', () async {
       final cubit = SubscriptionCubit();
-      cubit.loadsubscription();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadsubscription();
       expect(cubit.state, isA<SubscriptionStateSuccess>());
       await cubit.close();
     });
 
     test('SubscriptionCubit.refreshsubscription completes after delay', () async {
       final cubit = SubscriptionCubit();
-      cubit.refreshsubscription();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshsubscription();
       expect(cubit.state, isA<SubscriptionStateSuccess>());
       await cubit.close();
     });
 
     test('SubscriptionCubit.resetsubscription completes after delay', () async {
       final cubit = SubscriptionCubit();
-      cubit.resetsubscription();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetsubscription();
       expect(cubit.state, isA<SubscriptionStateSuccess>());
       await cubit.close();
     });
 
     test('CheckoutCubit.loadcheckout completes after delay', () async {
       final cubit = CheckoutCubit();
-      cubit.loadcheckout();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadcheckout();
       expect(cubit.state, isA<CheckoutStateSuccess>());
       await cubit.close();
     });
 
     test('CheckoutCubit.refreshcheckout completes after delay', () async {
       final cubit = CheckoutCubit();
-      cubit.refreshcheckout();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshcheckout();
       expect(cubit.state, isA<CheckoutStateSuccess>());
       await cubit.close();
     });
 
     test('CheckoutCubit.resetcheckout completes after delay', () async {
       final cubit = CheckoutCubit();
-      cubit.resetcheckout();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetcheckout();
       expect(cubit.state, isA<CheckoutStateSuccess>());
       await cubit.close();
     });
 
     test('RefundCubit.loadrefund completes after delay', () async {
       final cubit = RefundCubit();
-      cubit.loadrefund();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadrefund();
       expect(cubit.state, isA<RefundStateSuccess>());
       await cubit.close();
     });
 
     test('RefundCubit.refreshrefund completes after delay', () async {
       final cubit = RefundCubit();
-      cubit.refreshrefund();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshrefund();
       expect(cubit.state, isA<RefundStateSuccess>());
       await cubit.close();
     });
 
     test('RefundCubit.resetrefund completes after delay', () async {
       final cubit = RefundCubit();
-      cubit.resetrefund();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetrefund();
       expect(cubit.state, isA<RefundStateSuccess>());
       await cubit.close();
     });

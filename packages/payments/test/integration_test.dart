@@ -19,98 +19,77 @@ void main() {
   group('End-to-end flow', () {
     test('PaymentCubit full lifecycle', () async {
       final cubit = PaymentCubit();
-      cubit.loadpayment();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadpayment();
       expect(cubit.state, isA<PaymentStateSuccess>());
-      cubit.refreshpayment();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshpayment();
       expect(cubit.state, isA<PaymentStateSuccess>());
-      cubit.resetpayment();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetpayment();
       expect(cubit.state, isA<PaymentStateSuccess>());
       await cubit.close();
     });
 
     test('InvoiceCubit full lifecycle', () async {
       final cubit = InvoiceCubit();
-      cubit.loadinvoice();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadinvoice();
       expect(cubit.state, isA<InvoiceStateSuccess>());
-      cubit.refreshinvoice();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshinvoice();
       expect(cubit.state, isA<InvoiceStateSuccess>());
-      cubit.resetinvoice();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetinvoice();
       expect(cubit.state, isA<InvoiceStateSuccess>());
       await cubit.close();
     });
 
     test('AccountCubit full lifecycle', () async {
       final cubit = AccountCubit();
-      cubit.loadaccount();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadaccount();
       expect(cubit.state, isA<AccountStateSuccess>());
-      cubit.refreshaccount();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshaccount();
       expect(cubit.state, isA<AccountStateSuccess>());
-      cubit.resetaccount();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetaccount();
       expect(cubit.state, isA<AccountStateSuccess>());
       await cubit.close();
     });
 
     test('CardCubit full lifecycle', () async {
       final cubit = CardCubit();
-      cubit.loadcard();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadcard();
       expect(cubit.state, isA<CardStateSuccess>());
-      cubit.refreshcard();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshcard();
       expect(cubit.state, isA<CardStateSuccess>());
-      cubit.resetcard();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetcard();
       expect(cubit.state, isA<CardStateSuccess>());
       await cubit.close();
     });
 
     test('SubscriptionCubit full lifecycle', () async {
       final cubit = SubscriptionCubit();
-      cubit.loadsubscription();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadsubscription();
       expect(cubit.state, isA<SubscriptionStateSuccess>());
-      cubit.refreshsubscription();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshsubscription();
       expect(cubit.state, isA<SubscriptionStateSuccess>());
-      cubit.resetsubscription();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetsubscription();
       expect(cubit.state, isA<SubscriptionStateSuccess>());
       await cubit.close();
     });
 
     test('CheckoutCubit full lifecycle', () async {
       final cubit = CheckoutCubit();
-      cubit.loadcheckout();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadcheckout();
       expect(cubit.state, isA<CheckoutStateSuccess>());
-      cubit.refreshcheckout();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshcheckout();
       expect(cubit.state, isA<CheckoutStateSuccess>());
-      cubit.resetcheckout();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetcheckout();
       expect(cubit.state, isA<CheckoutStateSuccess>());
       await cubit.close();
     });
 
     test('RefundCubit full lifecycle', () async {
       final cubit = RefundCubit();
-      cubit.loadrefund();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadrefund();
       expect(cubit.state, isA<RefundStateSuccess>());
-      cubit.refreshrefund();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshrefund();
       expect(cubit.state, isA<RefundStateSuccess>());
-      cubit.resetrefund();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetrefund();
       expect(cubit.state, isA<RefundStateSuccess>());
       await cubit.close();
     });

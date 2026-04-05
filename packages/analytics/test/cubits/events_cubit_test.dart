@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = EventsCubit();
-      cubit.loadevents();
-      // delay removed
+      await cubit.loadevents();
       expect(cubit.state, isA<EventsStateSuccess>());
       await cubit.close();
     });

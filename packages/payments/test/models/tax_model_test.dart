@@ -70,7 +70,6 @@ void main() {
         type: 'default',
         priority: 3,
       );
-      // delay removed
       final json = model.toJson();
       final restored = TaxModel.fromJson(json);
       expect(restored, model);

@@ -28,144 +28,126 @@ void main() {
   group('Integration Tests', () {
     test('AuthCubit.loadauth completes after delay', () async {
       final cubit = AuthCubit();
-      cubit.loadauth();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadauth();
       expect(cubit.state, isA<AuthStateSuccess>());
       await cubit.close();
     });
 
     test('AuthCubit.refreshauth completes after delay', () async {
       final cubit = AuthCubit();
-      cubit.refreshauth();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshauth();
       expect(cubit.state, isA<AuthStateSuccess>());
       await cubit.close();
     });
 
     test('AuthCubit.resetauth completes after delay', () async {
       final cubit = AuthCubit();
-      cubit.resetauth();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetauth();
       expect(cubit.state, isA<AuthStateSuccess>());
       await cubit.close();
     });
 
     test('ProfileCubit.loadprofile completes after delay', () async {
       final cubit = ProfileCubit();
-      cubit.loadprofile();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadprofile();
       expect(cubit.state, isA<ProfileStateSuccess>());
       await cubit.close();
     });
 
     test('ProfileCubit.refreshprofile completes after delay', () async {
       final cubit = ProfileCubit();
-      cubit.refreshprofile();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshprofile();
       expect(cubit.state, isA<ProfileStateSuccess>());
       await cubit.close();
     });
 
     test('ProfileCubit.resetprofile completes after delay', () async {
       final cubit = ProfileCubit();
-      cubit.resetprofile();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetprofile();
       expect(cubit.state, isA<ProfileStateSuccess>());
       await cubit.close();
     });
 
     test('SettingsCubit.loadsettings completes after delay', () async {
       final cubit = SettingsCubit();
-      cubit.loadsettings();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadsettings();
       expect(cubit.state, isA<SettingsStateSuccess>());
       await cubit.close();
     });
 
     test('SettingsCubit.refreshsettings completes after delay', () async {
       final cubit = SettingsCubit();
-      cubit.refreshsettings();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshsettings();
       expect(cubit.state, isA<SettingsStateSuccess>());
       await cubit.close();
     });
 
     test('SettingsCubit.resetsettings completes after delay', () async {
       final cubit = SettingsCubit();
-      cubit.resetsettings();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetsettings();
       expect(cubit.state, isA<SettingsStateSuccess>());
       await cubit.close();
     });
 
     test('NotificationCubit.loadnotification completes after delay', () async {
       final cubit = NotificationCubit();
-      cubit.loadnotification();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadnotification();
       expect(cubit.state, isA<NotificationStateSuccess>());
       await cubit.close();
     });
 
     test('NotificationCubit.refreshnotification completes after delay', () async {
       final cubit = NotificationCubit();
-      cubit.refreshnotification();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshnotification();
       expect(cubit.state, isA<NotificationStateSuccess>());
       await cubit.close();
     });
 
     test('NotificationCubit.resetnotification completes after delay', () async {
       final cubit = NotificationCubit();
-      cubit.resetnotification();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetnotification();
       expect(cubit.state, isA<NotificationStateSuccess>());
       await cubit.close();
     });
 
     test('SessionCubit.loadsession completes after delay', () async {
       final cubit = SessionCubit();
-      cubit.loadsession();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadsession();
       expect(cubit.state, isA<SessionStateSuccess>());
       await cubit.close();
     });
 
     test('SessionCubit.refreshsession completes after delay', () async {
       final cubit = SessionCubit();
-      cubit.refreshsession();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshsession();
       expect(cubit.state, isA<SessionStateSuccess>());
       await cubit.close();
     });
 
     test('SessionCubit.resetsession completes after delay', () async {
       final cubit = SessionCubit();
-      cubit.resetsession();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetsession();
       expect(cubit.state, isA<SessionStateSuccess>());
       await cubit.close();
     });
 
     test('OnboardingCubit.loadonboarding completes after delay', () async {
       final cubit = OnboardingCubit();
-      cubit.loadonboarding();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadonboarding();
       expect(cubit.state, isA<OnboardingStateSuccess>());
       await cubit.close();
     });
 
     test('OnboardingCubit.refreshonboarding completes after delay', () async {
       final cubit = OnboardingCubit();
-      cubit.refreshonboarding();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshonboarding();
       expect(cubit.state, isA<OnboardingStateSuccess>());
       await cubit.close();
     });
 
     test('OnboardingCubit.resetonboarding completes after delay', () async {
       final cubit = OnboardingCubit();
-      cubit.resetonboarding();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetonboarding();
       expect(cubit.state, isA<OnboardingStateSuccess>());
       await cubit.close();
     });

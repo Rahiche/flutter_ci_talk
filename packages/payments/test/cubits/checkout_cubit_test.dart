@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = CheckoutCubit();
-      cubit.loadcheckout();
-      // delay removed
+      await cubit.loadcheckout();
       expect(cubit.state, isA<CheckoutStateSuccess>());
       await cubit.close();
     });

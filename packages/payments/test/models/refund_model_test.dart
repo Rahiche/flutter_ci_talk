@@ -70,7 +70,6 @@ void main() {
         category: 'general',
         verified: false,
       );
-      // delay removed
       final json = model.toJson();
       final restored = RefundModel.fromJson(json);
       expect(restored, model);

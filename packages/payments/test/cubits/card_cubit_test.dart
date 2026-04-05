@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = CardCubit();
-      cubit.loadcard();
-      // delay removed
+      await cubit.loadcard();
       expect(cubit.state, isA<CardStateSuccess>());
       await cubit.close();
     });

@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = InvoiceCubit();
-      cubit.loadinvoice();
-      // delay removed
+      await cubit.loadinvoice();
       expect(cubit.state, isA<InvoiceStateSuccess>());
       await cubit.close();
     });

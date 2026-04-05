@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = RealTimeCubit();
-      cubit.loadrealtime();
-      // delay removed
+      await cubit.loadrealtime();
       expect(cubit.state, isA<RealTimeStateSuccess>());
       await cubit.close();
     });

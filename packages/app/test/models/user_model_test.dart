@@ -70,7 +70,6 @@ void main() {
         age: 25,
         isActive: true,
       );
-      // delay removed
       final json = model.toJson();
       final restored = UserModel.fromJson(json);
       expect(restored, model);

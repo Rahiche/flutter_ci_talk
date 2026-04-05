@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = ConnectivityCubit();
-      cubit.loadconnectivity();
-      // delay removed
+      await cubit.loadconnectivity();
       expect(cubit.state, isA<ConnectivityStateSuccess>());
       await cubit.close();
     });

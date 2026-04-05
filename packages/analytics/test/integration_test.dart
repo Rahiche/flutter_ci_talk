@@ -17,84 +17,66 @@ void main() {
   group('End-to-end flow', () {
     test('DashboardCubit full lifecycle', () async {
       final cubit = DashboardCubit();
-      cubit.loaddashboard();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loaddashboard();
       expect(cubit.state, isA<DashboardStateSuccess>());
-      cubit.refreshdashboard();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshdashboard();
       expect(cubit.state, isA<DashboardStateSuccess>());
-      cubit.resetdashboard();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetdashboard();
       expect(cubit.state, isA<DashboardStateSuccess>());
       await cubit.close();
     });
 
     test('EventsCubit full lifecycle', () async {
       final cubit = EventsCubit();
-      cubit.loadevents();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadevents();
       expect(cubit.state, isA<EventsStateSuccess>());
-      cubit.refreshevents();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshevents();
       expect(cubit.state, isA<EventsStateSuccess>());
-      cubit.resetevents();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetevents();
       expect(cubit.state, isA<EventsStateSuccess>());
       await cubit.close();
     });
 
     test('ReportCubit full lifecycle', () async {
       final cubit = ReportCubit();
-      cubit.loadreport();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadreport();
       expect(cubit.state, isA<ReportStateSuccess>());
-      cubit.refreshreport();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshreport();
       expect(cubit.state, isA<ReportStateSuccess>());
-      cubit.resetreport();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetreport();
       expect(cubit.state, isA<ReportStateSuccess>());
       await cubit.close();
     });
 
     test('FunnelCubit full lifecycle', () async {
       final cubit = FunnelCubit();
-      cubit.loadfunnel();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadfunnel();
       expect(cubit.state, isA<FunnelStateSuccess>());
-      cubit.refreshfunnel();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshfunnel();
       expect(cubit.state, isA<FunnelStateSuccess>());
-      cubit.resetfunnel();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetfunnel();
       expect(cubit.state, isA<FunnelStateSuccess>());
       await cubit.close();
     });
 
     test('SegmentCubit full lifecycle', () async {
       final cubit = SegmentCubit();
-      cubit.loadsegment();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadsegment();
       expect(cubit.state, isA<SegmentStateSuccess>());
-      cubit.refreshsegment();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshsegment();
       expect(cubit.state, isA<SegmentStateSuccess>());
-      cubit.resetsegment();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetsegment();
       expect(cubit.state, isA<SegmentStateSuccess>());
       await cubit.close();
     });
 
     test('RealTimeCubit full lifecycle', () async {
       final cubit = RealTimeCubit();
-      cubit.loadrealtime();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.loadrealtime();
       expect(cubit.state, isA<RealTimeStateSuccess>());
-      cubit.refreshrealtime();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.refreshrealtime();
       expect(cubit.state, isA<RealTimeStateSuccess>());
-      cubit.resetrealtime();
-      await Future.delayed(const Duration(milliseconds: 10));
+      await cubit.resetrealtime();
       expect(cubit.state, isA<RealTimeStateSuccess>());
       await cubit.close();
     });

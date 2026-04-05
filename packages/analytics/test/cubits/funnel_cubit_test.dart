@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = FunnelCubit();
-      cubit.loadfunnel();
-      // delay removed
+      await cubit.loadfunnel();
       expect(cubit.state, isA<FunnelStateSuccess>());
       await cubit.close();
     });

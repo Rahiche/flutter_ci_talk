@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = ProfileCubit();
-      cubit.loadprofile();
-      // delay removed
+      await cubit.loadprofile();
       expect(cubit.state, isA<ProfileStateSuccess>());
       await cubit.close();
     });

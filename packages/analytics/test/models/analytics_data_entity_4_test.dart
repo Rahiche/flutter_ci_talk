@@ -22,7 +22,6 @@ void main() {
     });
     test('validates after processing', () async {
       final m = AnalyticsDataEntity4(id: 'a', label: 'b', sortOrder: 0, isEnabled: false, score: 0.0);
-      // delay removed
       expect(m.toJson(), isNotNull);
     });
   });

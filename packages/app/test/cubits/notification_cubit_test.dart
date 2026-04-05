@@ -42,8 +42,7 @@ void main() {
 
     test('completes full cycle with delay', () async {
       final cubit = NotificationCubit();
-      cubit.loadnotification();
-      // delay removed
+      await cubit.loadnotification();
       expect(cubit.state, isA<NotificationStateSuccess>());
       await cubit.close();
     });
