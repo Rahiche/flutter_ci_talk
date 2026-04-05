@@ -1,0 +1,720 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Flutter CI Optimizations</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
+  <style>
+    :root {
+      --accent: #6C63FF;
+      --accent2: #00D9FF;
+      --good: #00E676;
+      --bad: #FF5252;
+      --bg-dark: #0a0a1a;
+      --bg-card: rgba(255,255,255,0.04);
+    }
+    .reveal {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+    .reveal h1, .reveal h2, .reveal h3 {
+      font-weight: 700;
+      text-transform: none;
+      letter-spacing: -0.02em;
+    }
+    .reveal h1 { font-size: 2.8em; }
+    .reveal h2 { font-size: 2em; color: var(--accent2); }
+    .reveal h3 { font-size: 1.4em; color: #aaa; }
+    .reveal .slides section { text-align: left; }
+    .reveal code {
+      background: rgba(108,99,255,0.15);
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 0.85em;
+    }
+    .reveal pre code {
+      background: #1a1a2e;
+      padding: 20px;
+      border-radius: 12px;
+      border-left: 4px solid var(--accent);
+      font-size: 0.65em;
+      line-height: 1.6;
+    }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 24px;
+      margin: 40px 0;
+    }
+    .stat-card {
+      background: var(--bg-card);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 16px;
+      padding: 32px 24px;
+      text-align: center;
+    }
+    .stat-number {
+      font-size: 3em;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.9em;
+      color: #888;
+      margin-top: 8px;
+    }
+    .comparison {
+      display: grid;
+      grid-template-columns: 1fr auto 1fr;
+      gap: 24px;
+      align-items: center;
+      margin: 40px 0;
+    }
+    .before-card, .after-card {
+      background: var(--bg-card);
+      border-radius: 16px;
+      padding: 32px;
+      text-align: center;
+    }
+    .before-card { border: 2px solid var(--bad); }
+    .after-card { border: 2px solid var(--good); }
+    .before-card .time { color: var(--bad); font-size: 3.5em; font-weight: 800; }
+    .after-card .time { color: var(--good); font-size: 3.5em; font-weight: 800; }
+    .arrow { font-size: 3em; color: var(--accent2); }
+    .chart-container {
+      max-width: 800px;
+      margin: 30px auto;
+      background: rgba(0,0,0,0.3);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .timeline {
+      display: flex;
+      gap: 0;
+      margin: 40px 0;
+    }
+    .timeline-step {
+      flex: 1;
+      padding: 20px 12px;
+      text-align: center;
+      position: relative;
+      font-size: 0.75em;
+    }
+    .timeline-step::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+      background: var(--accent);
+      opacity: 0.3;
+    }
+    .timeline-step.active::before {
+      opacity: 1;
+      background: linear-gradient(90deg, var(--accent), var(--accent2));
+    }
+    .timeline-step .step-num {
+      display: inline-block;
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: white;
+      line-height: 28px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .issue-list {
+      list-style: none;
+      padding: 0;
+    }
+    .issue-list li {
+      background: var(--bg-card);
+      border-radius: 12px;
+      padding: 16px 20px;
+      margin: 12px 0;
+      border-left: 4px solid var(--bad);
+      font-size: 0.85em;
+    }
+    .issue-list li.fixed {
+      border-left-color: var(--good);
+      opacity: 0.7;
+    }
+    .pill {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.7em;
+      font-weight: 600;
+    }
+    .pill-bad { background: rgba(255,82,82,0.2); color: var(--bad); }
+    .pill-good { background: rgba(0,230,118,0.2); color: var(--good); }
+    .waterfall {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin: 20px 0;
+    }
+    .waterfall-bar {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 0.8em;
+    }
+    .waterfall-bar .bar {
+      height: 32px;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      padding: 0 12px;
+      color: white;
+      font-weight: 600;
+      font-size: 0.85em;
+      min-width: 40px;
+      transition: width 1s ease;
+    }
+    .waterfall-bar .label { width: 120px; text-align: right; color: #aaa; }
+    .gradient-text {
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    .reveal .slide-number { color: #666; }
+    .cmd {
+      background: #1a1a2e;
+      border-radius: 8px;
+      padding: 12px 20px;
+      margin: 12px 0;
+      font-family: monospace;
+      font-size: 0.8em;
+      border-left: 3px solid var(--accent);
+    }
+    .cmd::before { content: '$ '; color: var(--accent); }
+    .fade-in-then { animation: fadeInUp 0.6s ease forwards; }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes countUp {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    .animated-bar {
+      animation: growBar 1.5s ease forwards;
+      transform-origin: left;
+    }
+    @keyframes growBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  </style>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+
+<!-- ========== TITLE ========== -->
+<section data-background-gradient="linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%)">
+  <h1 style="text-align:center">
+    <span class="gradient-text">Flutter CI</span><br>
+    <span style="font-size:0.6em; color:#888">From 7 Minutes to 14 Seconds</span>
+  </h1>
+  <div style="text-align:center; margin-top: 40px; color:#666">
+    239 test files &middot; 4 packages &middot; 6 optimization steps
+  </div>
+</section>
+
+<!-- ========== THE PROBLEM ========== -->
+<section>
+  <h2>The Problem</h2>
+  <div class="stat-grid">
+    <div class="stat-card">
+      <div class="stat-number">239</div>
+      <div class="stat-label">Test Files</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Packages</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number" style="-webkit-text-fill-color: var(--bad)">7:12</div>
+      <div class="stat-label">Minutes to Run Tests</div>
+    </div>
+  </div>
+  <p style="text-align:center; color:#888; font-size:0.9em">
+    "It's just a medium-sized monorepo. Why is it so slow?"
+  </p>
+</section>
+
+<!-- ========== WHERE TIME GOES ========== -->
+<section>
+  <h2>Where Does the Time Go?</h2>
+  <div class="chart-container" style="height: 350px;">
+    <canvas id="timeBreakdown"></canvas>
+  </div>
+  <p style="text-align:center; font-size:0.8em; color:#888">
+    Output of <code>dart run tool/find_slow_tests.dart</code>
+  </p>
+</section>
+
+<!-- ========== TIMELINE ========== -->
+<section>
+  <h2>The Optimization Journey</h2>
+  <div class="timeline">
+    <div class="timeline-step active">
+      <div class="step-num">1</div><br>Fix Tests
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">2</div><br>Parallel Pkgs
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">3</div><br>Bundle Tests
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">4</div><br>Cache &amp; Select
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">5</div><br>Diff Coverage
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">6</div><br>All Combined
+    </div>
+  </div>
+  <div class="chart-container" style="height: 320px;">
+    <canvas id="journeyChart"></canvas>
+  </div>
+</section>
+
+<!-- ========== ACT 1: BAD TESTS ========== -->
+<section>
+  <section>
+    <h2>Act 1: Bad Test Patterns</h2>
+    <h3>The hidden time sinks</h3>
+    <ul class="issue-list">
+      <li><span class="pill pill-bad">~483s</span> Real async delays &mdash; <code>Future.delayed(seconds: 3)</code></li>
+      <li><span class="pill pill-bad">~41s</span> Heavy setUp &mdash; <code>setUp(() async { await Future.delayed(500ms) })</code></li>
+      <li><span class="pill pill-bad">~20s</span> Mega test files &mdash; 30+ tests in one file</li>
+      <li><span class="pill pill-bad">~3s</span> Excessive pumping &mdash; 100x pump loops</li>
+      <li><span class="pill pill-bad">~1s</span> Real I/O &mdash; disk writes in tests</li>
+    </ul>
+  </section>
+  <section>
+    <h2>The Worst Offender</h2>
+    <pre><code class="language-dart">// Looks innocent... but waits 3 REAL seconds
+test('should debounce search input', () async {
+  cubit.search('query');
+  await Future.delayed(const Duration(seconds: 3));
+  expect(cubit.state, isA&lt;SearchSuccess&gt;());
+});
+
+// x 198 tests across 4 packages = 594 seconds of waiting</code></pre>
+  </section>
+  <section>
+    <h2>The Fix</h2>
+    <pre><code class="language-dart">// Just await the action directly
+test('should debounce search input', () async {
+  await cubit.search('query');
+  expect(cubit.state, isA&lt;SearchSuccess&gt;());
+});</code></pre>
+    <div class="comparison">
+      <div class="before-card">
+        <div class="time">7:12</div>
+        <div style="color:#888">Before</div>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="after-card">
+        <div class="time">0:34</div>
+        <div style="color:#888">After</div>
+      </div>
+    </div>
+  </section>
+</section>
+
+<!-- ========== ACT 2: PARALLEL ========== -->
+<section>
+  <section>
+    <h2>Act 2: Parallel Packages</h2>
+    <h3>Sequential is a choice, not a requirement</h3>
+    <div class="waterfall">
+      <div class="waterfall-bar">
+        <span class="label">Sequential</span>
+        <div class="bar animated-bar" style="width:100%; background: var(--bad)">app (10s) + core (8s) + payments (9s) + analytics (7s) = 34s</div>
+      </div>
+      <div class="waterfall-bar" style="margin-top: 20px;">
+        <span class="label">Parallel</span>
+        <div class="bar animated-bar" style="width:30%; background: var(--good)">max(10s) = 17s</div>
+      </div>
+    </div>
+    <div class="cmd">sh/check-ci.sh  # 4 packages in parallel</div>
+  </section>
+  <section>
+    <h2>Parallel Script</h2>
+    <pre><code class="language-bash">for pkg in packages/*/; do
+  (cd "$pkg" && flutter test) &   # background job
+done
+wait  # wait for all to finish
+
+# Total = max(package_time) instead of sum(package_times)</code></pre>
+  </section>
+</section>
+
+<!-- ========== ACT 3: BUNDLER ========== -->
+<section>
+  <section>
+    <h2>Act 3: Isolate Cold Starts</h2>
+    <h3>239 files = 239 cold starts</h3>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number">239</div>
+        <div class="stat-label">Isolates Spawned</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">~300ms</div>
+        <div class="stat-label">Per Isolate Startup</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="-webkit-text-fill-color: var(--bad)">~72s</div>
+        <div class="stat-label">Just Starting Up</div>
+      </div>
+    </div>
+  </section>
+  <section>
+    <h2>The Bundler Solution</h2>
+    <pre><code class="language-dart">// Generated: test/all_tests.dart
+import 'models/user_model_test.dart' as test_0;
+import 'services/auth_service_test.dart' as test_1;
+// ... 56 more imports
+
+void main() {
+  group('user_model_test.dart', () { test_0.main(); });
+  group('auth_service_test.dart', () { test_1.main(); });
+  // ... all tests in ONE isolate
+}</code></pre>
+    <div class="cmd">dart run tool/generate_test_wrapper.dart</div>
+  </section>
+</section>
+
+<!-- ========== ACT 4: CI CACHING ========== -->
+<section>
+  <section>
+    <h2>Act 4: CI-Level Optimizations</h2>
+    <h3>Stop duplicating work</h3>
+    <ul class="issue-list">
+      <li><span class="pill pill-bad">DUP</span> Running <code>pub get</code> per package per CI job</li>
+      <li><span class="pill pill-bad">DUP</span> Running <code>dart analyze</code> per package</li>
+      <li><span class="pill pill-bad">WASTE</span> Full native build when only Dart changed</li>
+      <li><span class="pill pill-bad">WASTE</span> Testing all packages when one changed</li>
+    </ul>
+  </section>
+  <section>
+    <h2>The Fix: Workspace-Level Resolution</h2>
+    <pre><code class="language-yaml"># .github/workflows/pr_check.yml
+setup:
+  steps:
+    - run: dart pub get              # ONCE at root
+    - uses: actions/cache@v4         # cache .dart_tool
+      with:
+        key: pub-${{ hashFiles('**/pubspec.lock') }}
+
+analyze:
+  steps:
+    - run: dart analyze .            # ONCE for workspace
+
+test:
+  strategy:
+    matrix:
+      package: [app, core, payments, analytics]
+  steps:
+    # Restore cache — no pub get needed
+    - if: needs.setup.outputs.affected
+      run: flutter test</code></pre>
+  </section>
+</section>
+
+<!-- ========== ACT 5: DIFF COVERAGE ========== -->
+<section>
+  <section>
+    <h2>Act 5: Dependency Graph Testing</h2>
+    <h3>Test what matters</h3>
+    <div style="text-align:center; margin: 40px 0;">
+      <svg width="500" height="280" viewBox="0 0 500 280">
+        <defs>
+          <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
+            <polygon points="0 0, 10 3.5, 0 7" fill="#6C63FF"/>
+          </marker>
+        </defs>
+        <!-- Nodes -->
+        <rect x="200" y="20" width="100" height="44" rx="10" fill="rgba(108,99,255,0.3)" stroke="#6C63FF" stroke-width="2"/>
+        <text x="250" y="48" text-anchor="middle" fill="white" font-size="16" font-weight="600">core</text>
+
+        <rect x="50" y="120" width="100" height="44" rx="10" fill="rgba(255,255,255,0.05)" stroke="#444" stroke-width="1"/>
+        <text x="100" y="148" text-anchor="middle" fill="#aaa" font-size="16">app</text>
+
+        <rect x="200" y="120" width="100" height="44" rx="10" fill="rgba(255,255,255,0.05)" stroke="#444" stroke-width="1"/>
+        <text x="250" y="148" text-anchor="middle" fill="#aaa" font-size="16">payments</text>
+
+        <rect x="350" y="120" width="100" height="44" rx="10" fill="rgba(255,255,255,0.05)" stroke="#444" stroke-width="1"/>
+        <text x="400" y="148" text-anchor="middle" fill="#aaa" font-size="16">analytics</text>
+
+        <!-- Arrows -->
+        <line x1="100" y1="120" x2="220" y2="64" stroke="#6C63FF" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <line x1="250" y1="120" x2="250" y2="64" stroke="#6C63FF" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <line x1="400" y1="120" x2="280" y2="64" stroke="#6C63FF" stroke-width="2" marker-end="url(#arrowhead)"/>
+
+        <!-- Labels -->
+        <text x="250" y="200" text-anchor="middle" fill="#888" font-size="14">Change <tspan fill="#6C63FF" font-weight="700">core</tspan> → test ALL 4 packages</text>
+        <text x="250" y="230" text-anchor="middle" fill="#888" font-size="14">Change <tspan fill="#00E676" font-weight="700">payments</tspan> → test ONLY payments</text>
+
+        <rect x="130" y="250" width="240" height="30" rx="6" fill="rgba(0,230,118,0.1)" stroke="#00E676" stroke-width="1"/>
+        <text x="250" y="271" text-anchor="middle" fill="#00E676" font-size="13">sh/affected_packages.sh</text>
+      </svg>
+    </div>
+  </section>
+  <section>
+    <h2>Diff Coverage</h2>
+    <h3>Measure only what changed</h3>
+    <div class="comparison">
+      <div class="before-card" style="border-color: var(--bad)">
+        <div style="font-size:2em; font-weight:800; color:var(--bad)">235</div>
+        <div style="color:#888">Source files to cover</div>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="after-card" style="border-color: var(--good)">
+        <div style="font-size:2em; font-weight:800; color:var(--good)">3-10</div>
+        <div style="color:#888">Changed files to cover</div>
+      </div>
+    </div>
+    <div class="cmd">sh/diff_coverage.sh main</div>
+  </section>
+</section>
+
+<!-- ========== FINAL RESULTS ========== -->
+<section>
+  <h2>The Full Picture</h2>
+  <div class="chart-container" style="height: 400px;">
+    <canvas id="finalChart"></canvas>
+  </div>
+</section>
+
+<section data-background-gradient="linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%)">
+  <h2 style="text-align:center">Before &amp; After</h2>
+  <div class="comparison" style="max-width: 700px; margin: 40px auto;">
+    <div class="before-card">
+      <div class="time">7:12</div>
+      <div style="color:#888; margin-top:8px">main branch</div>
+      <div style="color:#555; font-size:0.7em; margin-top:16px">
+        Sequential &middot; Per-file isolates<br>
+        Real delays &middot; Heavy setUp<br>
+        No caching &middot; Full builds
+      </div>
+    </div>
+    <div class="arrow">&rarr;</div>
+    <div class="after-card">
+      <div class="time">0:14</div>
+      <div style="color:#888; margin-top:8px">step-6 branch</div>
+      <div style="color:#555; font-size:0.7em; margin-top:16px">
+        Parallel &middot; Bundled isolates<br>
+        Fixed tests &middot; Cached deps<br>
+        Selective builds &middot; Diff coverage
+      </div>
+    </div>
+  </div>
+  <div style="text-align:center">
+    <span class="stat-number" style="font-size:4em">97%</span>
+    <div class="stat-label" style="font-size:1.2em">Faster</div>
+  </div>
+</section>
+
+<!-- ========== TAKEAWAYS ========== -->
+<section data-background-gradient="linear-gradient(135deg, #1a0a2e 0%, #0a1a2e 100%)">
+  <h2 style="text-align:center">Key Takeaways</h2>
+  <div style="max-width: 600px; margin: 40px auto;">
+    <ul class="issue-list">
+      <li class="fixed"><span class="pill pill-good">1</span> Fix your tests first &mdash; async delays, heavy setUp, real I/O</li>
+      <li class="fixed"><span class="pill pill-good">2</span> Parallelize across packages &mdash; simple shell script</li>
+      <li class="fixed"><span class="pill pill-good">3</span> Bundle tests &mdash; reduce isolate cold start overhead</li>
+      <li class="fixed"><span class="pill pill-good">4</span> Cache pub get at workspace level</li>
+      <li class="fixed"><span class="pill pill-good">5</span> Analyze once at workspace root</li>
+      <li class="fixed"><span class="pill pill-good">6</span> Test selectively using dependency graph</li>
+      <li class="fixed"><span class="pill pill-good">7</span> Diff coverage &mdash; measure only what changed</li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========== BONUS ========== -->
+<section>
+  <h2>Bonus: Find Slow Tests Automatically</h2>
+  <div class="cmd">dart run tool/find_slow_tests.dart</div>
+  <pre><code style="font-size:0.55em">Found 361 potential issues:
+
+Summary by category:
+  ASYNC_DELAY:      198 issues (~483.0s estimated waste)
+  HEAVY_SETUP:       71 issues (~41.4s estimated waste)
+  MEGA_FILE:          8 issues (~20.4s estimated waste)
+  EXCESSIVE_PUMP:    12 issues (~2.9s estimated waste)
+  REAL_IO:           16 issues (~0.8s estimated waste)
+
+Total estimated waste: 548.4s</code></pre>
+  <p style="text-align:center; color:#888; font-size:0.8em; margin-top:20px">
+    Add this to your CI as a lint step. Catch slowness before it lands.
+  </p>
+</section>
+
+<section data-background-gradient="linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%)">
+  <h1 style="text-align:center">
+    <span class="gradient-text">Thank You</span>
+  </h1>
+  <div style="text-align:center; color:#888; margin-top:40px; font-size:0.9em">
+    All code: <code>github.com/your-repo/flutter_ci_talk</code><br><br>
+    <code>git checkout main</code> &rarr; slow<br>
+    <code>git checkout step-6/all-optimizations</code> &rarr; fast
+  </div>
+</section>
+
+</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.js"></script>
+<script>
+Reveal.initialize({
+  hash: true,
+  slideNumber: true,
+  transition: 'slide',
+  backgroundTransition: 'fade',
+  center: false,
+  width: 1200,
+  height: 700,
+  margin: 0.08,
+});
+
+// Chart: Time Breakdown (donut)
+Reveal.on('slidechanged', event => {
+  if (event.currentSlide.querySelector('#timeBreakdown')) {
+    const ctx = document.getElementById('timeBreakdown');
+    if (!ctx._chart) {
+      ctx._chart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+          labels: ['Async Delays (483s)', 'Heavy setUp (41s)', 'Mega Files (20s)', 'Excessive Pump (3s)', 'Real I/O (1s)'],
+          datasets: [{
+            data: [483, 41, 20, 3, 1],
+            backgroundColor: ['#FF5252', '#FF9800', '#FFD600', '#6C63FF', '#00D9FF'],
+            borderWidth: 0,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { position: 'right', labels: { color: '#aaa', font: { size: 13 } } }
+          },
+          animation: { animateScale: true, duration: 1500 }
+        }
+      });
+    }
+  }
+
+  // Journey chart (bar)
+  if (event.currentSlide.querySelector('#journeyChart')) {
+    const ctx = document.getElementById('journeyChart');
+    if (!ctx._chart) {
+      ctx._chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: ['main', 'Step 1\nFix Tests', 'Step 2\nParallel', 'Step 3\nBundler', 'Step 6\nAll'],
+          datasets: [{
+            label: 'Duration (seconds)',
+            data: [432, 34, 17, 14, 14],
+            backgroundColor: ['#FF5252', '#FF9800', '#FFD600', '#6C63FF', '#00E676'],
+            borderRadius: 8,
+            borderSkipped: false,
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(255,255,255,0.05)' },
+              ticks: { color: '#888', callback: v => v >= 60 ? Math.floor(v/60) + 'm ' + (v%60) + 's' : v + 's' }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#aaa', font: { size: 12 } }
+            }
+          },
+          animation: { duration: 1500, easing: 'easeOutBounce' }
+        }
+      });
+    }
+  }
+
+  // Final chart (horizontal bar)
+  if (event.currentSlide.querySelector('#finalChart')) {
+    const ctx = document.getElementById('finalChart');
+    if (!ctx._chart) {
+      ctx._chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: [
+            'main (baseline)',
+            'Step 1: Fix Tests',
+            'Step 2: Parallel',
+            'Step 3: Bundler',
+            'Step 4: CI Cache',
+            'Step 5: Selective',
+            'Step 6: Combined'
+          ],
+          datasets: [{
+            label: 'Time (seconds)',
+            data: [432, 34, 17, 14, null, null, 14],
+            backgroundColor: [
+              '#FF5252', '#FF9800', '#FFD600', '#6C63FF', '#888', '#888', '#00E676'
+            ],
+            borderRadius: 6,
+            borderSkipped: false,
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: false,
+          plugins: {
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: item => {
+                  const v = item.raw;
+                  if (!v) return 'CI-level (not measurable locally)';
+                  return v >= 60 ? Math.floor(v/60) + 'm ' + (v%60) + 's' : v + 's';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              grid: { color: 'rgba(255,255,255,0.05)' },
+              ticks: { color: '#888', callback: v => v >= 60 ? Math.floor(v/60) + 'm' : v + 's' }
+            },
+            y: {
+              grid: { display: false },
+              ticks: { color: '#ccc', font: { size: 13 } }
+            }
+          },
+          animation: { duration: 2000, easing: 'easeOutQuart' }
+        }
+      });
+    }
+  }
+});
+</script>
+</body>
+</html>
