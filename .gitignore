@@ -3,6 +3,8 @@ build/
 .packages
 pubspec.lock
 coverage/
+all_tests.dart
+all_tests_shard_*.dart
 *.iml
 .idea/
 .vscode/
