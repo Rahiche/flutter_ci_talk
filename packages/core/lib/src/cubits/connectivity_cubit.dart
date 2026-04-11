@@ -27,7 +27,7 @@ class ConnectivityCubit extends Cubit<ConnectivityState> {
   Future<void> loadconnectivity() async {
     emit(ConnectivityStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 54));
+      await Future.delayed(const Duration(milliseconds: 18));
       emit(const ConnectivityStateSuccess('loadconnectivity done'));
     } catch (e) {
       emit(ConnectivityStateError(e.toString()));
@@ -37,7 +37,7 @@ class ConnectivityCubit extends Cubit<ConnectivityState> {
   Future<void> refreshconnectivity() async {
     emit(ConnectivityStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 54));
+      await Future.delayed(const Duration(milliseconds: 18));
       emit(const ConnectivityStateSuccess('refreshconnectivity done'));
     } catch (e) {
       emit(ConnectivityStateError(e.toString()));
@@ -47,7 +47,7 @@ class ConnectivityCubit extends Cubit<ConnectivityState> {
   Future<void> resetconnectivity() async {
     emit(ConnectivityStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 54));
+      await Future.delayed(const Duration(milliseconds: 18));
       emit(const ConnectivityStateSuccess('resetconnectivity done'));
     } catch (e) {
       emit(ConnectivityStateError(e.toString()));

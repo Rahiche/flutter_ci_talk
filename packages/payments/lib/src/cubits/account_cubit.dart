@@ -27,7 +27,7 @@ class AccountCubit extends Cubit<AccountState> {
   Future<void> loadaccount() async {
     emit(AccountStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 89));
+      await Future.delayed(const Duration(milliseconds: 31));
       emit(const AccountStateSuccess('loadaccount done'));
     } catch (e) {
       emit(AccountStateError(e.toString()));
@@ -37,7 +37,7 @@ class AccountCubit extends Cubit<AccountState> {
   Future<void> refreshaccount() async {
     emit(AccountStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 89));
+      await Future.delayed(const Duration(milliseconds: 31));
       emit(const AccountStateSuccess('refreshaccount done'));
     } catch (e) {
       emit(AccountStateError(e.toString()));
@@ -47,7 +47,7 @@ class AccountCubit extends Cubit<AccountState> {
   Future<void> resetaccount() async {
     emit(AccountStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 89));
+      await Future.delayed(const Duration(milliseconds: 31));
       emit(const AccountStateSuccess('resetaccount done'));
     } catch (e) {
       emit(AccountStateError(e.toString()));

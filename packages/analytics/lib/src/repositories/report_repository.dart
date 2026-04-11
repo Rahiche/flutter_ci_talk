@@ -9,19 +9,19 @@ class ReportRepository implements IReportRepository {
 
   @override
   Future<List<String>> getAll() async {
-    await Future.delayed(const Duration(milliseconds: 150));
+    await Future.delayed(const Duration(milliseconds: 52));
     return ['item_1', 'item_2'];
   }
 
   @override
   Future<Map<String, dynamic>> getById() async {
-    await Future.delayed(const Duration(milliseconds: 94));
+    await Future.delayed(const Duration(milliseconds: 32));
     return {'id': '1'};
   }
 
   @override
   Future<bool> save() async {
-    await Future.delayed(const Duration(milliseconds: 122));
+    await Future.delayed(const Duration(milliseconds: 42));
     return true;
   }
 

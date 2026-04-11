@@ -27,7 +27,7 @@ class EventsCubit extends Cubit<EventsState> {
   Future<void> loadevents() async {
     emit(EventsStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 54));
+      await Future.delayed(const Duration(milliseconds: 18));
       emit(const EventsStateSuccess('loadevents done'));
     } catch (e) {
       emit(EventsStateError(e.toString()));
@@ -37,7 +37,7 @@ class EventsCubit extends Cubit<EventsState> {
   Future<void> refreshevents() async {
     emit(EventsStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 54));
+      await Future.delayed(const Duration(milliseconds: 18));
       emit(const EventsStateSuccess('refreshevents done'));
     } catch (e) {
       emit(EventsStateError(e.toString()));
@@ -47,7 +47,7 @@ class EventsCubit extends Cubit<EventsState> {
   Future<void> resetevents() async {
     emit(EventsStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 54));
+      await Future.delayed(const Duration(milliseconds: 18));
       emit(const EventsStateSuccess('resetevents done'));
     } catch (e) {
       emit(EventsStateError(e.toString()));

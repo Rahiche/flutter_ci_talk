@@ -27,7 +27,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   Future<void> loadcheckout() async {
     emit(CheckoutStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 110));
+      await Future.delayed(const Duration(milliseconds: 38));
       emit(const CheckoutStateSuccess('loadcheckout done'));
     } catch (e) {
       emit(CheckoutStateError(e.toString()));
@@ -37,7 +37,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   Future<void> refreshcheckout() async {
     emit(CheckoutStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 110));
+      await Future.delayed(const Duration(milliseconds: 38));
       emit(const CheckoutStateSuccess('refreshcheckout done'));
     } catch (e) {
       emit(CheckoutStateError(e.toString()));
@@ -47,7 +47,7 @@ class CheckoutCubit extends Cubit<CheckoutState> {
   Future<void> resetcheckout() async {
     emit(CheckoutStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 110));
+      await Future.delayed(const Duration(milliseconds: 38));
       emit(const CheckoutStateSuccess('resetcheckout done'));
     } catch (e) {
       emit(CheckoutStateError(e.toString()));

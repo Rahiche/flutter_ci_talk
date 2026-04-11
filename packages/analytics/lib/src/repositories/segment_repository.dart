@@ -9,19 +9,19 @@ class SegmentRepository implements ISegmentRepository {
 
   @override
   Future<List<String>> getAll() async {
-    await Future.delayed(const Duration(milliseconds: 160));
+    await Future.delayed(const Duration(milliseconds: 56));
     return ['item_1', 'item_2'];
   }
 
   @override
   Future<Map<String, dynamic>> getById() async {
-    await Future.delayed(const Duration(milliseconds: 100));
+    await Future.delayed(const Duration(milliseconds: 35));
     return {'id': '1'};
   }
 
   @override
   Future<bool> save() async {
-    await Future.delayed(const Duration(milliseconds: 130));
+    await Future.delayed(const Duration(milliseconds: 45));
     return true;
   }
 

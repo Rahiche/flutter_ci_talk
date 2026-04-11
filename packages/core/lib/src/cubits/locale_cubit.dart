@@ -27,7 +27,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   Future<void> loadlocale() async {
     emit(LocaleStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 61));
+      await Future.delayed(const Duration(milliseconds: 21));
       emit(const LocaleStateSuccess('loadlocale done'));
     } catch (e) {
       emit(LocaleStateError(e.toString()));
@@ -37,7 +37,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   Future<void> refreshlocale() async {
     emit(LocaleStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 61));
+      await Future.delayed(const Duration(milliseconds: 21));
       emit(const LocaleStateSuccess('refreshlocale done'));
     } catch (e) {
       emit(LocaleStateError(e.toString()));
@@ -47,7 +47,7 @@ class LocaleCubit extends Cubit<LocaleState> {
   Future<void> resetlocale() async {
     emit(LocaleStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 61));
+      await Future.delayed(const Duration(milliseconds: 21));
       emit(const LocaleStateSuccess('resetlocale done'));
     } catch (e) {
       emit(LocaleStateError(e.toString()));

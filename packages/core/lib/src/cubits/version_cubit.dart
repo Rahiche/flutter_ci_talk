@@ -27,7 +27,7 @@ class VersionCubit extends Cubit<VersionState> {
   Future<void> loadversion() async {
     emit(VersionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const VersionStateSuccess('loadversion done'));
     } catch (e) {
       emit(VersionStateError(e.toString()));
@@ -37,7 +37,7 @@ class VersionCubit extends Cubit<VersionState> {
   Future<void> refreshversion() async {
     emit(VersionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const VersionStateSuccess('refreshversion done'));
     } catch (e) {
       emit(VersionStateError(e.toString()));
@@ -47,7 +47,7 @@ class VersionCubit extends Cubit<VersionState> {
   Future<void> resetversion() async {
     emit(VersionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const VersionStateSuccess('resetversion done'));
     } catch (e) {
       emit(VersionStateError(e.toString()));

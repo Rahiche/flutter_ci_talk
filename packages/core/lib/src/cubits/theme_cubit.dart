@@ -27,7 +27,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   Future<void> loadtheme() async {
     emit(ThemeStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 197));
+      await Future.delayed(const Duration(milliseconds: 68));
       emit(const ThemeStateSuccess('loadtheme done'));
     } catch (e) {
       emit(ThemeStateError(e.toString()));
@@ -37,7 +37,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   Future<void> refreshtheme() async {
     emit(ThemeStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 197));
+      await Future.delayed(const Duration(milliseconds: 68));
       emit(const ThemeStateSuccess('refreshtheme done'));
     } catch (e) {
       emit(ThemeStateError(e.toString()));
@@ -47,7 +47,7 @@ class ThemeCubit extends Cubit<ThemeState> {
   Future<void> resettheme() async {
     emit(ThemeStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 197));
+      await Future.delayed(const Duration(milliseconds: 68));
       emit(const ThemeStateSuccess('resettheme done'));
     } catch (e) {
       emit(ThemeStateError(e.toString()));

@@ -27,7 +27,7 @@ class NavigationCubit extends Cubit<NavigationState> {
   Future<void> loadnavigation() async {
     emit(NavigationStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 68));
+      await Future.delayed(const Duration(milliseconds: 23));
       emit(const NavigationStateSuccess('loadnavigation done'));
     } catch (e) {
       emit(NavigationStateError(e.toString()));
@@ -37,7 +37,7 @@ class NavigationCubit extends Cubit<NavigationState> {
   Future<void> refreshnavigation() async {
     emit(NavigationStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 68));
+      await Future.delayed(const Duration(milliseconds: 23));
       emit(const NavigationStateSuccess('refreshnavigation done'));
     } catch (e) {
       emit(NavigationStateError(e.toString()));
@@ -47,7 +47,7 @@ class NavigationCubit extends Cubit<NavigationState> {
   Future<void> resetnavigation() async {
     emit(NavigationStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 68));
+      await Future.delayed(const Duration(milliseconds: 23));
       emit(const NavigationStateSuccess('resetnavigation done'));
     } catch (e) {
       emit(NavigationStateError(e.toString()));

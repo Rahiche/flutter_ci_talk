@@ -27,7 +27,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
   Future<void> loadinvoice() async {
     emit(InvoiceStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const InvoiceStateSuccess('loadinvoice done'));
     } catch (e) {
       emit(InvoiceStateError(e.toString()));
@@ -37,7 +37,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
   Future<void> refreshinvoice() async {
     emit(InvoiceStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const InvoiceStateSuccess('refreshinvoice done'));
     } catch (e) {
       emit(InvoiceStateError(e.toString()));
@@ -47,7 +47,7 @@ class InvoiceCubit extends Cubit<InvoiceState> {
   Future<void> resetinvoice() async {
     emit(InvoiceStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const InvoiceStateSuccess('resetinvoice done'));
     } catch (e) {
       emit(InvoiceStateError(e.toString()));

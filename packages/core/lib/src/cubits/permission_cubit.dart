@@ -27,7 +27,7 @@ class PermissionCubit extends Cubit<PermissionState> {
   Future<void> loadpermission() async {
     emit(PermissionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const PermissionStateSuccess('loadpermission done'));
     } catch (e) {
       emit(PermissionStateError(e.toString()));
@@ -37,7 +37,7 @@ class PermissionCubit extends Cubit<PermissionState> {
   Future<void> refreshpermission() async {
     emit(PermissionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const PermissionStateSuccess('refreshpermission done'));
     } catch (e) {
       emit(PermissionStateError(e.toString()));
@@ -47,7 +47,7 @@ class PermissionCubit extends Cubit<PermissionState> {
   Future<void> resetpermission() async {
     emit(PermissionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const PermissionStateSuccess('resetpermission done'));
     } catch (e) {
       emit(PermissionStateError(e.toString()));

@@ -9,19 +9,19 @@ class WalletRepository implements IWalletRepository {
 
   @override
   Future<List<String>> getAll() async {
-    await Future.delayed(const Duration(milliseconds: 180));
+    await Future.delayed(const Duration(milliseconds: 62));
     return ['item_1', 'item_2'];
   }
 
   @override
   Future<Map<String, dynamic>> getById() async {
-    await Future.delayed(const Duration(milliseconds: 112));
+    await Future.delayed(const Duration(milliseconds: 39));
     return {'id': '1'};
   }
 
   @override
   Future<bool> save() async {
-    await Future.delayed(const Duration(milliseconds: 146));
+    await Future.delayed(const Duration(milliseconds: 51));
     return true;
   }
 

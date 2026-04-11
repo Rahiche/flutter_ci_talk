@@ -27,7 +27,7 @@ class CardCubit extends Cubit<CardState> {
   Future<void> loadcard() async {
     emit(CardStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 96));
+      await Future.delayed(const Duration(milliseconds: 33));
       emit(const CardStateSuccess('loadcard done'));
     } catch (e) {
       emit(CardStateError(e.toString()));
@@ -37,7 +37,7 @@ class CardCubit extends Cubit<CardState> {
   Future<void> refreshcard() async {
     emit(CardStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 96));
+      await Future.delayed(const Duration(milliseconds: 33));
       emit(const CardStateSuccess('refreshcard done'));
     } catch (e) {
       emit(CardStateError(e.toString()));
@@ -47,7 +47,7 @@ class CardCubit extends Cubit<CardState> {
   Future<void> resetcard() async {
     emit(CardStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 96));
+      await Future.delayed(const Duration(milliseconds: 33));
       emit(const CardStateSuccess('resetcard done'));
     } catch (e) {
       emit(CardStateError(e.toString()));

@@ -27,7 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> loadauth() async {
     emit(AuthStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 197));
+      await Future.delayed(const Duration(milliseconds: 68));
       emit(const AuthStateSuccess('loadauth done'));
     } catch (e) {
       emit(AuthStateError(e.toString()));
@@ -37,7 +37,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> refreshauth() async {
     emit(AuthStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 197));
+      await Future.delayed(const Duration(milliseconds: 68));
       emit(const AuthStateSuccess('refreshauth done'));
     } catch (e) {
       emit(AuthStateError(e.toString()));
@@ -47,7 +47,7 @@ class AuthCubit extends Cubit<AuthState> {
   Future<void> resetauth() async {
     emit(AuthStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 197));
+      await Future.delayed(const Duration(milliseconds: 68));
       emit(const AuthStateSuccess('resetauth done'));
     } catch (e) {
       emit(AuthStateError(e.toString()));

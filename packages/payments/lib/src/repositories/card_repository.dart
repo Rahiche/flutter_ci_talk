@@ -9,19 +9,19 @@ class CardRepository implements ICardRepository {
 
   @override
   Future<List<String>> getAll() async {
-    await Future.delayed(const Duration(milliseconds: 170));
+    await Future.delayed(const Duration(milliseconds: 59));
     return ['item_1', 'item_2'];
   }
 
   @override
   Future<Map<String, dynamic>> getById() async {
-    await Future.delayed(const Duration(milliseconds: 106));
+    await Future.delayed(const Duration(milliseconds: 37));
     return {'id': '1'};
   }
 
   @override
   Future<bool> save() async {
-    await Future.delayed(const Duration(milliseconds: 138));
+    await Future.delayed(const Duration(milliseconds: 48));
     return true;
   }
 

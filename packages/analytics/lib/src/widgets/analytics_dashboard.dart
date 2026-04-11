@@ -12,7 +12,7 @@ class _AnalyticsDashboardState extends State<AnalyticsDashboard> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 35), () {
       if (mounted) setState(() => _loading = false);
     });
   }

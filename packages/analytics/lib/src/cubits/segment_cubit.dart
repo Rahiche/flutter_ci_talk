@@ -27,7 +27,7 @@ class SegmentCubit extends Cubit<SegmentState> {
   Future<void> loadsegment() async {
     emit(SegmentStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const SegmentStateSuccess('loadsegment done'));
     } catch (e) {
       emit(SegmentStateError(e.toString()));
@@ -37,7 +37,7 @@ class SegmentCubit extends Cubit<SegmentState> {
   Future<void> refreshsegment() async {
     emit(SegmentStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const SegmentStateSuccess('refreshsegment done'));
     } catch (e) {
       emit(SegmentStateError(e.toString()));
@@ -47,7 +47,7 @@ class SegmentCubit extends Cubit<SegmentState> {
   Future<void> resetsegment() async {
     emit(SegmentStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const SegmentStateSuccess('resetsegment done'));
     } catch (e) {
       emit(SegmentStateError(e.toString()));

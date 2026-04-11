@@ -27,7 +27,7 @@ class DashboardCubit extends Cubit<DashboardState> {
   Future<void> loaddashboard() async {
     emit(DashboardStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 197));
+      await Future.delayed(const Duration(milliseconds: 68));
       emit(const DashboardStateSuccess('loaddashboard done'));
     } catch (e) {
       emit(DashboardStateError(e.toString()));
@@ -37,7 +37,7 @@ class DashboardCubit extends Cubit<DashboardState> {
   Future<void> refreshdashboard() async {
     emit(DashboardStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 197));
+      await Future.delayed(const Duration(milliseconds: 68));
       emit(const DashboardStateSuccess('refreshdashboard done'));
     } catch (e) {
       emit(DashboardStateError(e.toString()));
@@ -47,7 +47,7 @@ class DashboardCubit extends Cubit<DashboardState> {
   Future<void> resetdashboard() async {
     emit(DashboardStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 197));
+      await Future.delayed(const Duration(milliseconds: 68));
       emit(const DashboardStateSuccess('resetdashboard done'));
     } catch (e) {
       emit(DashboardStateError(e.toString()));

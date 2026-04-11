@@ -9,19 +9,19 @@ class FunnelRepository implements IFunnelRepository {
 
   @override
   Future<List<String>> getAll() async {
-    await Future.delayed(const Duration(milliseconds: 155));
+    await Future.delayed(const Duration(milliseconds: 54));
     return ['item_1', 'item_2'];
   }
 
   @override
   Future<Map<String, dynamic>> getById() async {
-    await Future.delayed(const Duration(milliseconds: 97));
+    await Future.delayed(const Duration(milliseconds: 33));
     return {'id': '1'};
   }
 
   @override
   Future<bool> save() async {
-    await Future.delayed(const Duration(milliseconds: 126));
+    await Future.delayed(const Duration(milliseconds: 44));
     return true;
   }
 

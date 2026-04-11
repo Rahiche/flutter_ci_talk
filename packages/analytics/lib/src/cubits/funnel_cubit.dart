@@ -27,7 +27,7 @@ class FunnelCubit extends Cubit<FunnelState> {
   Future<void> loadfunnel() async {
     emit(FunnelStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 68));
+      await Future.delayed(const Duration(milliseconds: 23));
       emit(const FunnelStateSuccess('loadfunnel done'));
     } catch (e) {
       emit(FunnelStateError(e.toString()));
@@ -37,7 +37,7 @@ class FunnelCubit extends Cubit<FunnelState> {
   Future<void> refreshfunnel() async {
     emit(FunnelStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 68));
+      await Future.delayed(const Duration(milliseconds: 23));
       emit(const FunnelStateSuccess('refreshfunnel done'));
     } catch (e) {
       emit(FunnelStateError(e.toString()));
@@ -47,7 +47,7 @@ class FunnelCubit extends Cubit<FunnelState> {
   Future<void> resetfunnel() async {
     emit(FunnelStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 68));
+      await Future.delayed(const Duration(milliseconds: 23));
       emit(const FunnelStateSuccess('resetfunnel done'));
     } catch (e) {
       emit(FunnelStateError(e.toString()));

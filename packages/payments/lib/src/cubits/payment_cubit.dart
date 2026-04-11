@@ -27,7 +27,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   Future<void> loadpayment() async {
     emit(PaymentStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const PaymentStateSuccess('loadpayment done'));
     } catch (e) {
       emit(PaymentStateError(e.toString()));
@@ -37,7 +37,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   Future<void> refreshpayment() async {
     emit(PaymentStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const PaymentStateSuccess('refreshpayment done'));
     } catch (e) {
       emit(PaymentStateError(e.toString()));
@@ -47,7 +47,7 @@ class PaymentCubit extends Cubit<PaymentState> {
   Future<void> resetpayment() async {
     emit(PaymentStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const PaymentStateSuccess('resetpayment done'));
     } catch (e) {
       emit(PaymentStateError(e.toString()));

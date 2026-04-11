@@ -12,7 +12,7 @@ class _SegmentPickerState extends State<SegmentPicker> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(const Duration(milliseconds: 100), () {
+    Future.delayed(const Duration(milliseconds: 35), () {
       if (mounted) setState(() => _loading = false);
     });
   }

@@ -27,7 +27,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   Future<void> loadnotification() async {
     emit(NotificationStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 68));
+      await Future.delayed(const Duration(milliseconds: 23));
       emit(const NotificationStateSuccess('loadnotification done'));
     } catch (e) {
       emit(NotificationStateError(e.toString()));
@@ -37,7 +37,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   Future<void> refreshnotification() async {
     emit(NotificationStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 68));
+      await Future.delayed(const Duration(milliseconds: 23));
       emit(const NotificationStateSuccess('refreshnotification done'));
     } catch (e) {
       emit(NotificationStateError(e.toString()));
@@ -47,7 +47,7 @@ class NotificationCubit extends Cubit<NotificationState> {
   Future<void> resetnotification() async {
     emit(NotificationStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 68));
+      await Future.delayed(const Duration(milliseconds: 23));
       emit(const NotificationStateSuccess('resetnotification done'));
     } catch (e) {
       emit(NotificationStateError(e.toString()));

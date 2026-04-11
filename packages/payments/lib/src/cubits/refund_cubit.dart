@@ -27,7 +27,7 @@ class RefundCubit extends Cubit<RefundState> {
   Future<void> loadrefund() async {
     emit(RefundStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 117));
+      await Future.delayed(const Duration(milliseconds: 40));
       emit(const RefundStateSuccess('loadrefund done'));
     } catch (e) {
       emit(RefundStateError(e.toString()));
@@ -37,7 +37,7 @@ class RefundCubit extends Cubit<RefundState> {
   Future<void> refreshrefund() async {
     emit(RefundStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 117));
+      await Future.delayed(const Duration(milliseconds: 40));
       emit(const RefundStateSuccess('refreshrefund done'));
     } catch (e) {
       emit(RefundStateError(e.toString()));
@@ -47,7 +47,7 @@ class RefundCubit extends Cubit<RefundState> {
   Future<void> resetrefund() async {
     emit(RefundStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 117));
+      await Future.delayed(const Duration(milliseconds: 40));
       emit(const RefundStateSuccess('resetrefund done'));
     } catch (e) {
       emit(RefundStateError(e.toString()));

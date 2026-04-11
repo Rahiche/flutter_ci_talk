@@ -27,7 +27,7 @@ class ReportCubit extends Cubit<ReportState> {
   Future<void> loadreport() async {
     emit(ReportStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 61));
+      await Future.delayed(const Duration(milliseconds: 21));
       emit(const ReportStateSuccess('loadreport done'));
     } catch (e) {
       emit(ReportStateError(e.toString()));
@@ -37,7 +37,7 @@ class ReportCubit extends Cubit<ReportState> {
   Future<void> refreshreport() async {
     emit(ReportStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 61));
+      await Future.delayed(const Duration(milliseconds: 21));
       emit(const ReportStateSuccess('refreshreport done'));
     } catch (e) {
       emit(ReportStateError(e.toString()));
@@ -47,7 +47,7 @@ class ReportCubit extends Cubit<ReportState> {
   Future<void> resetreport() async {
     emit(ReportStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 61));
+      await Future.delayed(const Duration(milliseconds: 21));
       emit(const ReportStateSuccess('resetreport done'));
     } catch (e) {
       emit(ReportStateError(e.toString()));

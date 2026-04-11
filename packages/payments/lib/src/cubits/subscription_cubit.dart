@@ -27,7 +27,7 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
   Future<void> loadsubscription() async {
     emit(SubscriptionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 103));
+      await Future.delayed(const Duration(milliseconds: 36));
       emit(const SubscriptionStateSuccess('loadsubscription done'));
     } catch (e) {
       emit(SubscriptionStateError(e.toString()));
@@ -37,7 +37,7 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
   Future<void> refreshsubscription() async {
     emit(SubscriptionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 103));
+      await Future.delayed(const Duration(milliseconds: 36));
       emit(const SubscriptionStateSuccess('refreshsubscription done'));
     } catch (e) {
       emit(SubscriptionStateError(e.toString()));
@@ -47,7 +47,7 @@ class SubscriptionCubit extends Cubit<SubscriptionState> {
   Future<void> resetsubscription() async {
     emit(SubscriptionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 103));
+      await Future.delayed(const Duration(milliseconds: 36));
       emit(const SubscriptionStateSuccess('resetsubscription done'));
     } catch (e) {
       emit(SubscriptionStateError(e.toString()));

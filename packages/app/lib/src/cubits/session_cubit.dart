@@ -27,7 +27,7 @@ class SessionCubit extends Cubit<SessionState> {
   Future<void> loadsession() async {
     emit(SessionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const SessionStateSuccess('loadsession done'));
     } catch (e) {
       emit(SessionStateError(e.toString()));
@@ -37,7 +37,7 @@ class SessionCubit extends Cubit<SessionState> {
   Future<void> refreshsession() async {
     emit(SessionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const SessionStateSuccess('refreshsession done'));
     } catch (e) {
       emit(SessionStateError(e.toString()));
@@ -47,7 +47,7 @@ class SessionCubit extends Cubit<SessionState> {
   Future<void> resetsession() async {
     emit(SessionStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 75));
+      await Future.delayed(const Duration(milliseconds: 26));
       emit(const SessionStateSuccess('resetsession done'));
     } catch (e) {
       emit(SessionStateError(e.toString()));

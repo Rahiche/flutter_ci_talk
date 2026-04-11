@@ -27,7 +27,7 @@ class RealTimeCubit extends Cubit<RealTimeState> {
   Future<void> loadrealtime() async {
     emit(RealTimeStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const RealTimeStateSuccess('loadrealtime done'));
     } catch (e) {
       emit(RealTimeStateError(e.toString()));
@@ -37,7 +37,7 @@ class RealTimeCubit extends Cubit<RealTimeState> {
   Future<void> refreshrealtime() async {
     emit(RealTimeStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const RealTimeStateSuccess('refreshrealtime done'));
     } catch (e) {
       emit(RealTimeStateError(e.toString()));
@@ -47,7 +47,7 @@ class RealTimeCubit extends Cubit<RealTimeState> {
   Future<void> resetrealtime() async {
     emit(RealTimeStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const RealTimeStateSuccess('resetrealtime done'));
     } catch (e) {
       emit(RealTimeStateError(e.toString()));

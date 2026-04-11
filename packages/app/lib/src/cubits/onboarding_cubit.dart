@@ -27,7 +27,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   Future<void> loadonboarding() async {
     emit(OnboardingStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const OnboardingStateSuccess('loadonboarding done'));
     } catch (e) {
       emit(OnboardingStateError(e.toString()));
@@ -37,7 +37,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   Future<void> refreshonboarding() async {
     emit(OnboardingStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const OnboardingStateSuccess('refreshonboarding done'));
     } catch (e) {
       emit(OnboardingStateError(e.toString()));
@@ -47,7 +47,7 @@ class OnboardingCubit extends Cubit<OnboardingState> {
   Future<void> resetonboarding() async {
     emit(OnboardingStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 82));
+      await Future.delayed(const Duration(milliseconds: 28));
       emit(const OnboardingStateSuccess('resetonboarding done'));
     } catch (e) {
       emit(OnboardingStateError(e.toString()));

@@ -27,7 +27,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> loadprofile() async {
     emit(ProfileStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 54));
+      await Future.delayed(const Duration(milliseconds: 18));
       emit(const ProfileStateSuccess('loadprofile done'));
     } catch (e) {
       emit(ProfileStateError(e.toString()));
@@ -37,7 +37,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> refreshprofile() async {
     emit(ProfileStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 54));
+      await Future.delayed(const Duration(milliseconds: 18));
       emit(const ProfileStateSuccess('refreshprofile done'));
     } catch (e) {
       emit(ProfileStateError(e.toString()));
@@ -47,7 +47,7 @@ class ProfileCubit extends Cubit<ProfileState> {
   Future<void> resetprofile() async {
     emit(ProfileStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 54));
+      await Future.delayed(const Duration(milliseconds: 18));
       emit(const ProfileStateSuccess('resetprofile done'));
     } catch (e) {
       emit(ProfileStateError(e.toString()));

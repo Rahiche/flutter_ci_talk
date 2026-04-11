@@ -27,7 +27,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   Future<void> loadsettings() async {
     emit(SettingsStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 61));
+      await Future.delayed(const Duration(milliseconds: 21));
       emit(const SettingsStateSuccess('loadsettings done'));
     } catch (e) {
       emit(SettingsStateError(e.toString()));
@@ -37,7 +37,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   Future<void> refreshsettings() async {
     emit(SettingsStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 61));
+      await Future.delayed(const Duration(milliseconds: 21));
       emit(const SettingsStateSuccess('refreshsettings done'));
     } catch (e) {
       emit(SettingsStateError(e.toString()));
@@ -47,7 +47,7 @@ class SettingsCubit extends Cubit<SettingsState> {
   Future<void> resetsettings() async {
     emit(SettingsStateLoading());
     try {
-      await Future.delayed(const Duration(milliseconds: 61));
+      await Future.delayed(const Duration(milliseconds: 21));
       emit(const SettingsStateSuccess('resetsettings done'));
     } catch (e) {
       emit(SettingsStateError(e.toString()));
