@@ -15,19 +15,14 @@
 - "This looks like a typical medium-large Flutter monorepo"
 - "Let's run the tests and see how long it takes"
 
-### Demo Commands
+### Run Slide Command
 ```bash
-# Show structure
-find packages -name '*.dart' | wc -l
-tree packages --dirsfirst -L 3
-
-# Run the slow baseline
-time sh/run_sequential.sh
+git checkout main && make demo-slow
 ```
 
-### Expected Timing
-- Sequential test run: **~7 minutes**
-- Audience should feel the wait
+### Reveal Slide
+- Read from terminal: `=== Sequential total: Xm Ys ===`
+- Do not pre-announce the final number
 
 ### What to Show on Screen
 - Terminal running tests — the progress bar crawling
@@ -59,13 +54,14 @@ time sh/run_sequential.sh
 5. **Excessive pumping** — `for (int i = 0; i < 100; i++) { pump() }`
    - Fix: Use `pumpAndSettle()` or targeted pumps
 
-### Demo Commands
+### Run Slide Command
 ```bash
 git checkout step-1/fix-bad-tests
-# Show the fixes
-git diff main -- packages/app/test/everything_test.dart | head -80
-time sh/run_sequential.sh
+make demo-slow
 ```
+
+### Reveal Slide
+- Read from terminal: `=== Sequential total: Xm Ys ===`
 
 ### Quick Fix (if short on time)
 ```bash
@@ -85,14 +81,13 @@ sh/apply_fix.sh act2_fix_setup
 - Show `sh/check-ci.sh` — background jobs + wait
 - Total time = max(package times) instead of sum(package times)
 
-### Demo Commands
+### Run Slide Command
 ```bash
-git checkout step-2/parallel-packages
-
-# Compare
-time sh/run_sequential.sh   # slow
-time sh/check-ci.sh         # fast
+git checkout step-2/parallel-packages && sh/check-ci.sh
 ```
+
+### Reveal Slide
+- Read from terminal: `=== Parallel total: Xm Ys ===`
 
 ---
 
@@ -106,12 +101,13 @@ time sh/check-ci.sh         # fast
 - Show `tool/generate_test_wrapper.dart`
 - "Bundle all tests into one file = one isolate = one cold start"
 
-### Demo Commands
+### Run Slide Command
 ```bash
-git checkout step-3/test-bundler
-dart run tool/generate_test_wrapper.dart
-sh/demo_isolate.sh
+git checkout step-3/test-bundler && sh/demo_isolate.sh
 ```
+
+### Reveal Slide
+- Read from terminal: `Normal run`, `Bundled run`, and `% faster`
 
 ---
 
@@ -137,7 +133,7 @@ sh/demo_isolate.sh
 - "Detect native file changes (`.swift`, `.kt`, `.gradle`, etc.)"
 - Show the conditional build logic in the workflow
 
-### Demo Commands
+### Run Slide Command
 ```bash
 git checkout step-4/selective-builds
 cat .github/workflows/pr_check.yml
@@ -177,7 +173,7 @@ cat .github/workflows/pr_check.yml
 - "Keep high-churn code in leaf packages; keep core stable and minimal"
 - Show `sh/arch_guard.sh`
 
-### Demo Commands
+### Run Slide Command
 ```bash
 git checkout step-5/diff-coverage
 sh/diff_coverage.sh main
@@ -205,11 +201,9 @@ sh/arch_guard.sh --base main
 8. Diff coverage (measure what matters)
 9. Architecture guard (no cycles + low blast radius)
 
-### Demo Commands
+### Run Slide Command
 ```bash
-git checkout step-6/all-optimizations
-cat BENCHMARKS.md
-time sh/check-ci.sh
+git checkout step-6/all-optimizations && make demo-fast
 ```
 
 ### The Big Reveal
