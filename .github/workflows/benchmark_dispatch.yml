@@ -1,6 +1,9 @@
 name: Benchmark Dispatch
 
 on:
+  push:
+    branches:
+      - 'bench-run/**'
   workflow_dispatch:
     inputs:
       benchmark_stage:
@@ -20,12 +23,30 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-
       - name: Install dependencies
         run: dart pub get
-
+      - name: Resolve benchmark command
+        id: resolve
+        run: |
+          CMD="${{ inputs.benchmark_command }}"
+          STAGE="${{ inputs.benchmark_stage }}"
+          if [ -z "$CMD" ]; then
+            META_FILE=$(ls -1t .benchmarks/dispatch-*.txt 2>/dev/null | head -n1 || true)
+            if [ -z "$META_FILE" ]; then
+              echo "No benchmark metadata file found under .benchmarks/" >&2
+              exit 1
+            fi
+            STAGE=$(sed -n 's/^stage=//p' "$META_FILE" | head -n1)
+            CMD=$(sed -n 's/^cmd=//p' "$META_FILE" | head -n1)
+          fi
+          if [ -z "$CMD" ]; then
+            echo "Resolved benchmark command is empty" >&2
+            exit 1
+          fi
+          echo "stage=$STAGE" >> "$GITHUB_OUTPUT"
+          echo "cmd=$CMD" >> "$GITHUB_OUTPUT"
       - name: Run benchmark command
         run: |
-          echo "Stage: ${{ inputs.benchmark_stage }}"
-          echo "Command: ${{ inputs.benchmark_command }}"
-          bash -lc "${{ inputs.benchmark_command }}"
+          echo "Stage: ${{ steps.resolve.outputs.stage }}"
+          echo "Command: ${{ steps.resolve.outputs.cmd }}"
+          bash -lc "${{ steps.resolve.outputs.cmd }}"
