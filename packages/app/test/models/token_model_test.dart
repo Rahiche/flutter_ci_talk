@@ -70,7 +70,7 @@ void main() {
         type: 'default',
         priority: 3,
       );
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       final json = model.toJson();
       final restored = TokenModel.fromJson(json);
       expect(restored, model);

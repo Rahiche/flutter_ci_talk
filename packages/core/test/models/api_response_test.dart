@@ -70,7 +70,7 @@ void main() {
         age: 25,
         isActive: true,
       );
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       final json = model.toJson();
       final restored = ApiResponse.fromJson(json);
       expect(restored, model);

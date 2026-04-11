@@ -29,7 +29,7 @@ void main() {
     test('ThemeCubit.loadtheme completes after delay', () async {
       final cubit = ThemeCubit();
       cubit.loadtheme();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<ThemeStateSuccess>());
       await cubit.close();
     });
@@ -37,7 +37,7 @@ void main() {
     test('ThemeCubit.refreshtheme completes after delay', () async {
       final cubit = ThemeCubit();
       cubit.refreshtheme();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<ThemeStateSuccess>());
       await cubit.close();
     });
@@ -45,7 +45,7 @@ void main() {
     test('ThemeCubit.resettheme completes after delay', () async {
       final cubit = ThemeCubit();
       cubit.resettheme();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<ThemeStateSuccess>());
       await cubit.close();
     });
@@ -53,7 +53,7 @@ void main() {
     test('ConnectivityCubit.loadconnectivity completes after delay', () async {
       final cubit = ConnectivityCubit();
       cubit.loadconnectivity();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<ConnectivityStateSuccess>());
       await cubit.close();
     });
@@ -61,7 +61,7 @@ void main() {
     test('ConnectivityCubit.refreshconnectivity completes after delay', () async {
       final cubit = ConnectivityCubit();
       cubit.refreshconnectivity();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<ConnectivityStateSuccess>());
       await cubit.close();
     });
@@ -69,7 +69,7 @@ void main() {
     test('ConnectivityCubit.resetconnectivity completes after delay', () async {
       final cubit = ConnectivityCubit();
       cubit.resetconnectivity();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<ConnectivityStateSuccess>());
       await cubit.close();
     });
@@ -77,7 +77,7 @@ void main() {
     test('LocaleCubit.loadlocale completes after delay', () async {
       final cubit = LocaleCubit();
       cubit.loadlocale();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<LocaleStateSuccess>());
       await cubit.close();
     });
@@ -85,7 +85,7 @@ void main() {
     test('LocaleCubit.refreshlocale completes after delay', () async {
       final cubit = LocaleCubit();
       cubit.refreshlocale();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<LocaleStateSuccess>());
       await cubit.close();
     });
@@ -93,7 +93,7 @@ void main() {
     test('LocaleCubit.resetlocale completes after delay', () async {
       final cubit = LocaleCubit();
       cubit.resetlocale();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<LocaleStateSuccess>());
       await cubit.close();
     });
@@ -101,7 +101,7 @@ void main() {
     test('NavigationCubit.loadnavigation completes after delay', () async {
       final cubit = NavigationCubit();
       cubit.loadnavigation();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<NavigationStateSuccess>());
       await cubit.close();
     });
@@ -109,7 +109,7 @@ void main() {
     test('NavigationCubit.refreshnavigation completes after delay', () async {
       final cubit = NavigationCubit();
       cubit.refreshnavigation();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<NavigationStateSuccess>());
       await cubit.close();
     });
@@ -117,7 +117,7 @@ void main() {
     test('NavigationCubit.resetnavigation completes after delay', () async {
       final cubit = NavigationCubit();
       cubit.resetnavigation();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<NavigationStateSuccess>());
       await cubit.close();
     });
@@ -125,7 +125,7 @@ void main() {
     test('VersionCubit.loadversion completes after delay', () async {
       final cubit = VersionCubit();
       cubit.loadversion();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<VersionStateSuccess>());
       await cubit.close();
     });
@@ -133,7 +133,7 @@ void main() {
     test('VersionCubit.refreshversion completes after delay', () async {
       final cubit = VersionCubit();
       cubit.refreshversion();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<VersionStateSuccess>());
       await cubit.close();
     });
@@ -141,7 +141,7 @@ void main() {
     test('VersionCubit.resetversion completes after delay', () async {
       final cubit = VersionCubit();
       cubit.resetversion();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<VersionStateSuccess>());
       await cubit.close();
     });
@@ -149,7 +149,7 @@ void main() {
     test('PermissionCubit.loadpermission completes after delay', () async {
       final cubit = PermissionCubit();
       cubit.loadpermission();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<PermissionStateSuccess>());
       await cubit.close();
     });
@@ -157,7 +157,7 @@ void main() {
     test('PermissionCubit.refreshpermission completes after delay', () async {
       final cubit = PermissionCubit();
       cubit.refreshpermission();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<PermissionStateSuccess>());
       await cubit.close();
     });
@@ -165,7 +165,7 @@ void main() {
     test('PermissionCubit.resetpermission completes after delay', () async {
       final cubit = PermissionCubit();
       cubit.resetpermission();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<PermissionStateSuccess>());
       await cubit.close();
     });

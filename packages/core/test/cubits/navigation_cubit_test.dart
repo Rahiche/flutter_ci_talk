@@ -43,7 +43,7 @@ void main() {
     test('completes full cycle with delay', () async {
       final cubit = NavigationCubit();
       cubit.loadnavigation();
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       expect(cubit.state, isA<NavigationStateSuccess>());
       await cubit.close();
     });

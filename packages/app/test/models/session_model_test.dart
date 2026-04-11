@@ -70,7 +70,7 @@ void main() {
         category: 'general',
         verified: false,
       );
-      await Future.delayed(const Duration(seconds: 1));
+      await Future.delayed(const Duration(milliseconds: 200));
       final json = model.toJson();
       final restored = SessionModel.fromJson(json);
       expect(restored, model);
