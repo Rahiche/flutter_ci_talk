@@ -19,7 +19,11 @@ for pkg in packages/*/; do
     (
       cd "$pkg"
       PKG_START=$(date +%s)
-      if flutter test 2>&1 > "$LOG"; then
+      TEST_TARGET=""
+      if [ -f "test/all_tests.dart" ]; then
+        TEST_TARGET="test/all_tests.dart"
+      fi
+      if flutter test ${TEST_TARGET} > "$LOG" 2>&1; then
         PKG_END=$(date +%s)
         echo "PASS:$PKG_NAME:$((PKG_END - PKG_START))" >> "$TMPDIR_BASE/results.txt"
       else
