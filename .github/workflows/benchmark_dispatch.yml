@@ -1,0 +1,29 @@
+name: Benchmark Dispatch
+
+on:
+  workflow_dispatch:
+    inputs:
+      benchmark_stage:
+        description: Stage label
+        required: true
+        type: string
+      benchmark_command:
+        description: Command to benchmark
+        required: true
+        type: string
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+      - name: Install dependencies
+        run: dart pub get
+      - name: Run benchmark command
+        run: |
+          echo "Stage: ${{ inputs.benchmark_stage }}"
+          echo "Command: ${{ inputs.benchmark_command }}"
+          bash -lc "${{ inputs.benchmark_command }}"
