@@ -1,17 +1,8 @@
 name: Benchmark Dispatch
-
 on:
-  workflow_dispatch:
-    inputs:
-      benchmark_stage:
-        description: Stage label
-        required: true
-        type: string
-      benchmark_command:
-        description: Command to benchmark
-        required: true
-        type: string
-
+  push:
+    branches:
+      - 'bench/**'
 jobs:
   benchmark:
     runs-on: ubuntu-latest
@@ -20,12 +11,18 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: stable
-
       - name: Install dependencies
         run: dart pub get
-
+      - name: Resolve benchmark command
+        id: resolve
+        run: |
+          META_FILE=$(ls -1t .benchmarks/dispatch-*.txt 2>/dev/null | head -n1)
+          STAGE=$(sed -n 's/^stage=//p' "$META_FILE" | head -n1)
+          CMD=$(sed -n 's/^cmd=//p' "$META_FILE" | head -n1)
+          echo "stage=$STAGE" >> "$GITHUB_OUTPUT"
+          echo "cmd=$CMD" >> "$GITHUB_OUTPUT"
       - name: Run benchmark command
         run: |
-          echo "Stage: ${{ inputs.benchmark_stage }}"
-          echo "Command: ${{ inputs.benchmark_command }}"
-          bash -lc "${{ inputs.benchmark_command }}"
+          echo "Stage: ${{ steps.resolve.outputs.stage }}"
+          echo "Command: ${{ steps.resolve.outputs.cmd }}"
+          bash -lc "${{ steps.resolve.outputs.cmd }}"

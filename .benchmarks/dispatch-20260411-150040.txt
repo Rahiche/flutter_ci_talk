@@ -1,0 +1,4 @@
+stage=all_optimizations
+source=step-6/all-optimizations
+cmd=timeout 900 make demo-fast
+time=2026-04-11T15:00:45Z
