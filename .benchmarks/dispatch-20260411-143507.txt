@@ -1,0 +1,4 @@
+stage=selective_builds
+source=step-4/selective-builds
+cmd=dart pub get && dart analyze . && sh/check-ci.sh && (cd packages/app && flutter build bundle)
+time=2026-04-11T14:35:15Z
