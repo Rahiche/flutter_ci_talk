@@ -1,0 +1,4 @@
+stage=parallel_packages
+source=step-2/parallel-packages
+cmd=sh/check-ci.sh
+time=2026-04-11T14:35:12Z
