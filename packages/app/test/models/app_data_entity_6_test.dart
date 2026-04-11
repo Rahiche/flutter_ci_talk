@@ -34,7 +34,7 @@ void main() {
     });
     test('validates after processing', () async {
       final m = AppDataEntity6(id: 'a', label: 'b', sortOrder: 0, isEnabled: false, score: 0.0);
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(m.toJson(), isNotNull);
     });
   });

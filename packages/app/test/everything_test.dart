@@ -29,7 +29,7 @@ void main() {
     test('AuthCubit.loadauth completes after delay', () async {
       final cubit = AuthCubit();
       cubit.loadauth();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<AuthStateSuccess>());
       await cubit.close();
     });
@@ -37,7 +37,7 @@ void main() {
     test('AuthCubit.refreshauth completes after delay', () async {
       final cubit = AuthCubit();
       cubit.refreshauth();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<AuthStateSuccess>());
       await cubit.close();
     });
@@ -45,7 +45,7 @@ void main() {
     test('AuthCubit.resetauth completes after delay', () async {
       final cubit = AuthCubit();
       cubit.resetauth();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<AuthStateSuccess>());
       await cubit.close();
     });
@@ -53,7 +53,7 @@ void main() {
     test('ProfileCubit.loadprofile completes after delay', () async {
       final cubit = ProfileCubit();
       cubit.loadprofile();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<ProfileStateSuccess>());
       await cubit.close();
     });
@@ -61,7 +61,7 @@ void main() {
     test('ProfileCubit.refreshprofile completes after delay', () async {
       final cubit = ProfileCubit();
       cubit.refreshprofile();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<ProfileStateSuccess>());
       await cubit.close();
     });
@@ -69,7 +69,7 @@ void main() {
     test('ProfileCubit.resetprofile completes after delay', () async {
       final cubit = ProfileCubit();
       cubit.resetprofile();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<ProfileStateSuccess>());
       await cubit.close();
     });
@@ -77,7 +77,7 @@ void main() {
     test('SettingsCubit.loadsettings completes after delay', () async {
       final cubit = SettingsCubit();
       cubit.loadsettings();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<SettingsStateSuccess>());
       await cubit.close();
     });
@@ -85,7 +85,7 @@ void main() {
     test('SettingsCubit.refreshsettings completes after delay', () async {
       final cubit = SettingsCubit();
       cubit.refreshsettings();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<SettingsStateSuccess>());
       await cubit.close();
     });
@@ -93,7 +93,7 @@ void main() {
     test('SettingsCubit.resetsettings completes after delay', () async {
       final cubit = SettingsCubit();
       cubit.resetsettings();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<SettingsStateSuccess>());
       await cubit.close();
     });
@@ -101,7 +101,7 @@ void main() {
     test('NotificationCubit.loadnotification completes after delay', () async {
       final cubit = NotificationCubit();
       cubit.loadnotification();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<NotificationStateSuccess>());
       await cubit.close();
     });
@@ -109,7 +109,7 @@ void main() {
     test('NotificationCubit.refreshnotification completes after delay', () async {
       final cubit = NotificationCubit();
       cubit.refreshnotification();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<NotificationStateSuccess>());
       await cubit.close();
     });
@@ -117,7 +117,7 @@ void main() {
     test('NotificationCubit.resetnotification completes after delay', () async {
       final cubit = NotificationCubit();
       cubit.resetnotification();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<NotificationStateSuccess>());
       await cubit.close();
     });
@@ -125,7 +125,7 @@ void main() {
     test('SessionCubit.loadsession completes after delay', () async {
       final cubit = SessionCubit();
       cubit.loadsession();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<SessionStateSuccess>());
       await cubit.close();
     });
@@ -133,7 +133,7 @@ void main() {
     test('SessionCubit.refreshsession completes after delay', () async {
       final cubit = SessionCubit();
       cubit.refreshsession();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<SessionStateSuccess>());
       await cubit.close();
     });
@@ -141,7 +141,7 @@ void main() {
     test('SessionCubit.resetsession completes after delay', () async {
       final cubit = SessionCubit();
       cubit.resetsession();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<SessionStateSuccess>());
       await cubit.close();
     });
@@ -149,7 +149,7 @@ void main() {
     test('OnboardingCubit.loadonboarding completes after delay', () async {
       final cubit = OnboardingCubit();
       cubit.loadonboarding();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<OnboardingStateSuccess>());
       await cubit.close();
     });
@@ -157,7 +157,7 @@ void main() {
     test('OnboardingCubit.refreshonboarding completes after delay', () async {
       final cubit = OnboardingCubit();
       cubit.refreshonboarding();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<OnboardingStateSuccess>());
       await cubit.close();
     });
@@ -165,7 +165,7 @@ void main() {
     test('OnboardingCubit.resetonboarding completes after delay', () async {
       final cubit = OnboardingCubit();
       cubit.resetonboarding();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<OnboardingStateSuccess>());
       await cubit.close();
     });
