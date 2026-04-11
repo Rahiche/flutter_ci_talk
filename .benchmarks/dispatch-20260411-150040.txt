@@ -1,0 +1,4 @@
+stage=test_bundler
+source=step-3/test-bundler
+cmd=dart run tool/generate_test_wrapper.dart && sh/check-ci.sh
+time=2026-04-11T15:00:43Z
