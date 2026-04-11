@@ -1,4 +1,4 @@
-.PHONY: generate bootstrap test-all test-parallel test-bundled clean demo-slow demo-fast apply-fix benchmark
+.PHONY: generate bootstrap test-all test-parallel test-bundled arch-guard clean demo-slow demo-fast apply-fix benchmark
 
 generate:
 	dart run tool/generate_project.dart
@@ -15,6 +15,9 @@ test-parallel:
 test-bundled:
 	dart run tool/generate_test_wrapper.dart
 	sh/check-ci.sh
+
+arch-guard:
+	sh/arch_guard.sh
 
 clean:
 	melos exec -- flutter clean

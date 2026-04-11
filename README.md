@@ -61,6 +61,26 @@ sh/check-ci.sh           # Parallel test run
 sh/demo_isolate.sh       # Isolate comparison demo
 sh/diff_coverage.sh      # Diff coverage demo
 sh/affected_packages.sh  # Dependency graph testing
+sh/arch_guard.sh         # Circular dependency + blast radius guard
+```
+
+## Architecture Rule For Fast CI
+
+Fast selective CI depends on package boundaries.
+
+- Keep package dependencies acyclic (no circular package dependencies)
+- Keep high-churn features as leaf packages
+- Avoid turning one package into a mega shared dependency
+- Measure blast radius: if package `X` changes, how many other packages must be retested?
+
+Run the architecture guard:
+
+```bash
+# Report cycles + blast radius + affected packages vs main
+sh/arch_guard.sh
+
+# Enforce limits in CI (example)
+sh/arch_guard.sh --base main --max-affected 2 --max-blast-radius 2
 ```
 
 ## Quick Fixes (for live demo)

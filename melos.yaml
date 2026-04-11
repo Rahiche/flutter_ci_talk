@@ -17,3 +17,5 @@ scripts:
       dirExists: test
   analyze:
     run: melos exec -- dart analyze .
+  arch:check:
+    run: dart run tool/check_package_structure.dart --base main

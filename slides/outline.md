@@ -170,11 +170,19 @@ cat .github/workflows/pr_check.yml
 - Example: change `core/` → tests run for `core`, `app`, `payments`, `analytics`
 - Example: change `payments/` → tests run for only `payments`
 
+#### 6c: Package structure as a CI multiplier
+- "Selective testing only works if package boundaries are clean"
+- "No circular dependencies, or impact analysis gets messy and risky"
+- "Track blast radius per package: how many downstream packages a change retriggers"
+- "Keep high-churn code in leaf packages; keep core stable and minimal"
+- Show `sh/arch_guard.sh`
+
 ### Demo Commands
 ```bash
 git checkout step-5/diff-coverage
 sh/diff_coverage.sh main
 sh/affected_packages.sh main
+sh/arch_guard.sh --base main
 ```
 
 ---
@@ -194,7 +202,8 @@ sh/affected_packages.sh main
   5. Workspace-level analyze (one pass)
   6. Selective testing (dependency graph)
   7. Selective builds (Dart-only fast path)
-  8. Diff coverage (measure what matters)
+8. Diff coverage (measure what matters)
+9. Architecture guard (no cycles + low blast radius)
 
 ### Demo Commands
 ```bash
@@ -218,6 +227,7 @@ time sh/check-ci.sh
 6. **Test selectively** — dependency graph determines what to test
 7. **Build selectively** — skip native builds for Dart-only changes
 8. **Diff coverage** — measure only what changed
+9. **Design package boundaries** — no cycles, low blast radius
 
 ---
 
