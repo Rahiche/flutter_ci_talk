@@ -1,0 +1,4 @@
+stage=baseline_retry
+source=bench-run/tuned-bad-delays-20260411-145831
+cmd=timeout 1800 sh/run_sequential.sh
+time=2026-04-11T19:04:02Z
