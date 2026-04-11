@@ -1,0 +1,4 @@
+stage=diff_coverage
+source=step-5/diff-coverage
+cmd=sh/diff_coverage.sh main && sh/affected_packages.sh main
+time=2026-04-11T14:35:16Z
