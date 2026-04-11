@@ -43,6 +43,11 @@ jobs:
       - name: Install dependencies (workspace-level)
         run: dart pub get
 
+      - name: Enforce package architecture guard
+        run: |
+          # Fail fast on circular dependencies and keep module blast radius bounded.
+          sh sh/arch_guard.sh --base origin/main --max-blast-radius 3
+
       - name: Detect changes
         id: changes
         run: |
@@ -61,22 +66,44 @@ jobs:
           # Detect directly changed packages
           DIRECT_PKGS=$(echo "$CHANGED" | sed -n 's|packages/\([^/]*\)/.*|\1|p' | sort -u)
 
-          # Build dependency graph and expand to include dependents
-          AFFECTED="$DIRECT_PKGS"
-          for changed_pkg in $DIRECT_PKGS; do
-            for pkg_dir in packages/*/; do
-              pkg_name=$(basename "$pkg_dir")
-              if [ "$pkg_name" != "$changed_pkg" ]; then
-                if grep -q "^\s*$changed_pkg:" "$pkg_dir/pubspec.yaml" 2>/dev/null; then
-                  AFFECTED="$AFFECTED $pkg_name"
+          if [ -z "$DIRECT_PKGS" ]; then
+            echo "affected_packages=" >> $GITHUB_OUTPUT
+            echo "Affected packages: none"
+            exit 0
+          fi
+
+          # Build reverse dependency graph: dependency -> dependents
+          declare -A DEPENDENTS
+          for pkg_dir in packages/*/; do
+            pkg_name=$(basename "$pkg_dir")
+            for other_dir in packages/*/; do
+              dep_name=$(basename "$other_dir")
+              if [ "$pkg_name" != "$dep_name" ]; then
+                if grep -q "^\s*$dep_name:" "$pkg_dir/pubspec.yaml" 2>/dev/null; then
+                  DEPENDENTS[$dep_name]="${DEPENDENTS[$dep_name]:-} $pkg_name"
                 fi
               fi
             done
           done
 
-          AFFECTED=$(echo "$AFFECTED" | tr ' ' '\n' | sort -u | tr '\n' ',')
-          echo "affected_packages=$AFFECTED" >> $GITHUB_OUTPUT
-          echo "Affected packages: $AFFECTED"
+          # Expand transitively: if A depends on B and B depends on C,
+          # then changing C should test both B and A.
+          AFFECTED="$DIRECT_PKGS"
+          PREV=""
+          while [ "$AFFECTED" != "$PREV" ]; do
+            PREV="$AFFECTED"
+            for pkg in $PREV; do
+              deps="${DEPENDENTS[$pkg]:-}"
+              if [ -n "$deps" ]; then
+                AFFECTED="$AFFECTED $deps"
+              fi
+            done
+            AFFECTED=$(echo "$AFFECTED" | tr ' ' '\n' | sed '/^$/d' | sort -u | tr '\n' ' ')
+          done
+
+          AFFECTED_CSV=$(echo "$AFFECTED" | tr ' ' '\n' | sed '/^$/d' | sort -u | tr '\n' ',')
+          echo "affected_packages=$AFFECTED_CSV" >> $GITHUB_OUTPUT
+          echo "Affected packages: $AFFECTED_CSV"
 
   # ──────────────────────────────────────────────────
   # Job 2: dart analyze — runs once for entire workspace
