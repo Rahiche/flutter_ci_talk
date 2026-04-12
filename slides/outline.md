@@ -21,8 +21,7 @@ git checkout main && make demo-slow
 ```
 
 ### Reveal Slide
-- Read from terminal: `=== Sequential total: Xm Ys ===`
-- Do not pre-announce the final number
+- Call out the benchmarked baseline: `7m 12s` sequential on `main`
 
 ### What to Show on Screen
 - Terminal running tests — the progress bar crawling
@@ -61,7 +60,7 @@ make demo-slow
 ```
 
 ### Reveal Slide
-- Read from terminal: `=== Sequential total: Xm Ys ===`
+- Call out the benchmarked result: `34s` sequential on `step-1/fix-bad-tests`
 
 ### Quick Fix (if short on time)
 ```bash
@@ -87,7 +86,7 @@ git checkout step-2/parallel-packages && sh/check-ci.sh
 ```
 
 ### Reveal Slide
-- Read from terminal: `=== Parallel total: Xm Ys ===`
+- Call out the benchmarked result: `17s` on `step-2/parallel-packages`
 
 ---
 
@@ -107,7 +106,8 @@ git checkout step-3/test-bundler && sh/demo_isolate.sh
 ```
 
 ### Reveal Slide
-- Read from terminal: `Normal run`, `Bundled run`, and `% faster`
+- Call out the benchmarked result: `14s` on `step-3/test-bundler`
+- Mention the local improvement from step 2 to step 3: about `18%` faster
 
 ---
 
@@ -132,6 +132,18 @@ git checkout step-3/test-bundler && sh/demo_isolate.sh
 - "If only `.dart` files changed, `flutter build bundle` is 10x faster"
 - "Detect native file changes (`.swift`, `.kt`, `.gradle`, etc.)"
 - Show the conditional build logic in the workflow
+
+#### 5d: The hidden mobile build tax
+- "Running Android and iOS builds on every commit burns money fast"
+- "Android build is often ~20 minutes, iOS build is often ~20 minutes"
+- "That's ~40 build minutes per commit even when code is Dart-only"
+- "Use a decision gate: full native builds only when `pubspec.lock` or `android/` or `ios/` changes"
+- "For most PRs, run `flutter build bundle` and skip native rebuilds"
+- "At 30 PRs/day with 80% Dart-only changes, that's about 16 runner-hours saved per day"
+
+#### 5e: Cost spotlight slide
+- "Show one back-of-envelope equation live: `30 PR/day * 0.8 Dart-only * 40 min skipped = 16 runner-hours/day`"
+- "This lands the business case: selective builds are not only faster, they're dramatically cheaper"
 
 ### Run Slide Command
 ```bash
@@ -188,8 +200,10 @@ sh/arch_guard.sh --base main
 
 ### Talking Points
 - "Let's combine everything and see the total improvement"
-- Show BENCHMARKS.md with all results
-- "From 7+ minutes to under 30 seconds"
+- Show the three benchmark environments side by side: M4 Max, Codespaces, and GitHub Actions
+- "M4 Max: 7m 12s to about 14s"
+- "Codespaces: 14m 35s to 31s"
+- "GitHub Actions: 17m 15s to 2m 15s"
 - Walk through the optimization stack:
   1. Fix bad tests (remove artificial delays)
   2. Parallelize packages (background jobs)

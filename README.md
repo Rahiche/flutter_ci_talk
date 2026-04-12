@@ -53,7 +53,7 @@ Each branch builds on the previous one:
 make demo-slow           # ~7 min sequential
 
 # Fast version (step-6 branch)
-make demo-fast           # ~30s parallel + bundled
+make demo-fast           # ~14s full optimized pipeline
 
 # Individual scripts
 sh/run_sequential.sh     # Sequential test run
@@ -84,4 +84,4 @@ make apply-fix FIX=act2_fix_mega_files
 
 ## Key Metrics
 
-See [BENCHMARKS.md](BENCHMARKS.md) for recorded timing results.
+See [BENCHMARKS.md](BENCHMARKS.md) for the full benchmark matrix, including local M4 Max, GitHub Codespaces, and GitHub Actions timings.
