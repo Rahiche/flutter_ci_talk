@@ -37,6 +37,44 @@ jobs:
           end=$(date +%s)
           echo "BENCHMARK_RESULT baseline_coverage_seconds=$((end - start))"
 
+  baseline_concurrent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Regenerate expanded test corpus
+        run: |
+          set -euo pipefail
+          dart run tool/generate_extra_tests.dart
+          count=$(find packages -type f -name '*_test.dart' | wc -l)
+          echo "TEST_FILE_COUNT=$count"
+
+      - name: Baseline concurrent benchmark
+        run: |
+          set -euo pipefail
+          start=$(date +%s)
+          PIDS=()
+          TMPDIR_BASE=$(mktemp -d)
+          for pkg in packages/*/; do
+            if [ -d "$pkg/test" ] && grep -q 'sdk: flutter' "$pkg/pubspec.yaml"; then
+              PKG_NAME=$(basename "$pkg")
+              (cd "$pkg" && flutter test --coverage 2>&1 > "$TMPDIR_BASE/$PKG_NAME.log") &
+              PIDS+=($!)
+            fi
+          done
+          for pid in "${PIDS[@]}"; do
+            wait "$pid" || true
+          done
+          end=$(date +%s)
+          echo "BENCHMARK_RESULT baseline_concurrent_coverage_seconds=$((end - start))"
+
   test_bundler:
     runs-on: ubuntu-latest
     steps:
@@ -70,3 +108,44 @@ jobs:
           done
           end=$(date +%s)
           echo "BENCHMARK_RESULT test_bundler_coverage_seconds=$((end - start))"
+
+  test_bundler_concurrent:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Regenerate expanded test corpus
+        run: |
+          set -euo pipefail
+          dart run tool/generate_extra_tests.dart
+          count=$(find packages -type f -name '*_test.dart' | wc -l)
+          echo "TEST_FILE_COUNT=$count"
+
+      - name: Generate bundled wrappers
+        run: dart run tool/generate_test_wrapper.dart
+
+      - name: Test bundler concurrent benchmark
+        run: |
+          set -euo pipefail
+          start=$(date +%s)
+          PIDS=()
+          TMPDIR_BASE=$(mktemp -d)
+          for pkg in packages/*/; do
+            if [ -d "$pkg/test" ] && grep -q 'sdk: flutter' "$pkg/pubspec.yaml" && [ -f "$pkg/test/all_tests.dart" ]; then
+              PKG_NAME=$(basename "$pkg")
+              (cd "$pkg" && flutter test --coverage test/all_tests.dart 2>&1 > "$TMPDIR_BASE/$PKG_NAME.log") &
+              PIDS+=($!)
+            fi
+          done
+          for pid in "${PIDS[@]}"; do
+            wait "$pid" || true
+          done
+          end=$(date +%s)
+          echo "BENCHMARK_RESULT test_bundler_concurrent_coverage_seconds=$((end - start))"
