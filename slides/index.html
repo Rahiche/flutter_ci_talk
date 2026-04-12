@@ -349,7 +349,7 @@
     }
     .strategy-card {
       display: grid;
-      grid-template-columns: 74px 1fr;
+      grid-template-columns: 112px 1fr;
       gap: 14px;
       align-items: center;
       background: linear-gradient(160deg, rgba(22, 27, 34, 0.94) 0%, rgba(13, 17, 23, 0.98) 100%);
@@ -400,8 +400,8 @@
       line-height: 1.5;
     }
     .strategy-svg {
-      width: 72px;
-      height: 72px;
+      width: 108px;
+      height: 108px;
     }
     .svg-node {
       animation: nodePulse 2.4s ease-in-out infinite;
@@ -574,8 +574,8 @@
 </section>
 
 <section>
-  <h2>Four Levers To Speed Up Builds And Tests</h2>
-  <h3>First make it fast locally, then scale that speed in CI</h3>
+  <h2>How We Speed It Up</h2>
+  <h3>Local first. CI second.</h3>
   <div class="strategy-grid">
     <div class="strategy-card">
       <svg class="strategy-svg" viewBox="0 0 72 72" aria-hidden="true">
@@ -590,7 +590,6 @@
           <span class="scope-badge ci">CI</span>
         </div>
         <h4>Make Every Job Faster</h4>
-        <p>Local wins come first: remove artificial waits, trim heavy setup, and streamline test/build logic before tuning CI workflows.</p>
       </div>
     </div>
 
@@ -607,7 +606,6 @@
           <span class="scope-badge ci">CI</span>
         </div>
         <h4>Run Only What Changed</h4>
-        <p>Use selective tests and builds based on the diff and dependency graph to avoid unnecessary compute.</p>
       </div>
     </div>
 
@@ -622,7 +620,6 @@
           <span class="scope-badge ci">CI</span>
         </div>
         <h4>Reuse Compute With Caching</h4>
-        <p>Cache dependencies and setup artifacts once, then fan out jobs that restore state instead of rebuilding it.</p>
       </div>
     </div>
 
@@ -640,7 +637,6 @@
           <span class="scope-badge ci">CI</span>
         </div>
         <h4>Parallelize Independent Work</h4>
-        <p>Run packages and checks concurrently so total pipeline time follows the slowest lane, not the sum of all lanes.</p>
       </div>
     </div>
   </div>
