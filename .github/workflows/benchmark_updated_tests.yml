@@ -29,9 +29,13 @@ jobs:
         run: |
           set -euo pipefail
           start=$(date +%s)
-          make demo-slow
+          for pkg in packages/*/; do
+            if [ -d "$pkg/test" ] && grep -q 'sdk: flutter' "$pkg/pubspec.yaml"; then
+              (cd "$pkg" && flutter test --coverage 2>&1 | tail -1)
+            fi
+          done
           end=$(date +%s)
-          echo "BENCHMARK_RESULT baseline_seconds=$((end - start))"
+          echo "BENCHMARK_RESULT baseline_coverage_seconds=$((end - start))"
 
   test_bundler:
     runs-on: ubuntu-latest
@@ -61,8 +65,8 @@ jobs:
           start=$(date +%s)
           for pkg in packages/*/; do
             if [ -d "$pkg/test" ] && grep -q 'sdk: flutter' "$pkg/pubspec.yaml" && [ -f "$pkg/test/all_tests.dart" ]; then
-              (cd "$pkg" && flutter test test/all_tests.dart 2>&1 | tail -1)
+              (cd "$pkg" && flutter test --coverage test/all_tests.dart 2>&1 | tail -1)
             fi
           done
           end=$(date +%s)
-          echo "BENCHMARK_RESULT test_bundler_seconds=$((end - start))"
+          echo "BENCHMARK_RESULT test_bundler_coverage_seconds=$((end - start))"
