@@ -328,6 +328,69 @@
       color: var(--muted);
       font-size: 0.85em;
     }
+    .main-hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center !important;
+      min-height: 100%;
+      height: 100%;
+      width: 100%;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box;
+    }
+    .reveal .slides section.main-hero {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+      text-align: center !important;
+      min-height: 100% !important;
+      height: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .main-hero h1 {
+      margin: 0 0 4px 0;
+    }
+    .hero-sub {
+      font-size: 0.62em;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    .hero-chips {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 0.58em;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #e6edf3;
+      background: rgba(139, 148, 158, 0.14);
+    }
+    .hero-chip.accent {
+      background: rgba(47, 129, 247, 0.18);
+      border-color: rgba(47, 129, 247, 0.42);
+      color: #dbe8ff;
+    }
+    .hero-chip.good {
+      background: rgba(63, 185, 80, 0.18);
+      border-color: rgba(63, 185, 80, 0.42);
+      color: #b7f3bf;
+    }
     .fade-in-then { animation: fadeInUp 0.6s ease forwards; }
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -475,6 +538,9 @@
       .strategy-grid {
         grid-template-columns: 1fr;
       }
+      .hero-sub {
+        font-size: 0.56em;
+      }
     }
   </style>
 </head>
@@ -483,16 +549,14 @@
 <div class="slides">
 
 <!-- ========== TITLE ========== -->
-<section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
-  <h1 style="text-align:center">
+<section class="main-hero" id="mainHero" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
+  <h1>
     <span class="gradient-text">Flutter CI</span><br>
-    <span style="font-size:0.6em; color:var(--muted)">A Live Optimization Story</span>
+    <span style="font-size:0.6em; color:var(--muted)">let's cut some costs and speed up some flows</span>
   </h1>
-  <div style="text-align:center; margin-top: 28px;">
-    <span class="workflow-chip">GitHub Actions Pipeline</span>
-  </div>
-  <div class="hero-meta">
-    239 test files &middot; 4 packages &middot; 6 optimization steps
+  <div class="hero-chips">
+    <span class="hero-chip accent">GitHub Actions Pipeline</span>
+    <span class="hero-chip good">Flutter London meetup</span>
   </div>
 </section>
 
@@ -545,32 +609,6 @@
   <p style="text-align:center; font-size:0.8em; color:var(--muted)">
     Output of <code>dart run tool/find_slow_tests.dart</code>
   </p>
-</section>
-
-<!-- ========== TIMELINE ========== -->
-<section>
-  <h2>The Optimization Journey</h2>
-  <div class="timeline">
-    <div class="timeline-step active">
-      <div class="step-num">1</div><br>Fix Tests
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">2</div><br>Parallel Pkgs
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">3</div><br>Bundle Tests
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">4</div><br>Cache &amp; Select
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">5</div><br>Diff Coverage
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">6</div><br>All Combined
-    </div>
-  </div>
-
 </section>
 
 <section>
@@ -899,6 +937,32 @@ test:
     </div>
     <div class="cmd">sh/diff_coverage.sh main</div>
   </section>
+</section>
+
+<!-- ========== TIMELINE ========== -->
+<section>
+  <h2>The Optimization Journey</h2>
+  <div class="timeline">
+    <div class="timeline-step active">
+      <div class="step-num">1</div><br>Fix Tests
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">2</div><br>Parallel Pkgs
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">3</div><br>Bundle Tests
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">4</div><br>Cache &amp; Select
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">5</div><br>Diff Coverage
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">6</div><br>All Combined
+    </div>
+  </div>
+
 </section>
 
 <!-- ========== FINAL RESULTS ========== -->
