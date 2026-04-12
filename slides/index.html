@@ -989,15 +989,15 @@ test:
 <!-- ========== FINAL RESULTS ========== -->
 <section>
   <h2>The Full Picture</h2>
-  <div class="cmd">git checkout step-6/all-optimizations && make demo-fast</div>
+  <div class="cmd">Benchmark Updated Tests &middot; GitHub Actions run 24317309884 &middot; 344 test files &middot; coverage enabled</div>
   <div class="chart-container" style="height: 320px;">
     <canvas id="finalChart"></canvas>
   </div>
   <p style="text-align:center; color:var(--muted); font-size:0.7em; margin-top:12px;">
-    Reference benchmark: GitHub Actions, the slowest recorded environment in this repo.
+    Coverage + Concurrency Matrix &mdash; GitHub Actions Ubuntu (April 12, 2026).
   </p>
   <p style="text-align:center; color:#6e7681; font-size:0.62em; margin-top:8px;">
-    Step 4 is runtime-to-failure and step 5 is a diff-only CI path, so compare those as workflow-specific checkpoints rather than full-suite replacements.
+    All variants collect coverage reports. Bundler + Concurrent is super-additive: 81.7% faster than the sequential baseline.
   </p>
 </section>
 
@@ -1330,19 +1330,16 @@ Reveal.on('slidechanged', event => {
         type: 'bar',
         data: {
           labels: [
-            'main (baseline)',
-            'Step 1: Fix Tests',
-            'Step 2: Parallel',
-            'Step 3: Bundler',
-            'Step 4: CI Cache',
-            'Step 5: Selective',
-            'Step 6: Combined'
+            'Baseline (sequential)',
+            'Baseline + Concurrent',
+            'Test Bundler',
+            'Bundler + Concurrent'
           ],
           datasets: [{
             label: 'GitHub Actions time (seconds)',
-            data: [1035, 338, 269, 277, 296, 76, 135],
+            data: [921, 519, 488, 168],
             backgroundColor: [
-              '#f85149', '#d29922', '#e3b341', '#2f81f7', '#6e7681', '#6e7681', '#3fb950'
+              '#f85149', '#d29922', '#2f81f7', '#3fb950'
             ],
             borderRadius: 6,
             borderSkipped: false,
