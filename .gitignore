@@ -1,0 +1,8 @@
+# Dart / Flutter build outputs
+.dart_tool/
+build/
+pubspec.lock
+*.iml
+
+# IntelliJ / Android Studio
+.idea/
