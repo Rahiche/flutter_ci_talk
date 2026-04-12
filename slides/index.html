@@ -4,41 +4,61 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Flutter CI Optimizations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/reveal.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js@5.1.0/dist/theme/black.css">
   <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.7/dist/chart.umd.min.js"></script>
   <style>
     :root {
-      --accent: #6C63FF;
-      --accent2: #00D9FF;
-      --good: #00E676;
-      --bad: #FF5252;
-      --bg-dark: #0a0a1a;
-      --bg-card: rgba(255,255,255,0.04);
+      --accent: #2f81f7;
+      --accent2: #1f6feb;
+      --good: #3fb950;
+      --bad: #f85149;
+      --warn: #d29922;
+      --bg-dark: #0d1117;
+      --bg-card: #161b22;
+      --bg-card-soft: rgba(22, 27, 34, 0.88);
+      --text: #c9d1d9;
+      --muted: #8b949e;
+      --border: #30363d;
+    }
+    body {
+      background:
+        radial-gradient(circle at 15% 12%, rgba(47, 129, 247, 0.2), transparent 45%),
+        radial-gradient(circle at 86% 80%, rgba(63, 185, 80, 0.12), transparent 42%),
+        linear-gradient(180deg, #0d1117 0%, #090d13 100%);
     }
     .reveal {
-      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+      color: var(--text);
     }
     .reveal h1, .reveal h2, .reveal h3 {
-      font-weight: 700;
+      font-weight: 800;
       text-transform: none;
       letter-spacing: -0.02em;
     }
-    .reveal h1 { font-size: 2.8em; }
-    .reveal h2 { font-size: 2em; color: var(--accent2); }
-    .reveal h3 { font-size: 1.4em; color: #aaa; }
+    .reveal h1 { font-size: 2.8em; color: #f0f6fc; }
+    .reveal h2 { font-size: 2em; color: var(--accent); }
+    .reveal h3 { font-size: 1.4em; color: var(--muted); }
     .reveal .slides section { text-align: left; }
     .reveal code {
-      background: rgba(108,99,255,0.15);
+      background: rgba(47, 129, 247, 0.15);
       padding: 2px 8px;
       border-radius: 4px;
       font-size: 0.85em;
+      font-family: 'JetBrains Mono', monospace;
+      color: #e6edf3;
     }
     .reveal pre code {
-      background: #1a1a2e;
+      background: #0d1117;
       padding: 20px;
       border-radius: 12px;
       border-left: 4px solid var(--accent);
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
       font-size: 0.65em;
       line-height: 1.6;
     }
@@ -49,23 +69,24 @@
       margin: 40px 0;
     }
     .stat-card {
-      background: var(--bg-card);
-      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(160deg, rgba(22, 27, 34, 0.92) 0%, rgba(13, 17, 23, 0.96) 100%);
+      border: 1px solid var(--border);
       border-radius: 16px;
       padding: 32px 24px;
       text-align: center;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
     }
     .stat-number {
       font-size: 3em;
       font-weight: 800;
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(125deg, var(--accent), var(--good));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       line-height: 1;
     }
     .stat-label {
       font-size: 0.9em;
-      color: #888;
+      color: var(--muted);
       margin-top: 8px;
     }
     .comparison {
@@ -76,22 +97,24 @@
       margin: 40px 0;
     }
     .before-card, .after-card {
-      background: var(--bg-card);
+      background: var(--bg-card-soft);
       border-radius: 16px;
       padding: 32px;
       text-align: center;
+      border: 1px solid var(--border);
     }
     .before-card { border: 2px solid var(--bad); }
     .after-card { border: 2px solid var(--good); }
     .before-card .time { color: var(--bad); font-size: 3.5em; font-weight: 800; }
     .after-card .time { color: var(--good); font-size: 3.5em; font-weight: 800; }
-    .arrow { font-size: 3em; color: var(--accent2); }
+    .arrow { font-size: 3em; color: var(--accent); }
     .chart-container {
       max-width: 800px;
       margin: 30px auto;
-      background: rgba(0,0,0,0.3);
+      background: rgba(13, 17, 23, 0.82);
       border-radius: 16px;
       padding: 24px;
+      border: 1px solid var(--border);
     }
     .timeline {
       display: flex;
@@ -117,7 +140,7 @@
     }
     .timeline-step.active::before {
       opacity: 1;
-      background: linear-gradient(90deg, var(--accent), var(--accent2));
+      background: linear-gradient(90deg, var(--accent), var(--good));
     }
     .timeline-step .step-num {
       display: inline-block;
@@ -125,7 +148,7 @@
       height: 28px;
       border-radius: 50%;
       background: var(--accent);
-      color: white;
+      color: #f0f6fc;
       line-height: 28px;
       font-weight: 700;
       margin-bottom: 8px;
@@ -135,16 +158,19 @@
       padding: 0;
     }
     .issue-list li {
-      background: var(--bg-card);
+      background: var(--bg-card-soft);
       border-radius: 12px;
       padding: 16px 20px;
       margin: 12px 0;
       border-left: 4px solid var(--bad);
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
       font-size: 0.85em;
     }
     .issue-list li.fixed {
       border-left-color: var(--good);
-      opacity: 0.7;
+      opacity: 0.85;
     }
     .pill {
       display: inline-block;
@@ -152,9 +178,10 @@
       border-radius: 20px;
       font-size: 0.7em;
       font-weight: 600;
+      letter-spacing: 0.04em;
     }
-    .pill-bad { background: rgba(255,82,82,0.2); color: var(--bad); }
-    .pill-good { background: rgba(0,230,118,0.2); color: var(--good); }
+    .pill-bad { background: rgba(248,81,73,0.16); color: #ffb1ab; border: 1px solid rgba(248,81,73,0.35); }
+    .pill-good { background: rgba(63,185,80,0.16); color: #9be9a8; border: 1px solid rgba(63,185,80,0.4); }
     .waterfall {
       display: flex;
       flex-direction: column;
@@ -173,29 +200,60 @@
       display: flex;
       align-items: center;
       padding: 0 12px;
-      color: white;
+      color: #f0f6fc;
       font-weight: 600;
       font-size: 0.85em;
       min-width: 40px;
       transition: width 1s ease;
     }
-    .waterfall-bar .label { width: 120px; text-align: right; color: #aaa; }
+    .waterfall-bar .label { width: 120px; text-align: right; color: var(--muted); }
     .gradient-text {
-      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      background: linear-gradient(125deg, var(--accent), var(--good));
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
-    .reveal .slide-number { color: #666; }
+    .reveal .slide-number { color: #6e7681; }
     .cmd {
-      background: #1a1a2e;
+      background: #0d1117;
       border-radius: 8px;
       padding: 12px 20px;
       margin: 12px 0;
-      font-family: monospace;
+      font-family: 'JetBrains Mono', monospace;
       font-size: 0.8em;
       border-left: 3px solid var(--accent);
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
     }
     .cmd::before { content: '$ '; color: var(--accent); }
+    .workflow-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: rgba(47, 129, 247, 0.12);
+      color: #dbe8ff;
+      font-size: 0.65em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .workflow-chip::before {
+      content: '';
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--good);
+      box-shadow: 0 0 0 6px rgba(63, 185, 80, 0.15);
+    }
+    .hero-meta {
+      text-align: center;
+      margin-top: 40px;
+      color: var(--muted);
+      font-size: 0.85em;
+    }
     .fade-in-then { animation: fadeInUp 0.6s ease forwards; }
     @keyframes fadeInUp {
       from { opacity: 0; transform: translateY(20px); }
@@ -210,6 +268,36 @@
       transform-origin: left;
     }
     @keyframes growBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+    @media (max-width: 900px) {
+      .stat-grid {
+        grid-template-columns: 1fr;
+        gap: 14px;
+        margin: 24px 0;
+      }
+      .comparison {
+        grid-template-columns: 1fr;
+      }
+      .arrow {
+        transform: rotate(90deg);
+        text-align: center;
+      }
+      .timeline {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+      }
+      .timeline-step {
+        font-size: 0.68em;
+      }
+      .waterfall-bar {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .waterfall-bar .label {
+        width: auto;
+        text-align: left;
+      }
+    }
   </style>
 </head>
 <body>
@@ -217,14 +305,37 @@
 <div class="slides">
 
 <!-- ========== TITLE ========== -->
-<section data-background-gradient="linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%)">
+<section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
   <h1 style="text-align:center">
     <span class="gradient-text">Flutter CI</span><br>
-    <span style="font-size:0.6em; color:#888">From 7 Minutes to 14 Seconds</span>
+    <span style="font-size:0.6em; color:var(--muted)">A Live Optimization Story</span>
   </h1>
-  <div style="text-align:center; margin-top: 40px; color:#666">
+  <div style="text-align:center; margin-top: 28px;">
+    <span class="workflow-chip">GitHub Actions Pipeline</span>
+  </div>
+  <div class="hero-meta">
     239 test files &middot; 4 packages &middot; 6 optimization steps
   </div>
+</section>
+
+<!-- ========== LIVE DEMO START ========== -->
+<section>
+  <h2>Live Demo Start</h2>
+  <h3>Repo shape + one copy/paste command</h3>
+  <pre><code class="language-text">flutter_ci_talk/
+  packages/
+    app/
+    core/
+    payments/
+    analytics/
+  sh/
+  tool/
+  slides/
+  BENCHMARKS.md</code></pre>
+  <div class="cmd">git checkout main && make demo-slow</div>
+  <p style="color:var(--muted); font-size:0.82em; margin-top:14px">
+    Script prints total runtime at the end as: <code>=== Sequential total: Xm Ys ===</code>
+  </p>
 </section>
 
 <!-- ========== THE PROBLEM ========== -->
@@ -240,11 +351,11 @@
       <div class="stat-label">Packages</div>
     </div>
     <div class="stat-card">
-      <div class="stat-number" style="-webkit-text-fill-color: var(--bad)">7:12</div>
-      <div class="stat-label">Minutes to Run Tests</div>
+      <div class="stat-number" style="-webkit-text-fill-color: var(--warn)">?</div>
+      <div class="stat-label">Total Time (Reveal Later)</div>
     </div>
   </div>
-  <p style="text-align:center; color:#888; font-size:0.9em">
+  <p style="text-align:center; color:var(--muted); font-size:0.9em">
     "It's just a medium-sized monorepo. Why is it so slow?"
   </p>
 </section>
@@ -255,7 +366,7 @@
   <div class="chart-container" style="height: 350px;">
     <canvas id="timeBreakdown"></canvas>
   </div>
-  <p style="text-align:center; font-size:0.8em; color:#888">
+  <p style="text-align:center; font-size:0.8em; color:var(--muted)">
     Output of <code>dart run tool/find_slow_tests.dart</code>
   </p>
 </section>
@@ -283,22 +394,30 @@
       <div class="step-num">6</div><br>All Combined
     </div>
   </div>
-  <div class="chart-container" style="height: 320px;">
-    <canvas id="journeyChart"></canvas>
-  </div>
+  <p style="text-align:center; color:var(--muted); margin-top:28px">
+    Rule for this talk: no final numbers until each run finishes.
+  </p>
 </section>
 
 <!-- ========== ACT 1: BAD TESTS ========== -->
 <section>
   <section>
+    <h2>Act 1 Run Slide</h2>
+    <h3>Start from the slow baseline</h3>
+    <div class="cmd">git checkout main && make demo-slow</div>
+    <p style="color:var(--muted); font-size:0.82em; margin-top:14px">
+      Keep this running while you explain why slow CI hurts team flow.
+    </p>
+  </section>
+  <section>
     <h2>Act 1: Bad Test Patterns</h2>
     <h3>The hidden time sinks</h3>
     <ul class="issue-list">
-      <li><span class="pill pill-bad">~483s</span> Real async delays &mdash; <code>Future.delayed(seconds: 3)</code></li>
-      <li><span class="pill pill-bad">~41s</span> Heavy setUp &mdash; <code>setUp(() async { await Future.delayed(500ms) })</code></li>
-      <li><span class="pill pill-bad">~20s</span> Mega test files &mdash; 30+ tests in one file</li>
-      <li><span class="pill pill-bad">~3s</span> Excessive pumping &mdash; 100x pump loops</li>
-      <li><span class="pill pill-bad">~1s</span> Real I/O &mdash; disk writes in tests</li>
+      <li><span class="pill pill-bad">Delay</span> Real async delays &mdash; <code>Future.delayed(seconds: 3)</code></li>
+      <li><span class="pill pill-bad">Setup</span> Heavy setUp &mdash; <code>setUp(() async { await Future.delayed(500ms) })</code></li>
+      <li><span class="pill pill-bad">Parallelism</span> Mega test files &mdash; 30+ tests in one file</li>
+      <li><span class="pill pill-bad">Rendering</span> Excessive pumping &mdash; 100x pump loops</li>
+      <li><span class="pill pill-bad">I/O</span> Real disk writes in tests</li>
     </ul>
   </section>
   <section>
@@ -313,45 +432,44 @@ test('should debounce search input', () async {
 // x 198 tests across 4 packages = 594 seconds of waiting</code></pre>
   </section>
   <section>
-    <h2>The Fix</h2>
+    <h2>Act 1 Result Reveal</h2>
     <pre><code class="language-dart">// Just await the action directly
 test('should debounce search input', () async {
   await cubit.search('query');
   expect(cubit.state, isA&lt;SearchSuccess&gt;());
 });</code></pre>
-    <div class="comparison">
-      <div class="before-card">
-        <div class="time">7:12</div>
-        <div style="color:#888">Before</div>
-      </div>
-      <div class="arrow">&rarr;</div>
-      <div class="after-card">
-        <div class="time">0:34</div>
-        <div style="color:#888">After</div>
-      </div>
-    </div>
+    <div class="cmd">Look at terminal output: === Sequential total: Xm Ys ===</div>
+    <p style="color:var(--muted); font-size:0.82em">Now transition: "Let's improve one bottleneck at a time."</p>
   </section>
 </section>
 
 <!-- ========== ACT 2: PARALLEL ========== -->
 <section>
   <section>
+    <h2>Act 2 Run Slide</h2>
+    <h3>Fix bad tests, then rerun same script</h3>
+    <div class="cmd">git checkout step-1/fix-bad-tests && make demo-slow</div>
+  </section>
+  <section>
     <h2>Act 2: Parallel Packages</h2>
     <h3>Sequential is a choice, not a requirement</h3>
     <div class="waterfall">
       <div class="waterfall-bar">
         <span class="label">Sequential</span>
-        <div class="bar animated-bar" style="width:100%; background: var(--bad)">app (10s) + core (8s) + payments (9s) + analytics (7s) = 34s</div>
+        <div class="bar animated-bar" style="width:100%; background: var(--bad)">app + core + payments + analytics (sum)</div>
       </div>
       <div class="waterfall-bar" style="margin-top: 20px;">
         <span class="label">Parallel</span>
-        <div class="bar animated-bar" style="width:30%; background: var(--good)">max(10s) = 17s</div>
+        <div class="bar animated-bar" style="width:35%; background: var(--good)">max(package_time)</div>
       </div>
     </div>
     <div class="cmd">sh/check-ci.sh  # 4 packages in parallel</div>
   </section>
   <section>
-    <h2>Parallel Script</h2>
+    <h2>Act 2 Result Reveal</h2>
+    <div class="cmd">Terminal should show: === Sequential total: Xm Ys ===</div>
+    <p style="color:var(--muted); font-size:0.82em">After showing the number, move to package-level parallelism.</p>
+    <h3>Parallel Script</h3>
     <pre><code class="language-bash">for pkg in packages/*/; do
   (cd "$pkg" && flutter test) &   # background job
 done
@@ -363,6 +481,11 @@ wait  # wait for all to finish
 
 <!-- ========== ACT 3: BUNDLER ========== -->
 <section>
+  <section>
+    <h2>Act 3 Run Slide</h2>
+    <h3>Parallel package execution</h3>
+    <div class="cmd">git checkout step-2/parallel-packages && sh/check-ci.sh</div>
+  </section>
   <section>
     <h2>Act 3: Isolate Cold Starts</h2>
     <h3>239 files = 239 cold starts</h3>
@@ -380,6 +503,11 @@ wait  # wait for all to finish
         <div class="stat-label">Just Starting Up</div>
       </div>
     </div>
+  </section>
+  <section>
+    <h2>Act 3 Result Reveal</h2>
+    <div class="cmd">Terminal should show: === Parallel total: Xm Ys ===</div>
+    <p style="color:var(--muted); font-size:0.82em">Next transition: same idea inside each package, not just across packages.</p>
   </section>
   <section>
     <h2>The Bundler Solution</h2>
@@ -400,6 +528,11 @@ void main() {
 <!-- ========== ACT 4: CI CACHING ========== -->
 <section>
   <section>
+    <h2>Act 4 Run Slide</h2>
+    <h3>Bundle tests to reduce isolate startup overhead</h3>
+    <div class="cmd">git checkout step-3/test-bundler && sh/demo_isolate.sh</div>
+  </section>
+  <section>
     <h2>Act 4: CI-Level Optimizations</h2>
     <h3>Stop duplicating work</h3>
     <ul class="issue-list">
@@ -408,6 +541,11 @@ void main() {
       <li><span class="pill pill-bad">WASTE</span> Full native build when only Dart changed</li>
       <li><span class="pill pill-bad">WASTE</span> Testing all packages when one changed</li>
     </ul>
+  </section>
+  <section>
+    <h2>Act 4 Result Reveal</h2>
+    <div class="cmd">Terminal should show: Normal vs Bundled and % faster</div>
+    <p style="color:var(--muted); font-size:0.82em">Then move to CI workflow-level wins.</p>
   </section>
   <section>
     <h2>The Fix: Workspace-Level Resolution</h2>
@@ -437,41 +575,50 @@ test:
 <!-- ========== ACT 5: DIFF COVERAGE ========== -->
 <section>
   <section>
+    <h2>Act 5 Run Slide</h2>
+    <h3>Selective workflows and dependency-aware checks</h3>
+    <div class="cmd">git checkout step-4/selective-builds && cat .github/workflows/pr_check.yml</div>
+  </section>
+  <section>
     <h2>Act 5: Dependency Graph Testing</h2>
     <h3>Test what matters</h3>
     <div style="text-align:center; margin: 40px 0;">
       <svg width="500" height="280" viewBox="0 0 500 280">
         <defs>
           <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
-            <polygon points="0 0, 10 3.5, 0 7" fill="#6C63FF"/>
+            <polygon points="0 0, 10 3.5, 0 7" fill="#2f81f7"/>
           </marker>
         </defs>
         <!-- Nodes -->
-        <rect x="200" y="20" width="100" height="44" rx="10" fill="rgba(108,99,255,0.3)" stroke="#6C63FF" stroke-width="2"/>
+        <rect x="200" y="20" width="100" height="44" rx="10" fill="rgba(47,129,247,0.28)" stroke="#2f81f7" stroke-width="2"/>
         <text x="250" y="48" text-anchor="middle" fill="white" font-size="16" font-weight="600">core</text>
 
-        <rect x="50" y="120" width="100" height="44" rx="10" fill="rgba(255,255,255,0.05)" stroke="#444" stroke-width="1"/>
-        <text x="100" y="148" text-anchor="middle" fill="#aaa" font-size="16">app</text>
+        <rect x="50" y="120" width="100" height="44" rx="10" fill="rgba(22,27,34,0.9)" stroke="#30363d" stroke-width="1"/>
+        <text x="100" y="148" text-anchor="middle" fill="#8b949e" font-size="16">app</text>
 
-        <rect x="200" y="120" width="100" height="44" rx="10" fill="rgba(255,255,255,0.05)" stroke="#444" stroke-width="1"/>
-        <text x="250" y="148" text-anchor="middle" fill="#aaa" font-size="16">payments</text>
+        <rect x="200" y="120" width="100" height="44" rx="10" fill="rgba(22,27,34,0.9)" stroke="#30363d" stroke-width="1"/>
+        <text x="250" y="148" text-anchor="middle" fill="#8b949e" font-size="16">payments</text>
 
-        <rect x="350" y="120" width="100" height="44" rx="10" fill="rgba(255,255,255,0.05)" stroke="#444" stroke-width="1"/>
-        <text x="400" y="148" text-anchor="middle" fill="#aaa" font-size="16">analytics</text>
+        <rect x="350" y="120" width="100" height="44" rx="10" fill="rgba(22,27,34,0.9)" stroke="#30363d" stroke-width="1"/>
+        <text x="400" y="148" text-anchor="middle" fill="#8b949e" font-size="16">analytics</text>
 
         <!-- Arrows -->
-        <line x1="100" y1="120" x2="220" y2="64" stroke="#6C63FF" stroke-width="2" marker-end="url(#arrowhead)"/>
-        <line x1="250" y1="120" x2="250" y2="64" stroke="#6C63FF" stroke-width="2" marker-end="url(#arrowhead)"/>
-        <line x1="400" y1="120" x2="280" y2="64" stroke="#6C63FF" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <line x1="100" y1="120" x2="220" y2="64" stroke="#2f81f7" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <line x1="250" y1="120" x2="250" y2="64" stroke="#2f81f7" stroke-width="2" marker-end="url(#arrowhead)"/>
+        <line x1="400" y1="120" x2="280" y2="64" stroke="#2f81f7" stroke-width="2" marker-end="url(#arrowhead)"/>
 
         <!-- Labels -->
-        <text x="250" y="200" text-anchor="middle" fill="#888" font-size="14">Change <tspan fill="#6C63FF" font-weight="700">core</tspan> → test ALL 4 packages</text>
-        <text x="250" y="230" text-anchor="middle" fill="#888" font-size="14">Change <tspan fill="#00E676" font-weight="700">payments</tspan> → test ONLY payments</text>
+        <text x="250" y="200" text-anchor="middle" fill="#8b949e" font-size="14">Change <tspan fill="#2f81f7" font-weight="700">core</tspan> -> test ALL 4 packages</text>
+        <text x="250" y="230" text-anchor="middle" fill="#8b949e" font-size="14">Change <tspan fill="#3fb950" font-weight="700">payments</tspan> -> test ONLY payments</text>
 
-        <rect x="130" y="250" width="240" height="30" rx="6" fill="rgba(0,230,118,0.1)" stroke="#00E676" stroke-width="1"/>
-        <text x="250" y="271" text-anchor="middle" fill="#00E676" font-size="13">sh/affected_packages.sh</text>
+        <rect x="130" y="250" width="240" height="30" rx="6" fill="rgba(63,185,80,0.1)" stroke="#3fb950" stroke-width="1"/>
+        <text x="250" y="271" text-anchor="middle" fill="#3fb950" font-size="13">sh/affected_packages.sh</text>
       </svg>
     </div>
+  </section>
+  <section>
+    <h2>Act 5 Run Slide (continued)</h2>
+    <div class="cmd">git checkout step-5/diff-coverage && sh/diff_coverage.sh main && sh/affected_packages.sh main</div>
   </section>
   <section>
     <h2>Diff Coverage</h2>
@@ -479,12 +626,12 @@ test:
     <div class="comparison">
       <div class="before-card" style="border-color: var(--bad)">
         <div style="font-size:2em; font-weight:800; color:var(--bad)">235</div>
-        <div style="color:#888">Source files to cover</div>
+        <div style="color:var(--muted)">Source files to cover</div>
       </div>
       <div class="arrow">&rarr;</div>
       <div class="after-card" style="border-color: var(--good)">
         <div style="font-size:2em; font-weight:800; color:var(--good)">3-10</div>
-        <div style="color:#888">Changed files to cover</div>
+        <div style="color:var(--muted)">Changed files to cover</div>
       </div>
     </div>
     <div class="cmd">sh/diff_coverage.sh main</div>
@@ -494,18 +641,19 @@ test:
 <!-- ========== FINAL RESULTS ========== -->
 <section>
   <h2>The Full Picture</h2>
+  <div class="cmd">git checkout step-6/all-optimizations && make demo-fast</div>
   <div class="chart-container" style="height: 400px;">
     <canvas id="finalChart"></canvas>
   </div>
 </section>
 
-<section data-background-gradient="linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%)">
+<section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
   <h2 style="text-align:center">Before &amp; After</h2>
   <div class="comparison" style="max-width: 700px; margin: 40px auto;">
     <div class="before-card">
       <div class="time">7:12</div>
-      <div style="color:#888; margin-top:8px">main branch</div>
-      <div style="color:#555; font-size:0.7em; margin-top:16px">
+      <div style="color:var(--muted); margin-top:8px">main branch</div>
+      <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Sequential &middot; Per-file isolates<br>
         Real delays &middot; Heavy setUp<br>
         No caching &middot; Full builds
@@ -514,8 +662,8 @@ test:
     <div class="arrow">&rarr;</div>
     <div class="after-card">
       <div class="time">0:14</div>
-      <div style="color:#888; margin-top:8px">step-6 branch</div>
-      <div style="color:#555; font-size:0.7em; margin-top:16px">
+      <div style="color:var(--muted); margin-top:8px">step-6 branch</div>
+      <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Parallel &middot; Bundled isolates<br>
         Fixed tests &middot; Cached deps<br>
         Selective builds &middot; Diff coverage
@@ -529,7 +677,7 @@ test:
 </section>
 
 <!-- ========== TAKEAWAYS ========== -->
-<section data-background-gradient="linear-gradient(135deg, #1a0a2e 0%, #0a1a2e 100%)">
+<section data-background-gradient="linear-gradient(135deg, #111926 0%, #0d1117 100%)">
   <h2 style="text-align:center">Key Takeaways</h2>
   <div style="max-width: 600px; margin: 40px auto;">
     <ul class="issue-list">
@@ -558,16 +706,16 @@ Summary by category:
   REAL_IO:           16 issues (~0.8s estimated waste)
 
 Total estimated waste: 548.4s</code></pre>
-  <p style="text-align:center; color:#888; font-size:0.8em; margin-top:20px">
+  <p style="text-align:center; color:var(--muted); font-size:0.8em; margin-top:20px">
     Add this to your CI as a lint step. Catch slowness before it lands.
   </p>
 </section>
 
-<section data-background-gradient="linear-gradient(135deg, #0a0a1a 0%, #1a0a2e 100%)">
+<section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
   <h1 style="text-align:center">
     <span class="gradient-text">Thank You</span>
   </h1>
-  <div style="text-align:center; color:#888; margin-top:40px; font-size:0.9em">
+  <div style="text-align:center; color:var(--muted); margin-top:40px; font-size:0.9em">
     All code: <code>github.com/your-repo/flutter_ci_talk</code><br><br>
     <code>git checkout main</code> &rarr; slow<br>
     <code>git checkout step-6/all-optimizations</code> &rarr; fast
@@ -582,6 +730,7 @@ Total estimated waste: 548.4s</code></pre>
 Reveal.initialize({
   hash: true,
   slideNumber: true,
+  navigationMode: 'linear',
   transition: 'slide',
   backgroundTransition: 'fade',
   center: false,
@@ -598,10 +747,10 @@ Reveal.on('slidechanged', event => {
       ctx._chart = new Chart(ctx, {
         type: 'doughnut',
         data: {
-          labels: ['Async Delays (483s)', 'Heavy setUp (41s)', 'Mega Files (20s)', 'Excessive Pump (3s)', 'Real I/O (1s)'],
+          labels: ['Async Delays', 'Heavy setUp', 'Mega Files', 'Excessive Pump', 'Real I/O'],
           datasets: [{
-            data: [483, 41, 20, 3, 1],
-            backgroundColor: ['#FF5252', '#FF9800', '#FFD600', '#6C63FF', '#00D9FF'],
+            data: [58, 21, 12, 5, 4],
+            backgroundColor: ['#f85149', '#d29922', '#e3b341', '#2f81f7', '#79c0ff'],
             borderWidth: 0,
           }]
         },
@@ -609,48 +758,9 @@ Reveal.on('slidechanged', event => {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: 'right', labels: { color: '#aaa', font: { size: 13 } } }
+            legend: { position: 'right', labels: { color: '#8b949e', font: { size: 13 } } }
           },
           animation: { animateScale: true, duration: 1500 }
-        }
-      });
-    }
-  }
-
-  // Journey chart (bar)
-  if (event.currentSlide.querySelector('#journeyChart')) {
-    const ctx = document.getElementById('journeyChart');
-    if (!ctx._chart) {
-      ctx._chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-          labels: ['main', 'Step 1\nFix Tests', 'Step 2\nParallel', 'Step 3\nBundler', 'Step 6\nAll'],
-          datasets: [{
-            label: 'Duration (seconds)',
-            data: [432, 34, 17, 14, 14],
-            backgroundColor: ['#FF5252', '#FF9800', '#FFD600', '#6C63FF', '#00E676'],
-            borderRadius: 8,
-            borderSkipped: false,
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: { color: 'rgba(255,255,255,0.05)' },
-              ticks: { color: '#888', callback: v => v >= 60 ? Math.floor(v/60) + 'm ' + (v%60) + 's' : v + 's' }
-            },
-            x: {
-              grid: { display: false },
-              ticks: { color: '#aaa', font: { size: 12 } }
-            }
-          },
-          animation: { duration: 1500, easing: 'easeOutBounce' }
         }
       });
     }
@@ -676,7 +786,7 @@ Reveal.on('slidechanged', event => {
             label: 'Time (seconds)',
             data: [432, 34, 17, 14, null, null, 14],
             backgroundColor: [
-              '#FF5252', '#FF9800', '#FFD600', '#6C63FF', '#888', '#888', '#00E676'
+              '#f85149', '#d29922', '#e3b341', '#2f81f7', '#6e7681', '#6e7681', '#3fb950'
             ],
             borderRadius: 6,
             borderSkipped: false,
@@ -702,11 +812,11 @@ Reveal.on('slidechanged', event => {
             x: {
               beginAtZero: true,
               grid: { color: 'rgba(255,255,255,0.05)' },
-              ticks: { color: '#888', callback: v => v >= 60 ? Math.floor(v/60) + 'm' : v + 's' }
+              ticks: { color: '#8b949e', callback: v => v >= 60 ? Math.floor(v/60) + 'm' : v + 's' }
             },
             y: {
               grid: { display: false },
-              ticks: { color: '#ccc', font: { size: 13 } }
+              ticks: { color: '#c9d1d9', font: { size: 13 } }
             }
           },
           animation: { duration: 2000, easing: 'easeOutQuart' }

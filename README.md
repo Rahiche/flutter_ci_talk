@@ -63,6 +63,15 @@ sh/diff_coverage.sh      # Diff coverage demo
 sh/affected_packages.sh  # Dependency graph testing
 ```
 
+## Running the Slides
+
+```bash
+# Serve slides locally
+python3 -m http.server 8000 --directory slides
+# Open in your browser
+$BROWSER http://localhost:8000
+```
+
 ## Quick Fixes (for live demo)
 
 ```bash
