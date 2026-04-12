@@ -12,7 +12,7 @@ PKG_NAMES=()
 TMPDIR_BASE=$(mktemp -d)
 
 for pkg in packages/*/; do
-  if [ -d "$pkg/test" ]; then
+  if [ -d "$pkg/test" ] && grep -q 'sdk: flutter' "$pkg/pubspec.yaml"; then
     PKG_NAME=$(basename "$pkg")
     PKG_NAMES+=("$PKG_NAME")
     LOG="$TMPDIR_BASE/$PKG_NAME.log"

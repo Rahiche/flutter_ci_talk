@@ -716,7 +716,7 @@ test('should debounce search input', () async {
   await cubit.search('query');
   expect(cubit.state, isA&lt;SearchSuccess&gt;());
 });</code></pre>
-    <div class="cmd">Benchmark result: main baseline = 7m 12s sequential</div>
+    <div class="cmd">Benchmark result: main baseline = 17m 15s on GitHub Actions</div>
   </section>
 </section>
 
@@ -744,7 +744,7 @@ test('should debounce search input', () async {
   </section>
   <section>
     <h2>Act 2 Result Reveal</h2>
-    <div class="cmd">Benchmark result: step-1/fix-bad-tests = 34s sequential</div>
+    <div class="cmd">Benchmark result: step-1/fix-bad-tests = 5m 38s on GitHub Actions</div>
     <h3>Parallel Script</h3>
     <pre><code class="language-bash">for pkg in packages/*/; do
   (cd "$pkg" && flutter test) &   # background job
@@ -782,7 +782,7 @@ wait  # wait for all to finish
   </section>
   <section>
     <h2>Act 3 Result Reveal</h2>
-    <div class="cmd">Benchmark result: step-2/parallel-packages = 17s parallel</div>
+    <div class="cmd">Benchmark result: step-2/parallel-packages = 4m 29s on GitHub Actions</div>
   </section>
   <section>
     <h2>The Bundler Solution</h2>
@@ -846,7 +846,10 @@ else
   </section>
   <section>
     <h2>Act 4 Result Reveal</h2>
-    <div class="cmd">Benchmark result: step-3/test-bundler = 14s, about 18% faster than step 2</div>
+    <div class="cmd">Benchmark result: step-3/test-bundler = 4m 37s on GitHub Actions</div>
+    <p style="text-align:center; color:var(--muted); font-size:0.72em; margin-top:10px">
+      On the slowest benchmark environment, workflow overhead keeps wall-clock roughly flat here. The bundling win is clearer in local test execution.
+    </p>
   </section>
   <section>
     <h2>The Fix: Workspace-Level Resolution</h2>
@@ -972,13 +975,19 @@ test:
   <div class="chart-container" style="height: 320px;">
     <canvas id="finalChart"></canvas>
   </div>
+  <p style="text-align:center; color:var(--muted); font-size:0.7em; margin-top:12px;">
+    Reference benchmark: GitHub Actions, the slowest recorded environment in this repo.
+  </p>
+  <p style="text-align:center; color:#6e7681; font-size:0.62em; margin-top:8px;">
+    Step 4 is runtime-to-failure and step 5 is a diff-only CI path, so compare those as workflow-specific checkpoints rather than full-suite replacements.
+  </p>
 </section>
 
 <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
   <h2 style="text-align:center">Before &amp; After</h2>
   <div class="comparison" style="max-width: 700px; margin: 14px auto;">
     <div class="before-card">
-      <div class="time">7:12</div>
+      <div class="time">17:15</div>
       <div style="color:var(--muted); margin-top:8px">main branch</div>
       <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Sequential &middot; Per-file isolates<br>
@@ -988,7 +997,7 @@ test:
     </div>
     <div class="arrow">&rarr;</div>
     <div class="after-card">
-      <div class="time">0:14</div>
+      <div class="time">2:15</div>
       <div style="color:var(--muted); margin-top:8px">step-6 branch</div>
       <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Parallel &middot; Bundled isolates<br>
@@ -998,11 +1007,11 @@ test:
     </div>
   </div>
   <div style="text-align:center">
-    <span class="stat-number" style="font-size:4em">97%</span>
-    <div class="stat-label" style="font-size:1.2em">Faster on the M4 Max benchmark</div>
+    <span class="stat-number" style="font-size:4em">87%</span>
+    <div class="stat-label" style="font-size:1.2em">Faster on the GitHub Actions benchmark</div>
   </div>
   <div style="text-align:center; color:var(--muted); font-size:0.78em; margin-top:18px">
-    M4 Max: 7:12 -&gt; 0:14 &nbsp;&middot;&nbsp; Codespaces: 14:35 -&gt; 0:31 &nbsp;&middot;&nbsp; GitHub Actions: 17:15 -&gt; 2:15
+    Using the slowest environment consistently: GitHub Actions 17:15 -&gt; 2:15
   </div>
 </section>
 
@@ -1312,8 +1321,8 @@ Reveal.on('slidechanged', event => {
             'Step 6: Combined'
           ],
           datasets: [{
-            label: 'Time (seconds)',
-            data: [432, 34, 17, 14, null, null, 14],
+            label: 'GitHub Actions time (seconds)',
+            data: [1035, 338, 269, 277, 296, 76, 135],
             backgroundColor: [
               '#f85149', '#d29922', '#e3b341', '#2f81f7', '#6e7681', '#6e7681', '#3fb950'
             ],
@@ -1331,7 +1340,6 @@ Reveal.on('slidechanged', event => {
               callbacks: {
                 label: item => {
                   const v = item.raw;
-                  if (!v) return 'CI-level (not measurable locally)';
                   return v >= 60 ? Math.floor(v/60) + 'm ' + (v%60) + 's' : v + 's';
                 }
               }

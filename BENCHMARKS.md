@@ -1,8 +1,22 @@
 2# Benchmark Results
 
-Test files: 239 across 4 packages (235 source files)
+Test files: 343 across 4 packages (235 source files)
 
-## Cross-Environment Summary
+## Reference Benchmark
+
+GitHub Actions Ubuntu is the slowest recorded environment in this repo, so it is the default example used in the talk, slides, and README callouts.
+
+| Stage | Branch | Command | Reference: GitHub Actions Ubuntu | Notes |
+|---|---|---|---:|---|
+| Baseline | `main` | `make demo-slow` | 17m 15s | Sequential, per-file isolates, intentionally bad tests |
+| Fix bad tests | `step-1/fix-bad-tests` | `make demo-slow` | 5m 38s | Removed artificial delays, heavy setUp, real I/O, mega files |
+| Parallel packages | `step-2/parallel-packages` | `sh/check-ci.sh` | 4m 29s | Package-level parallel execution |
+| Test bundler | `step-3/test-bundler` | bundled path | 4m 37s | CI wall-clock stayed roughly flat here; local Codespaces still dropped from 3m 54s normal run to 1m 03s bundled |
+| Selective builds | `step-4/selective-builds` | CI workflow | 4m 56s failed | CI-only optimization; benchmark run failed, so this is runtime-to-failure |
+| Diff coverage | `step-5/diff-coverage` | `sh/diff_coverage.sh` + `sh/affected_packages.sh` | 1m 16s | Per-change CI optimization, not directly comparable to full-suite runs |
+| All optimizations | `step-6/all-optimizations` | `make demo-fast` | 2m 15s | Combined result: fixed tests + parallel + bundled + selective |
+
+## Full Benchmark Matrix
 
 | Stage | Branch | Command | Local: M4 Max | Local: Codespaces (2 vCPU) | GitHub Actions Ubuntu | Notes |
 |---|---|---|---:|---:|---:|---|
@@ -13,6 +27,19 @@ Test files: 239 across 4 packages (235 source files)
 | Selective builds | `step-4/selective-builds` | CI workflow | n/a | n/a | 4m 56s failed | CI-only optimization; benchmark run failed, so this is runtime-to-failure |
 | Diff coverage | `step-5/diff-coverage` | `sh/diff_coverage.sh` + `sh/affected_packages.sh` | n/a | n/a | 1m 16s | Per-change CI optimization, not directly comparable to full local demo runs |
 | All optimizations | `step-6/all-optimizations` | `make demo-fast` | ~14s | 31s | 2m 15s | Combined result: fixed tests + parallel + bundled + selective |
+
+## Local Bundler Stress Check
+
+This rerun keeps the duplicate-file pressure high while reducing the synthetic wait cost inside generated tests, so the bundler improvement is driven more by file-count and isolate overhead than by the worst bad-test delays.
+
+| Scenario | Corpus | Command | Result | Notes |
+|---|---|---|---:|---|
+| Normal per-file isolates | 343 generated test files | `sh/demo_isolate.sh` step 1 | 11m 37s | Duplicate test files added; generated async waits halved |
+| Bundled per-package isolates | 343 generated test files | `sh/demo_isolate.sh` step 3 | 7m 33s | Same corpus, same halved waits, single wrapper per Flutter package |
+
+- Local delta: 4m 04s saved
+- Relative improvement: 35% faster than the per-file run
+- Measurement environment: current dev container on Linux
 
 ## Sources
 

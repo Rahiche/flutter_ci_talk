@@ -10,7 +10,7 @@ echo ""
 FAILED=0
 
 for pkg in packages/*/; do
-  if [ -d "$pkg/test" ]; then
+  if [ -d "$pkg/test" ] && grep -q 'sdk: flutter' "$pkg/pubspec.yaml"; then
     PKG_NAME=$(basename "$pkg")
     echo "--- Testing $PKG_NAME ---"
     PKG_START=$(date +%s)

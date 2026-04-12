@@ -3,7 +3,7 @@
 ## Setup
 - Open terminal in `~/flutter_ci_talk`
 - Ensure on `main` branch
-- Have BENCHMARKS.md open in split view
+- Have BENCHMARKS.md open in split view with the GitHub Actions reference column visible
 
 ---
 
@@ -21,7 +21,7 @@ git checkout main && make demo-slow
 ```
 
 ### Reveal Slide
-- Call out the benchmarked baseline: `7m 12s` sequential on `main`
+- Call out the benchmarked baseline: `17m 15s` sequential on GitHub Actions for `main`
 
 ### What to Show on Screen
 - Terminal running tests — the progress bar crawling
@@ -60,7 +60,7 @@ make demo-slow
 ```
 
 ### Reveal Slide
-- Call out the benchmarked result: `34s` sequential on `step-1/fix-bad-tests`
+- Call out the benchmarked result: `5m 38s` sequential on GitHub Actions for `step-1/fix-bad-tests`
 
 ### Quick Fix (if short on time)
 ```bash
@@ -86,7 +86,7 @@ git checkout step-2/parallel-packages && sh/check-ci.sh
 ```
 
 ### Reveal Slide
-- Call out the benchmarked result: `17s` on `step-2/parallel-packages`
+- Call out the benchmarked result: `4m 29s` on GitHub Actions for `step-2/parallel-packages`
 
 ---
 
@@ -106,8 +106,8 @@ git checkout step-3/test-bundler && sh/demo_isolate.sh
 ```
 
 ### Reveal Slide
-- Call out the benchmarked result: `14s` on `step-3/test-bundler`
-- Mention the local improvement from step 2 to step 3: about `18%` faster
+- Call out the benchmarked result: `4m 37s` on GitHub Actions for `step-3/test-bundler`
+- Mention that bundling is still a strong local execution win, but CI wall-clock stays roughly flat here because workflow overhead dominates the slowest benchmark environment
 
 ---
 
@@ -200,9 +200,7 @@ sh/arch_guard.sh --base main
 
 ### Talking Points
 - "Let's combine everything and see the total improvement"
-- Show the three benchmark environments side by side: M4 Max, Codespaces, and GitHub Actions
-- "M4 Max: 7m 12s to about 14s"
-- "Codespaces: 14m 35s to 31s"
+- Use GitHub Actions as the single reference benchmark because it is the slowest environment in the repo
 - "GitHub Actions: 17m 15s to 2m 15s"
 - Walk through the optimization stack:
   1. Fix bad tests (remove artificial delays)
@@ -221,7 +219,7 @@ git checkout step-6/all-optimizations && make demo-fast
 ```
 
 ### The Big Reveal
-- Show the benchmark table side-by-side
+- Show the GitHub Actions reference benchmark column
 - "Your CI doesn't have to be slow"
 
 ---

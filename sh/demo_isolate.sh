@@ -10,7 +10,7 @@ echo ""
 echo "--- Step 1: Normal test run (per-file isolates) ---"
 START1=$(date +%s)
 for pkg in packages/*/; do
-  if [ -d "$pkg/test" ]; then
+  if [ -d "$pkg/test" ] && grep -q 'sdk: flutter' "$pkg/pubspec.yaml"; then
     (cd "$pkg" && flutter test 2>&1 | tail -1)
   fi
 done
@@ -28,7 +28,7 @@ echo ""
 echo "--- Step 3: Bundled test run (single isolate per package) ---"
 START2=$(date +%s)
 for pkg in packages/*/; do
-  if [ -d "$pkg/test" ] && [ -f "$pkg/test/all_tests.dart" ]; then
+  if [ -d "$pkg/test" ] && grep -q 'sdk: flutter' "$pkg/pubspec.yaml" && [ -f "$pkg/test/all_tests.dart" ]; then
     (cd "$pkg" && flutter test test/all_tests.dart 2>&1 | tail -1)
   fi
 done

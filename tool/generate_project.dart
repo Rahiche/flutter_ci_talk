@@ -550,7 +550,7 @@ String _modelTest(String pkg, String name, String snake, List<List<String>> fiel
       }
     }
     buf.writeln('      );');
-    buf.writeln('      await Future.delayed(const Duration(seconds: 2));');
+    buf.writeln('      await Future.delayed(const Duration(seconds: 1));');
     buf.writeln('      final json = model.toJson();');
     buf.writeln('      final restored = $name.fromJson(json);');
     buf.writeln('      expect(restored, model);');
@@ -593,7 +593,7 @@ String _serviceTest(String pkg, String name, String snake, List<List<String>> me
     buf.writeln('    late $name service;');
     buf.writeln();
     buf.writeln('    setUp(() async {');
-    buf.writeln('      await Future.delayed(const Duration(milliseconds: 600));');
+    buf.writeln('      await Future.delayed(const Duration(milliseconds: 300));');
     buf.writeln('      service = $name();');
     buf.writeln('    });');
     buf.writeln();
@@ -783,7 +783,7 @@ String _cubitTest(String pkg, String name, String snake, String stateName, List<
     buf.writeln("    test('completes full cycle with delay', () async {");
     buf.writeln('      final cubit = $name();');
     buf.writeln('      cubit.${actions.first}();');
-    buf.writeln('      await Future.delayed(const Duration(seconds: 3));');
+    buf.writeln('      await Future.delayed(const Duration(milliseconds: 1500));');
     buf.writeln('      expect(cubit.state, isA<${stateName}Success>());');
     buf.writeln('      await cubit.close();');
     buf.writeln('    });');
@@ -996,7 +996,7 @@ String _everythingTest(_PackageConfig pkg) {
       buf.writeln("    test('$c.$action completes after delay', () async {");
       buf.writeln('      final cubit = $c();');
       buf.writeln('      cubit.$action();');
-      buf.writeln('      await Future.delayed(const Duration(seconds: 3));');
+      buf.writeln('      await Future.delayed(const Duration(milliseconds: 1500));');
       buf.writeln('      expect(cubit.state, isA<${stateName}Success>());');
       buf.writeln('      await cubit.close();');
       buf.writeln('    });');
@@ -1011,7 +1011,7 @@ String _everythingTest(_PackageConfig pkg) {
     buf.writeln("    group('$s setup', () {");
     buf.writeln('      late $s service;');
     buf.writeln('      setUp(() async {');
-    buf.writeln('        await Future.delayed(const Duration(milliseconds: 700));');
+    buf.writeln('        await Future.delayed(const Duration(milliseconds: 350));');
     buf.writeln('        service = $s();');
     buf.writeln('      });');
     for (var i = 0; i < 5; i++) {
@@ -1093,7 +1093,7 @@ String _integrationTest(_PackageConfig pkg) {
     buf.writeln('      final cubit = $c();');
     for (final action in actions) {
       buf.writeln('      cubit.$action();');
-      buf.writeln('      await Future.delayed(const Duration(seconds: 2));');
+      buf.writeln('      await Future.delayed(const Duration(seconds: 1));');
       buf.writeln('      expect(cubit.state, isA<${stateName}Success>());');
     }
     buf.writeln('      await cubit.close();');
@@ -1108,7 +1108,7 @@ String _integrationTest(_PackageConfig pkg) {
     buf.writeln("    group('$s lifecycle', () {");
     buf.writeln('      late $s service;');
     buf.writeln('      setUp(() async {');
-    buf.writeln('        await Future.delayed(const Duration(milliseconds: 500));');
+    buf.writeln('        await Future.delayed(const Duration(milliseconds: 250));');
     buf.writeln('        service = $s();');
     buf.writeln('      });');
     for (var i = 0; i < 4; i++) {

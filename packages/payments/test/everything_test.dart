@@ -33,7 +33,7 @@ void main() {
     test('PaymentCubit.loadpayment completes after delay', () async {
       final cubit = PaymentCubit();
       cubit.loadpayment();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<PaymentStateSuccess>());
       await cubit.close();
     });
@@ -41,7 +41,7 @@ void main() {
     test('PaymentCubit.refreshpayment completes after delay', () async {
       final cubit = PaymentCubit();
       cubit.refreshpayment();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<PaymentStateSuccess>());
       await cubit.close();
     });
@@ -49,7 +49,7 @@ void main() {
     test('PaymentCubit.resetpayment completes after delay', () async {
       final cubit = PaymentCubit();
       cubit.resetpayment();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<PaymentStateSuccess>());
       await cubit.close();
     });
@@ -57,7 +57,7 @@ void main() {
     test('InvoiceCubit.loadinvoice completes after delay', () async {
       final cubit = InvoiceCubit();
       cubit.loadinvoice();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<InvoiceStateSuccess>());
       await cubit.close();
     });
@@ -65,7 +65,7 @@ void main() {
     test('InvoiceCubit.refreshinvoice completes after delay', () async {
       final cubit = InvoiceCubit();
       cubit.refreshinvoice();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<InvoiceStateSuccess>());
       await cubit.close();
     });
@@ -73,7 +73,7 @@ void main() {
     test('InvoiceCubit.resetinvoice completes after delay', () async {
       final cubit = InvoiceCubit();
       cubit.resetinvoice();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<InvoiceStateSuccess>());
       await cubit.close();
     });
@@ -81,7 +81,7 @@ void main() {
     test('AccountCubit.loadaccount completes after delay', () async {
       final cubit = AccountCubit();
       cubit.loadaccount();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<AccountStateSuccess>());
       await cubit.close();
     });
@@ -89,7 +89,7 @@ void main() {
     test('AccountCubit.refreshaccount completes after delay', () async {
       final cubit = AccountCubit();
       cubit.refreshaccount();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<AccountStateSuccess>());
       await cubit.close();
     });
@@ -97,7 +97,7 @@ void main() {
     test('AccountCubit.resetaccount completes after delay', () async {
       final cubit = AccountCubit();
       cubit.resetaccount();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<AccountStateSuccess>());
       await cubit.close();
     });
@@ -105,7 +105,7 @@ void main() {
     test('CardCubit.loadcard completes after delay', () async {
       final cubit = CardCubit();
       cubit.loadcard();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<CardStateSuccess>());
       await cubit.close();
     });
@@ -113,7 +113,7 @@ void main() {
     test('CardCubit.refreshcard completes after delay', () async {
       final cubit = CardCubit();
       cubit.refreshcard();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<CardStateSuccess>());
       await cubit.close();
     });
@@ -121,7 +121,7 @@ void main() {
     test('CardCubit.resetcard completes after delay', () async {
       final cubit = CardCubit();
       cubit.resetcard();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<CardStateSuccess>());
       await cubit.close();
     });
@@ -129,7 +129,7 @@ void main() {
     test('SubscriptionCubit.loadsubscription completes after delay', () async {
       final cubit = SubscriptionCubit();
       cubit.loadsubscription();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<SubscriptionStateSuccess>());
       await cubit.close();
     });
@@ -137,7 +137,7 @@ void main() {
     test('SubscriptionCubit.refreshsubscription completes after delay', () async {
       final cubit = SubscriptionCubit();
       cubit.refreshsubscription();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<SubscriptionStateSuccess>());
       await cubit.close();
     });
@@ -145,7 +145,7 @@ void main() {
     test('SubscriptionCubit.resetsubscription completes after delay', () async {
       final cubit = SubscriptionCubit();
       cubit.resetsubscription();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<SubscriptionStateSuccess>());
       await cubit.close();
     });
@@ -153,7 +153,7 @@ void main() {
     test('CheckoutCubit.loadcheckout completes after delay', () async {
       final cubit = CheckoutCubit();
       cubit.loadcheckout();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<CheckoutStateSuccess>());
       await cubit.close();
     });
@@ -161,7 +161,7 @@ void main() {
     test('CheckoutCubit.refreshcheckout completes after delay', () async {
       final cubit = CheckoutCubit();
       cubit.refreshcheckout();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<CheckoutStateSuccess>());
       await cubit.close();
     });
@@ -169,7 +169,7 @@ void main() {
     test('CheckoutCubit.resetcheckout completes after delay', () async {
       final cubit = CheckoutCubit();
       cubit.resetcheckout();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<CheckoutStateSuccess>());
       await cubit.close();
     });
@@ -177,7 +177,7 @@ void main() {
     test('RefundCubit.loadrefund completes after delay', () async {
       final cubit = RefundCubit();
       cubit.loadrefund();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<RefundStateSuccess>());
       await cubit.close();
     });
@@ -185,7 +185,7 @@ void main() {
     test('RefundCubit.refreshrefund completes after delay', () async {
       final cubit = RefundCubit();
       cubit.refreshrefund();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<RefundStateSuccess>());
       await cubit.close();
     });
@@ -193,7 +193,7 @@ void main() {
     test('RefundCubit.resetrefund completes after delay', () async {
       final cubit = RefundCubit();
       cubit.resetrefund();
-      await Future.delayed(const Duration(seconds: 3));
+      await Future.delayed(const Duration(milliseconds: 1500));
       expect(cubit.state, isA<RefundStateSuccess>());
       await cubit.close();
     });
@@ -203,7 +203,7 @@ void main() {
     group('PaymentService setup', () {
       late PaymentService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 700));
+        await Future.delayed(const Duration(milliseconds: 350));
         service = PaymentService();
       });
       test('validation 0', () {
@@ -225,7 +225,7 @@ void main() {
     group('InvoiceService setup', () {
       late InvoiceService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 700));
+        await Future.delayed(const Duration(milliseconds: 350));
         service = InvoiceService();
       });
       test('validation 0', () {
@@ -247,7 +247,7 @@ void main() {
     group('TransactionService setup', () {
       late TransactionService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 700));
+        await Future.delayed(const Duration(milliseconds: 350));
         service = TransactionService();
       });
       test('validation 0', () {
@@ -269,7 +269,7 @@ void main() {
     group('CardService setup', () {
       late CardService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 700));
+        await Future.delayed(const Duration(milliseconds: 350));
         service = CardService();
       });
       test('validation 0', () {
@@ -291,7 +291,7 @@ void main() {
     group('SubscriptionService setup', () {
       late SubscriptionService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 700));
+        await Future.delayed(const Duration(milliseconds: 350));
         service = SubscriptionService();
       });
       test('validation 0', () {
@@ -313,7 +313,7 @@ void main() {
     group('RefundService setup', () {
       late RefundService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 700));
+        await Future.delayed(const Duration(milliseconds: 350));
         service = RefundService();
       });
       test('validation 0', () {
@@ -335,7 +335,7 @@ void main() {
     group('WalletService setup', () {
       late WalletService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 700));
+        await Future.delayed(const Duration(milliseconds: 350));
         service = WalletService();
       });
       test('validation 0', () {

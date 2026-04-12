@@ -19,10 +19,10 @@ dart run tool/generate_extra_tests.dart
 ```
 flutter_ci_talk/
 ├── packages/
-│   ├── app/          # Main app (58 test files)
-│   ├── core/         # Shared components (58 test files)
-│   ├── payments/     # Payment feature (64 test files)
-│   └── analytics/    # Analytics feature (59 test files)
+│   ├── app/          # Main app (84 test files)
+│   ├── core/         # Shared components (84 test files)
+│   ├── payments/     # Payment feature (90 test files)
+│   └── analytics/    # Analytics feature (85 test files)
 ├── slides/           # Talk outline
 ├── tool/             # Code generators
 ├── sh/               # Shell scripts for CI demos
@@ -30,7 +30,7 @@ flutter_ci_talk/
 └── BENCHMARKS.md     # Recorded timing results
 ```
 
-**Total: ~235 source files, ~239 test files**
+**Total: ~235 source files, ~343 test files**
 
 ## Branch Progression
 
@@ -50,10 +50,10 @@ Each branch builds on the previous one:
 
 ```bash
 # Slow baseline (main branch)
-make demo-slow           # ~7 min sequential
+make demo-slow           # talk reference: ~17 min on GitHub Actions (slowest benchmark)
 
 # Fast version (step-6 branch)
-make demo-fast           # ~14s full optimized pipeline
+make demo-fast           # talk reference: ~2m 15s on GitHub Actions
 
 # Individual scripts
 sh/run_sequential.sh     # Sequential test run
@@ -84,4 +84,4 @@ make apply-fix FIX=act2_fix_mega_files
 
 ## Key Metrics
 
-See [BENCHMARKS.md](BENCHMARKS.md) for the full benchmark matrix, including local M4 Max, GitHub Codespaces, and GitHub Actions timings.
+See [BENCHMARKS.md](BENCHMARKS.md) for the full benchmark matrix. The talk now uses the slowest benchmark set, GitHub Actions, as the default example for result callouts.

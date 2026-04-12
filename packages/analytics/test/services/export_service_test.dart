@@ -6,7 +6,7 @@ void main() {
     late ExportService service;
 
     setUp(() async {
-      await Future.delayed(const Duration(milliseconds: 600));
+      await Future.delayed(const Duration(milliseconds: 300));
       service = ExportService();
     });
 

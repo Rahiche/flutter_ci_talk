@@ -70,7 +70,7 @@ void main() {
         type: 'default',
         priority: 3,
       );
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       final json = model.toJson();
       final restored = CacheEntry.fromJson(json);
       expect(restored, model);

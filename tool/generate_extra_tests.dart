@@ -3,6 +3,12 @@
 
 import 'dart:io';
 
+const _extraModelFilesPerPackage = 8;
+const _extraWidgetFilesPerPackage = 5;
+const _duplicateCopiesPerGeneratedTest = 2;
+const _heavySetupDelayMs = 250;
+const _asyncDelayMs = 1000;
+
 /// Generates additional test files to push total past 200+
 /// and ensure the baseline is painfully slow (~4+ minutes).
 void main() {
@@ -13,7 +19,7 @@ void main() {
     final pkgDir = '$root/packages/$pkg';
 
     // Generate extra model-like source + test files
-    for (var i = 0; i < 8; i++) {
+    for (var i = 0; i < _extraModelFilesPerPackage; i++) {
       final name = '${pkg}_data_entity_$i';
       final className = '${_capitalize(pkg)}DataEntity$i';
 
@@ -87,7 +93,7 @@ class $className extends Equatable {
         testBuf.writeln("  group('$className with setup', () {");
         testBuf.writeln('    late $className entity;');
         testBuf.writeln('    setUp(() async {');
-        testBuf.writeln('      await Future.delayed(const Duration(milliseconds: 500));');
+        testBuf.writeln('      await Future.delayed(const Duration(milliseconds: $_heavySetupDelayMs));');
         testBuf.writeln("      entity = $className(id: 'e$i', label: 'Entity $i', sortOrder: $i, isEnabled: true, score: ${i * 1.5});");
         testBuf.writeln('    });');
         for (var j = 0; j < 4; j++) {
@@ -119,7 +125,7 @@ class $className extends Equatable {
       if (hasDelay) {
         testBuf.writeln("    test('validates after processing', () async {");
         testBuf.writeln("      final m = $className(id: 'a', label: 'b', sortOrder: 0, isEnabled: false, score: 0.0);");
-        testBuf.writeln('      await Future.delayed(const Duration(seconds: 2));');
+        testBuf.writeln('      await Future.delayed(const Duration(milliseconds: $_asyncDelayMs));');
         testBuf.writeln('      expect(m.toJson(), isNotNull);');
         testBuf.writeln('    });');
       }
@@ -127,11 +133,16 @@ class $className extends Equatable {
       testBuf.writeln('  });');
       testBuf.writeln('}');
 
-      _write('$pkgDir/test/models/${name}_test.dart', testBuf.toString());
+      final testContent = testBuf.toString();
+      _write('$pkgDir/test/models/${name}_test.dart', testContent);
+      _writeDuplicateTests(
+        '$pkgDir/test/models/${name}_dup',
+        testContent,
+      );
     }
 
     // Generate extra widget test files with slow patterns
-    for (var i = 0; i < 5; i++) {
+    for (var i = 0; i < _extraWidgetFilesPerPackage; i++) {
       final name = '${pkg}_screen_$i';
       final className = '${_capitalize(pkg)}Screen$i';
 
@@ -184,7 +195,12 @@ class $className extends StatelessWidget {
       testBuf.writeln('  });');
       testBuf.writeln('}');
 
-      _write('$pkgDir/test/widgets/${name}_test.dart', testBuf.toString());
+      final testContent = testBuf.toString();
+      _write('$pkgDir/test/widgets/${name}_test.dart', testContent);
+      _writeDuplicateTests(
+        '$pkgDir/test/widgets/${name}_dup',
+        testContent,
+      );
     }
   }
 
@@ -210,6 +226,12 @@ class $className extends StatelessWidget {
 }
 
 String _capitalize(String s) => s.isEmpty ? s : '${s[0].toUpperCase()}${s.substring(1)}';
+
+void _writeDuplicateTests(String pathPrefix, String content) {
+  for (var copy = 1; copy <= _duplicateCopiesPerGeneratedTest; copy++) {
+    _write('${pathPrefix}_${copy}_test.dart', content);
+  }
+}
 
 void _write(String path, String content) {
   final file = File(path);

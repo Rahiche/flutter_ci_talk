@@ -18,13 +18,13 @@ void main() {
     test('ThemeCubit full lifecycle', () async {
       final cubit = ThemeCubit();
       cubit.loadtheme();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<ThemeStateSuccess>());
       cubit.refreshtheme();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<ThemeStateSuccess>());
       cubit.resettheme();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<ThemeStateSuccess>());
       await cubit.close();
     });
@@ -32,13 +32,13 @@ void main() {
     test('ConnectivityCubit full lifecycle', () async {
       final cubit = ConnectivityCubit();
       cubit.loadconnectivity();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<ConnectivityStateSuccess>());
       cubit.refreshconnectivity();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<ConnectivityStateSuccess>());
       cubit.resetconnectivity();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<ConnectivityStateSuccess>());
       await cubit.close();
     });
@@ -46,13 +46,13 @@ void main() {
     test('LocaleCubit full lifecycle', () async {
       final cubit = LocaleCubit();
       cubit.loadlocale();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<LocaleStateSuccess>());
       cubit.refreshlocale();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<LocaleStateSuccess>());
       cubit.resetlocale();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<LocaleStateSuccess>());
       await cubit.close();
     });
@@ -60,13 +60,13 @@ void main() {
     test('NavigationCubit full lifecycle', () async {
       final cubit = NavigationCubit();
       cubit.loadnavigation();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<NavigationStateSuccess>());
       cubit.refreshnavigation();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<NavigationStateSuccess>());
       cubit.resetnavigation();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<NavigationStateSuccess>());
       await cubit.close();
     });
@@ -74,13 +74,13 @@ void main() {
     test('VersionCubit full lifecycle', () async {
       final cubit = VersionCubit();
       cubit.loadversion();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<VersionStateSuccess>());
       cubit.refreshversion();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<VersionStateSuccess>());
       cubit.resetversion();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<VersionStateSuccess>());
       await cubit.close();
     });
@@ -88,13 +88,13 @@ void main() {
     test('PermissionCubit full lifecycle', () async {
       final cubit = PermissionCubit();
       cubit.loadpermission();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<PermissionStateSuccess>());
       cubit.refreshpermission();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<PermissionStateSuccess>());
       cubit.resetpermission();
-      await Future.delayed(const Duration(seconds: 2));
+      await Future.delayed(const Duration(seconds: 1));
       expect(cubit.state, isA<PermissionStateSuccess>());
       await cubit.close();
     });
@@ -104,7 +104,7 @@ void main() {
     group('HttpClient lifecycle', () {
       late HttpClient service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 250));
         service = HttpClient();
       });
       test('lifecycle check 0', () {
@@ -123,7 +123,7 @@ void main() {
     group('CacheService lifecycle', () {
       late CacheService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 250));
         service = CacheService();
       });
       test('lifecycle check 0', () {
@@ -142,7 +142,7 @@ void main() {
     group('LoggerService lifecycle', () {
       late LoggerService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 250));
         service = LoggerService();
       });
       test('lifecycle check 0', () {
@@ -161,7 +161,7 @@ void main() {
     group('StorageService lifecycle', () {
       late StorageService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 250));
         service = StorageService();
       });
       test('lifecycle check 0', () {
@@ -180,7 +180,7 @@ void main() {
     group('ConnectivityService lifecycle', () {
       late ConnectivityService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 250));
         service = ConnectivityService();
       });
       test('lifecycle check 0', () {
@@ -199,7 +199,7 @@ void main() {
     group('EncryptionService lifecycle', () {
       late EncryptionService service;
       setUp(() async {
-        await Future.delayed(const Duration(milliseconds: 500));
+        await Future.delayed(const Duration(milliseconds: 250));
         service = EncryptionService();
       });
       test('lifecycle check 0', () {
