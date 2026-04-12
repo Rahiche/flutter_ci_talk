@@ -21,7 +21,7 @@ git checkout main && make demo-slow
 ```
 
 ### Reveal Slide
-- Call out the benchmarked baseline: `17m 15s` sequential on GitHub Actions for `main`
+- Call out the benchmarked baseline: `15m 21s` sequential + coverage on GitHub Actions for `main` (344 test files, run 24317309884)
 
 ### What to Show on Screen
 - Terminal running tests — the progress bar crawling
@@ -86,7 +86,7 @@ git checkout step-2/parallel-packages && sh/check-ci.sh
 ```
 
 ### Reveal Slide
-- Call out the benchmarked result: `4m 29s` on GitHub Actions for `step-2/parallel-packages`
+- Call out the benchmarked result: `8m 39s` on GitHub Actions for baseline + concurrent packages (with coverage, 344 test files)
 
 ---
 
@@ -106,8 +106,12 @@ git checkout step-3/test-bundler && sh/demo_isolate.sh
 ```
 
 ### Reveal Slide
-- Call out the benchmarked result: `4m 37s` on GitHub Actions for `step-3/test-bundler`
-- Mention that bundling is still a strong local execution win, but CI wall-clock stays roughly flat here because workflow overhead dominates the slowest benchmark environment
+- Show the 4-variant coverage matrix (run 24317309884):
+  - Baseline sequential: **15m 21s**
+  - + Concurrency: **8m 39s** (43.6% faster)
+  - + Bundler: **8m 08s** (47% faster)
+  - + Bundler + Concurrency: **2m 48s** (81.7% faster)
+- Key talking point: bundler + concurrency is super-additive — fewer isolates × parallel execution
 
 ---
 
@@ -201,7 +205,7 @@ sh/arch_guard.sh --base main
 ### Talking Points
 - "Let's combine everything and see the total improvement"
 - Use GitHub Actions as the single reference benchmark because it is the slowest environment in the repo
-- "GitHub Actions: 17m 15s to 2m 15s"
+- "GitHub Actions: 15m 21s to 2m 48s (with coverage on 344 test files)"
 - Walk through the optimization stack:
   1. Fix bad tests (remove artificial delays)
   2. Parallelize packages (background jobs)
@@ -221,6 +225,7 @@ git checkout step-6/all-optimizations && make demo-fast
 ### The Big Reveal
 - Show the GitHub Actions reference benchmark column
 - "Your CI doesn't have to be slow"
+- Final numbers: 15m 21s → 2m 48s = **82% improvement** (with coverage, 344 test files, GitHub Actions run 24317309884)
 
 ---
 

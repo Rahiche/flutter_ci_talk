@@ -716,7 +716,7 @@ test('should debounce search input', () async {
   await cubit.search('query');
   expect(cubit.state, isA&lt;SearchSuccess&gt;());
 });</code></pre>
-    <div class="cmd">Benchmark result: main baseline = 17m 15s on GitHub Actions</div>
+    <div class="cmd">Benchmark result: main baseline = 15m 21s on GitHub Actions (sequential, with coverage, 344 test files)</div>
   </section>
 </section>
 
@@ -764,10 +764,10 @@ wait  # wait for all to finish
   </section>
   <section>
     <h2>Act 3: Isolate Cold Starts</h2>
-    <h3>239 files = 239 cold starts</h3>
+    <h3>344 files = 344 cold starts</h3>
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-number">239</div>
+        <div class="stat-number">344</div>
         <div class="stat-label">Isolates Spawned</div>
       </div>
       <div class="stat-card">
@@ -775,14 +775,14 @@ wait  # wait for all to finish
         <div class="stat-label">Per Isolate Startup</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number" style="-webkit-text-fill-color: var(--bad)">~72s</div>
+        <div class="stat-number" style="-webkit-text-fill-color: var(--bad)">~103s</div>
         <div class="stat-label">Just Starting Up</div>
       </div>
     </div>
   </section>
   <section>
     <h2>Act 3 Result Reveal</h2>
-    <div class="cmd">Benchmark result: step-2/parallel-packages = 4m 29s on GitHub Actions</div>
+    <div class="cmd">Benchmark result: baseline + concurrent packages = 8m 39s on GitHub Actions (parallel packages, with coverage, 344 test files)</div>
   </section>
   <section>
     <h2>The Bundler Solution</h2>
@@ -846,9 +846,27 @@ else
   </section>
   <section>
     <h2>Act 4 Result Reveal</h2>
-    <div class="cmd">Benchmark result: step-3/test-bundler = 4m 37s on GitHub Actions</div>
+    <div class="cmd">Benchmark result (with coverage, 344 files):</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-top:14px">
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--bad)">15m 21s</div>
+        <div class="stat-label" style="font-size:0.7em">Baseline sequential</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--warn)">8m 39s</div>
+        <div class="stat-label" style="font-size:0.7em">+ Concurrency</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--warn)">8m 08s</div>
+        <div class="stat-label" style="font-size:0.7em">+ Bundler</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--good)">2m 48s</div>
+        <div class="stat-label" style="font-size:0.7em">+ Both combined</div>
+      </div>
+    </div>
     <p style="text-align:center; color:var(--muted); font-size:0.72em; margin-top:10px">
-      On the slowest benchmark environment, workflow overhead keeps wall-clock roughly flat here. The bundling win is clearer in local test execution.
+      Bundler + concurrency together: <strong style="color:var(--good)">81.7% faster</strong> than baseline. Super-additive: fewer isolates &times; parallel execution.
     </p>
   </section>
   <section>
@@ -987,31 +1005,31 @@ test:
   <h2 style="text-align:center">Before &amp; After</h2>
   <div class="comparison" style="max-width: 700px; margin: 14px auto;">
     <div class="before-card">
-      <div class="time">17:15</div>
+      <div class="time">15:21</div>
       <div style="color:var(--muted); margin-top:8px">main branch</div>
       <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Sequential &middot; Per-file isolates<br>
-        Real delays &middot; Heavy setUp<br>
+        Coverage enabled &middot; 344 test files<br>
         No caching &middot; Full builds
       </div>
     </div>
     <div class="arrow">&rarr;</div>
     <div class="after-card">
-      <div class="time">2:15</div>
-      <div style="color:var(--muted); margin-top:8px">step-6 branch</div>
+      <div class="time">2:48</div>
+      <div style="color:var(--muted); margin-top:8px">bundler + concurrent</div>
       <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Parallel &middot; Bundled isolates<br>
-        Fixed tests &middot; Cached deps<br>
+        Coverage enabled &middot; 344 test files<br>
         Selective builds &middot; Diff coverage
       </div>
     </div>
   </div>
   <div style="text-align:center">
-    <span class="stat-number" style="font-size:4em">87%</span>
+    <span class="stat-number" style="font-size:4em">82%</span>
     <div class="stat-label" style="font-size:1.2em">Faster on the GitHub Actions benchmark</div>
   </div>
   <div style="text-align:center; color:var(--muted); font-size:0.78em; margin-top:18px">
-    Using the slowest environment consistently: GitHub Actions 17:15 -&gt; 2:15
+    Measured with coverage on 344 test files: GitHub Actions 15:21 &rarr; 2:48 (run 24317309884)
   </div>
 </section>
 
@@ -1019,28 +1037,28 @@ test:
 <section data-background-gradient="linear-gradient(145deg, #0a1020 0%, #0d1117 100%)">
   <h2 style="text-align:center">What This Saves, In Practice</h2>
   <div style="text-align:center; color:var(--muted); font-size:0.8em; margin-top:-4px; margin-bottom:24px;">
-    Measured on GitHub Actions &nbsp;&mdash;&nbsp; 17:15 baseline &rarr; 2:15 optimized (87% reduction)
+    Measured on GitHub Actions &nbsp;&mdash;&nbsp; 15:21 baseline &rarr; 2:48 optimized (82% reduction, with coverage, 344 test files)
   </div>
   <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; max-width:940px; margin:0 auto;">
     <div class="stat-card" style="border: 2px solid var(--good);">
-      <div class="stat-number" style="-webkit-text-fill-color:var(--good); font-size:2.6em;">15 min</div>
+      <div class="stat-number" style="-webkit-text-fill-color:var(--good); font-size:2.6em;">12m 33s</div>
       <div class="stat-label">saved per CI run</div>
       <div style="color:#6e7681; font-size:0.65em; margin-top:12px; line-height:1.6;">
-        17m 15s &rarr; 2m 15s<br>per GitHub Actions run
+        15m 21s &rarr; 2m 48s<br>per GitHub Actions run
       </div>
     </div>
     <div class="stat-card" style="border: 2px solid var(--accent);">
-      <div class="stat-number" style="-webkit-text-fill-color:var(--accent); font-size:2.6em;">330h</div>
+      <div class="stat-number" style="-webkit-text-fill-color:var(--accent); font-size:2.6em;">275h</div>
       <div class="stat-label">dev time back / month</div>
       <div style="color:#6e7681; font-size:0.65em; margin-top:12px; line-height:1.6;">
-        30 PRs/day &times; 2 engineers<br>&times; 15 min &times; 22 days<br>&asymp; 41 working days recovered
+        30 PRs/day &times; 2 engineers<br>&times; 12.5 min &times; 22 days<br>&asymp; 34 working days recovered
       </div>
     </div>
     <div class="stat-card" style="border: 2px solid var(--warn);">
-      <div class="stat-number" style="-webkit-text-fill-color:var(--warn); font-size:2.6em;">$79</div>
+      <div class="stat-number" style="-webkit-text-fill-color:var(--warn); font-size:2.6em;">$66</div>
       <div class="stat-label">Actions cost saved / month</div>
       <div style="color:#6e7681; font-size:0.65em; margin-top:12px; line-height:1.6;">
-        15 min &times; 30 PRs/day<br>&times; $0.008/min<br>&times; 22 working days
+        12.5 min &times; 30 PRs/day<br>&times; $0.008/min<br>&times; 22 working days
       </div>
     </div>
   </div>
