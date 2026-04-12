@@ -1,0 +1,68 @@
+name: Benchmark Updated Tests
+
+on:
+  push:
+    branches:
+      - bench/updated-tests-actions-run
+
+jobs:
+  baseline:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Regenerate expanded test corpus
+        run: |
+          set -euo pipefail
+          dart run tool/generate_extra_tests.dart
+          count=$(find packages -type f -name '*_test.dart' | wc -l)
+          echo "TEST_FILE_COUNT=$count"
+
+      - name: Baseline benchmark
+        run: |
+          set -euo pipefail
+          start=$(date +%s)
+          make demo-slow
+          end=$(date +%s)
+          echo "BENCHMARK_RESULT baseline_seconds=$((end - start))"
+
+  test_bundler:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Regenerate expanded test corpus
+        run: |
+          set -euo pipefail
+          dart run tool/generate_extra_tests.dart
+          count=$(find packages -type f -name '*_test.dart' | wc -l)
+          echo "TEST_FILE_COUNT=$count"
+
+      - name: Generate bundled wrappers
+        run: dart run tool/generate_test_wrapper.dart
+
+      - name: Test bundler benchmark
+        run: |
+          set -euo pipefail
+          start=$(date +%s)
+          for pkg in packages/*/; do
+            if [ -d "$pkg/test" ] && grep -q 'sdk: flutter' "$pkg/pubspec.yaml" && [ -f "$pkg/test/all_tests.dart" ]; then
+              (cd "$pkg" && flutter test test/all_tests.dart 2>&1 | tail -1)
+            fi
+          done
+          end=$(date +%s)
+          echo "BENCHMARK_RESULT test_bundler_seconds=$((end - start))"
