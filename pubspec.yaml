@@ -10,6 +10,7 @@ workspace:
   - packages/core
   - packages/payments
   - packages/analytics
+  - packages/test_bundler
 
 dev_dependencies:
   melos: ^7.3.0
