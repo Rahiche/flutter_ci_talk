@@ -28,6 +28,24 @@ GitHub Actions Ubuntu is the slowest recorded environment in this repo, so it is
 | Diff coverage | `step-5/diff-coverage` | `sh/diff_coverage.sh` + `sh/affected_packages.sh` | n/a | n/a | 1m 16s | Per-change CI optimization, not directly comparable to full local demo runs |
 | All optimizations | `step-6/all-optimizations` | `make demo-fast` | ~14s | 31s | 2m 15s | Combined result: fixed tests + parallel + bundled + selective |
 
+## Updated Benchmarks: Coverage + Concurrency Matrix (April 12, 2026)
+
+High-corpus benchmark suite (344 test files) on GitHub Actions Ubuntu, measuring optimizations independently and combined. All runs collect coverage reports.
+
+| Variant | Test Files | Coverage | Concurrency | Execution Strategy | GitHub Actions | Delta from Baseline | Relative Improvement |
+|---|---:|:---:|:---:|---|---:|---|---|
+| Baseline | 344 | ✓ | Sequential | Per-file isolates, sequential | 921s (15m 21s) | baseline | — |
+| Baseline + Concurrent | 344 | ✓ | Parallel | Per-file isolates, parallel packages | 519s (8m 39s) | -402s | 43.6% faster |
+| Test Bundler | 344 | ✓ | Sequential | Single wrapper per package, sequential | 488s (8m 08s) | -433s | 47.0% faster |
+| Test Bundler + Concurrent | 344 | ✓ | Parallel | Single wrapper per package, parallel packages | 168s (2m 48s) | -753s | **81.7% faster** |
+
+**Key finding:** Combining test bundling + package-level concurrency + coverage collection yields 81.7% wall-clock improvement over sequential baseline with coverage, reducing 15m 21s to 2m 48s.
+
+Interaction effects:
+- Concurrency alone (baseline → baseline concurrent): 43.6% improvement
+- Bundling alone (baseline → bundler): 47.0% improvement
+- Combined (baseline → bundler concurrent): 81.7% improvement (super-additive due to reduced bundle count × parallelism)
+
 ## Local Bundler Stress Check
 
 This rerun keeps the duplicate-file pressure high while reducing the synthetic wait cost inside generated tests, so the bundler improvement is driven more by file-count and isolate overhead than by the worst bad-test delays.
@@ -65,8 +83,17 @@ This rerun keeps the duplicate-file pressure high while reducing the synthetic w
 
 ### GitHub Actions benchmark runs
 
-- Workflow: `Benchmark Dispatch`
-- Repo: `Rahiche/flutter_ci_talk`
-- CI timings above are workflow wall-clock durations from successful benchmark runs where available
-- Baseline used run `24284636313` because the later `150040` baseline batch failed
-- Other CI timings use the `20260411-150040` batch runs: `24285087150`, `24285087193`, `24285087380`, `24285087785`, `24285087924`
+- **Latest run (April 12, 2026):** Comprehensive matrix comparing baseline, bundler, concurrency, and coverage combinations
+  - Workflow: `Benchmark Updated Tests`
+  - Run ID: `24317309884`
+  - Test corpus: 344 files (expanded with duplicates)
+  - Environment: Ubuntu latest (2 vCPU)
+  - All variants with coverage enabled
+  - Includes sequential and concurrent variants
+
+- **Previous runs:** Historical benchmarks from optimization branches
+  - Workflow: `Benchmark Dispatch`
+  - Repo: `Rahiche/flutter_ci_talk`
+  - CI timings are workflow wall-clock durations from successful benchmark runs where available
+  - Baseline used run `24284636313` because the later `150040` baseline batch failed
+  - Other CI timings use the `20260411-150040` batch runs: `24285087150`, `24285087193`, `24285087380`, `24285087785`, `24285087924`
