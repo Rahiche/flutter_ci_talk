@@ -483,6 +483,41 @@
       font-size: 0.68em;
       letter-spacing: 0.03em;
     }
+    /* Clickable benchmark numbers */
+    .stat-number a {
+      background: linear-gradient(125deg, var(--accent), var(--good));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .stat-number a:hover, .stat-number a:focus-visible {
+      filter: brightness(1.2);
+      text-decoration: underline;
+      text-decoration-color: rgba(47, 129, 247, 0.45);
+      text-underline-offset: 0.12em;
+    }
+    .before-card .time a, .after-card .time a {
+      color: inherit;
+      -webkit-text-fill-color: inherit;
+      background: none;
+      text-decoration: none;
+      display: inline-block;
+    }
+    .before-card .time a:hover, .before-card .time a:focus-visible,
+    .after-card .time a:hover, .after-card .time a:focus-visible {
+      opacity: 0.8;
+      text-decoration: underline;
+      text-decoration-color: rgba(255, 255, 255, 0.35);
+      text-underline-offset: 0.1em;
+    }
+    /* Compact issue-list for slides with many items */
+    .issue-list-compact li {
+      padding: 9px 18px;
+      margin: 6px 0;
+      font-size: 0.88em;
+    }
   </style>
 </head>
 <body>
@@ -747,11 +782,11 @@ test('should debounce search input', () async {
     <h2>Act 1 Result Reveal</h2>
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-number" style="background:none; -webkit-text-fill-color: var(--bad);">8:31</div>
+        <div class="stat-number" style="background:none; -webkit-text-fill-color: var(--bad);"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24289431723" target="_blank" rel="noopener noreferrer" style="background:none; -webkit-text-fill-color: var(--bad);">8:31</a></div>
         <div class="stat-label">Latest GitHub Actions baseline</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number">511s</div>
+        <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24289431723" target="_blank" rel="noopener noreferrer">511s</a></div>
         <div class="stat-label">Benchmark Dispatch wall time</div>
       </div>
       <div class="stat-card">
@@ -792,22 +827,22 @@ test('should debounce search input', () async {
     <h2>Act 2 Result Reveal</h2>
     <div class="comparison" style="max-width: 760px; margin: 32px auto;">
       <div class="before-card">
-        <div class="time">8:31</div>
+        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24289431723" target="_blank" rel="noopener noreferrer">8:31</a></div>
         <div style="color:var(--muted); margin-top:8px">Baseline</div>
       </div>
       <div class="arrow">&rarr;</div>
       <div class="after-card">
-        <div class="time">5:38</div>
+        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087150" target="_blank" rel="noopener noreferrer">5:38</a></div>
         <div style="color:var(--muted); margin-top:8px">After fixing bad tests</div>
       </div>
     </div>
     <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr);">
       <div class="stat-card">
-        <div class="stat-number">34%</div>
+        <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087150" target="_blank" rel="noopener noreferrer">34%</a></div>
         <div class="stat-label">Faster than baseline</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number">173s</div>
+        <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087150" target="_blank" rel="noopener noreferrer">173s</a></div>
         <div class="stat-label">Wall time removed</div>
       </div>
     </div>
@@ -843,22 +878,22 @@ test('should debounce search input', () async {
     <h2>Act 3 Result Reveal</h2>
     <div class="comparison" style="max-width: 760px; margin: 32px auto;">
       <div class="before-card">
-        <div class="time">5:38</div>
+        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087150" target="_blank" rel="noopener noreferrer">5:38</a></div>
         <div style="color:var(--muted); margin-top:8px">After fixing bad tests</div>
       </div>
       <div class="arrow">&rarr;</div>
       <div class="after-card">
-        <div class="time">4:29</div>
+        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087193" target="_blank" rel="noopener noreferrer">4:29</a></div>
         <div style="color:var(--muted); margin-top:8px">After package-level parallelism</div>
       </div>
     </div>
     <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr);">
       <div class="stat-card">
-        <div class="stat-number">20%</div>
+        <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087193" target="_blank" rel="noopener noreferrer">20%</a></div>
         <div class="stat-label">Faster than Step 1</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number">47%</div>
+        <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087193" target="_blank" rel="noopener noreferrer">47%</a></div>
         <div class="stat-label">Faster than the baseline</div>
       </div>
     </div>
@@ -900,12 +935,12 @@ void main() {
     <h2>Act 4 Result Reveal</h2>
     <div class="comparison" style="max-width: 760px; margin: 32px auto;">
       <div class="before-card">
-        <div class="time">4:29</div>
+        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087193" target="_blank" rel="noopener noreferrer">4:29</a></div>
         <div style="color:var(--muted); margin-top:8px">Step 2 parallel packages</div>
       </div>
       <div class="arrow">&rarr;</div>
       <div class="after-card">
-        <div class="time">4:37</div>
+        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087380" target="_blank" rel="noopener noreferrer">4:37</a></div>
         <div style="color:var(--muted); margin-top:8px">Latest bundled CI benchmark</div>
       </div>
     </div>
@@ -1018,21 +1053,21 @@ test:
 
 <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
   <h2 style="text-align:center">Before &amp; After</h2>
-  <div class="comparison" style="max-width: 700px; margin: 40px auto;">
-    <div class="before-card">
-      <div class="time">8:31</div>
+  <div class="comparison" style="max-width: 700px; margin: 20px auto;">
+    <div class="before-card" style="padding: 20px 24px;">
+      <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24289431723" target="_blank" rel="noopener noreferrer">8:31</a></div>
       <div style="color:var(--muted); margin-top:8px">Latest successful baseline benchmark</div>
-      <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
+      <div style="color:#6e7681; font-size:0.7em; margin-top:12px">
         Sequential &middot; Per-file isolates<br>
         Real delays &middot; Heavy setUp<br>
         No caching &middot; Full builds
       </div>
     </div>
     <div class="arrow">&rarr;</div>
-    <div class="after-card">
-      <div class="time">2:15</div>
+    <div class="after-card" style="padding: 20px 24px;">
+      <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087924" target="_blank" rel="noopener noreferrer">2:15</a></div>
       <div style="color:var(--muted); margin-top:8px">Latest all-optimizations benchmark</div>
-      <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
+      <div style="color:#6e7681; font-size:0.7em; margin-top:12px">
         Parallel &middot; Bundled isolates<br>
         Fixed tests &middot; Cached deps<br>
         Selective builds &middot; Diff coverage
@@ -1040,7 +1075,7 @@ test:
     </div>
   </div>
   <div style="text-align:center">
-    <span class="stat-number" style="font-size:4em">74%</span>
+    <span class="stat-number" style="font-size:3.2em"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087924" target="_blank" rel="noopener noreferrer">74%</a></span>
     <div class="stat-label" style="font-size:1.2em">Faster</div>
   </div>
 </section>
@@ -1048,8 +1083,8 @@ test:
 <!-- ========== TAKEAWAYS ========== -->
 <section data-background-gradient="linear-gradient(135deg, #111926 0%, #0d1117 100%)">
   <h2 style="text-align:center">Key Takeaways</h2>
-  <div style="max-width: 600px; margin: 40px auto;">
-    <ul class="issue-list">
+  <div style="max-width: 680px; margin: 18px auto;">
+    <ul class="issue-list issue-list-compact">
       <li class="fixed"><span class="pill pill-good">1</span> Fix your tests first &mdash; async delays, heavy setUp, real I/O</li>
       <li class="fixed"><span class="pill pill-good">2</span> Parallelize across packages &mdash; simple shell script</li>
       <li class="fixed"><span class="pill pill-good">3</span> Bundle tests &mdash; reduce isolate cold start overhead</li>
