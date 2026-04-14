@@ -3,12 +3,12 @@
 ## Setup
 - Open terminal in `~/flutter_ci_talk`
 - Ensure on `main` branch
-- Have the slide deck open full-screen
+- Have BENCHMARKS.md open in split view with the GitHub Actions reference column visible
 
 ---
 
 ## Act 1: "Look how slow this is" (~5 min)
-**Branch:** `bench/baseline-20260411-150040`
+**Branch:** `main`
 
 ### Talking Points
 - Show project structure: 4 packages, ~235 source files, ~239 test files
@@ -17,12 +17,11 @@
 
 ### Run Slide Command
 ```bash
-git checkout bench/baseline-20260411-150040 && make demo-slow
+git checkout main && make demo-slow
 ```
 
 ### Reveal Slide
-- Show the slide result: `8m 31s` on the latest successful GitHub Actions baseline benchmark
-- Call out that this is the cloud CI wall time, not a local terminal run
+- Call out the benchmarked baseline: `15m 21s` sequential + coverage on GitHub Actions for `main` (344 test files, run 24317309884)
 
 ### What to Show on Screen
 - Terminal running tests — the progress bar crawling
@@ -61,8 +60,7 @@ make demo-slow
 ```
 
 ### Reveal Slide
-- Show the slide result: `5m 38s` on GitHub Actions
-- Emphasize the `34%` reduction from removing bad test patterns
+- Call out the benchmarked result: `5m 38s` sequential on GitHub Actions for `step-1/fix-bad-tests`
 
 ### Quick Fix (if short on time)
 ```bash
@@ -88,8 +86,7 @@ git checkout step-2/parallel-packages && sh/check-ci.sh
 ```
 
 ### Reveal Slide
-- Show the slide result: `4m 29s` on GitHub Actions
-- Emphasize `20%` faster than Step 1 and `47%` faster than the baseline
+- Call out the benchmarked result: `8m 39s` on GitHub Actions for baseline + concurrent packages (with coverage, 344 test files)
 
 ---
 
@@ -109,8 +106,12 @@ git checkout step-3/test-bundler && sh/demo_isolate.sh
 ```
 
 ### Reveal Slide
-- Show the slide result: `4m 37s` on the latest bundled GitHub Actions benchmark
-- Note that CI setup dominates at this point, so bundling keeps the run in the same range rather than producing a dramatic wall-time drop
+- Show the 4-variant coverage matrix (run 24317309884):
+  - Baseline sequential: **15m 21s**
+  - + Concurrency: **8m 39s** (43.6% faster)
+  - + Bundler: **8m 08s** (47% faster)
+  - + Bundler + Concurrency: **2m 48s** (81.7% faster)
+- Key talking point: bundler + concurrency is super-additive — fewer isolates × parallel execution
 
 ---
 
@@ -135,6 +136,18 @@ git checkout step-3/test-bundler && sh/demo_isolate.sh
 - "If only `.dart` files changed, `flutter build bundle` is 10x faster"
 - "Detect native file changes (`.swift`, `.kt`, `.gradle`, etc.)"
 - Show the conditional build logic in the workflow
+
+#### 5d: The hidden mobile build tax
+- "Running Android and iOS builds on every commit burns money fast"
+- "Android build is often ~20 minutes, iOS build is often ~20 minutes"
+- "That's ~40 build minutes per commit even when code is Dart-only"
+- "Use a decision gate: full native builds only when `pubspec.lock` or `android/` or `ios/` changes"
+- "For most PRs, run `flutter build bundle` and skip native rebuilds"
+- "At 30 PRs/day with 80% Dart-only changes, that's about 16 runner-hours saved per day"
+
+#### 5e: Cost spotlight slide
+- "Show one back-of-envelope equation live: `30 PR/day * 0.8 Dart-only * 40 min skipped = 16 runner-hours/day`"
+- "This lands the business case: selective builds are not only faster, they're dramatically cheaper"
 
 ### Run Slide Command
 ```bash
@@ -179,9 +192,9 @@ cat .github/workflows/pr_check.yml
 ### Run Slide Command
 ```bash
 git checkout step-5/diff-coverage
-sh/diff_coverage.sh bench/baseline-20260411-150040
-sh/affected_packages.sh bench/baseline-20260411-150040
-sh/arch_guard.sh --base bench/baseline-20260411-150040
+sh/diff_coverage.sh main
+sh/affected_packages.sh main
+sh/arch_guard.sh --base main
 ```
 
 ---
@@ -191,8 +204,8 @@ sh/arch_guard.sh --base bench/baseline-20260411-150040
 
 ### Talking Points
 - "Let's combine everything and see the total improvement"
-- Show the benchmark chart in the deck
-- "From 8m 31s to 2m 15s on GitHub Actions"
+- Use GitHub Actions as the single reference benchmark because it is the slowest environment in the repo
+- "GitHub Actions: 15m 21s to 2m 48s (with coverage on 344 test files)"
 - Walk through the optimization stack:
   1. Fix bad tests (remove artificial delays)
   2. Parallelize packages (background jobs)
@@ -210,8 +223,9 @@ git checkout step-6/all-optimizations && make demo-fast
 ```
 
 ### The Big Reveal
-- Show the benchmark chart and before/after slide side-by-side
+- Show the GitHub Actions reference benchmark column
 - "Your CI doesn't have to be slow"
+- Final numbers: 15m 21s → 2m 48s = **82% improvement** (with coverage, 344 test files, GitHub Actions run 24317309884)
 
 ---
 

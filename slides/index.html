@@ -39,9 +39,9 @@
       text-transform: none;
       letter-spacing: -0.02em;
     }
-    .reveal h1 { font-size: 2.8em; color: #f0f6fc; }
-    .reveal h2 { font-size: 2em; color: var(--accent); }
-    .reveal h3 { font-size: 1.4em; color: var(--muted); }
+    .reveal h1 { font-size: 2.2em; color: #f0f6fc; }
+    .reveal h2 { font-size: 1.65em; color: var(--accent); }
+    .reveal h3 { font-size: 1.1em; color: var(--muted); }
     .reveal .slides section { text-align: left; }
     .reveal code {
       background: rgba(47, 129, 247, 0.15);
@@ -65,19 +65,19 @@
     .stat-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-      margin: 40px 0;
+      gap: 14px;
+      margin: 14px 0;
     }
     .stat-card {
       background: linear-gradient(160deg, rgba(22, 27, 34, 0.92) 0%, rgba(13, 17, 23, 0.96) 100%);
       border: 1px solid var(--border);
-      border-radius: 16px;
-      padding: 32px 24px;
+      border-radius: 14px;
+      padding: 18px 14px;
       text-align: center;
-      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
     }
     .stat-number {
-      font-size: 3em;
+      font-size: 2.4em;
       font-weight: 800;
       background: linear-gradient(125deg, var(--accent), var(--good));
       -webkit-background-clip: text;
@@ -92,34 +92,34 @@
     .comparison {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
-      gap: 24px;
+      gap: 14px;
       align-items: center;
-      margin: 40px 0;
+      margin: 14px 0;
     }
     .before-card, .after-card {
       background: var(--bg-card-soft);
-      border-radius: 16px;
-      padding: 32px;
+      border-radius: 14px;
+      padding: 18px;
       text-align: center;
       border: 1px solid var(--border);
     }
     .before-card { border: 2px solid var(--bad); }
     .after-card { border: 2px solid var(--good); }
-    .before-card .time { color: var(--bad); font-size: 3.5em; font-weight: 800; }
-    .after-card .time { color: var(--good); font-size: 3.5em; font-weight: 800; }
-    .arrow { font-size: 3em; color: var(--accent); }
+    .before-card .time { color: var(--bad); font-size: 2.6em; font-weight: 800; }
+    .after-card .time { color: var(--good); font-size: 2.6em; font-weight: 800; }
+    .arrow { font-size: 2em; color: var(--accent); }
     .chart-container {
       max-width: 800px;
-      margin: 30px auto;
+      margin: 10px auto;
       background: rgba(13, 17, 23, 0.82);
       border-radius: 16px;
-      padding: 24px;
+      padding: 16px;
       border: 1px solid var(--border);
     }
     .timeline {
       display: flex;
       gap: 0;
-      margin: 40px 0;
+      margin: 14px 0;
     }
     .timeline-step {
       flex: 1;
@@ -226,28 +226,6 @@
       border-bottom: 1px solid var(--border);
     }
     .cmd::before { content: '$ '; color: var(--accent); }
-    .cmd a {
-      color: inherit;
-      text-decoration: underline;
-      text-decoration-color: rgba(47, 129, 247, 0.65);
-      text-underline-offset: 0.16em;
-    }
-    .cmd a:hover,
-    .cmd a:focus-visible {
-      color: #f0f6fc;
-      text-decoration-color: var(--good);
-    }
-    .branch-link {
-      color: inherit;
-      text-decoration: underline;
-      text-decoration-color: rgba(47, 129, 247, 0.65);
-      text-underline-offset: 0.16em;
-    }
-    .branch-link:hover,
-    .branch-link:focus-visible {
-      color: #f0f6fc;
-      text-decoration-color: var(--good);
-    }
     .workflow-chip {
       display: inline-flex;
       align-items: center;
@@ -270,11 +248,148 @@
       background: var(--good);
       box-shadow: 0 0 0 6px rgba(63, 185, 80, 0.15);
     }
+    .estimator-shell {
+      margin-top: 10px;
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 14px;
+      align-items: start;
+    }
+    .estimator-panel {
+      background: linear-gradient(155deg, rgba(22, 27, 34, 0.95) 0%, rgba(13, 17, 23, 0.96) 100%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
+    }
+    .slider-row {
+      margin-bottom: 16px;
+    }
+    .slider-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      font-size: 0.62em;
+      color: var(--muted);
+      margin-bottom: 8px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+      font-weight: 700;
+    }
+    .slider-value {
+      font-size: 1.5em;
+      color: #f0f6fc;
+      letter-spacing: 0;
+    }
+    input[type='range'].ci-slider {
+      width: 100%;
+      accent-color: var(--accent);
+      height: 6px;
+      cursor: pointer;
+    }
+    .estimate-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .estimate-card {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: rgba(9, 13, 19, 0.6);
+    }
+    .estimate-title {
+      color: var(--muted);
+      font-size: 0.55em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .estimate-value {
+      color: #f0f6fc;
+      font-size: 1.05em;
+      font-weight: 800;
+      margin-top: 8px;
+    }
+    .estimate-value.good {
+      color: var(--good);
+    }
+    .estimate-value.bad {
+      color: #ffb1ab;
+    }
+    .assumption-note {
+      margin-top: 12px;
+      color: var(--muted);
+      font-size: 0.52em;
+      line-height: 1.45;
+    }
     .hero-meta {
       text-align: center;
-      margin-top: 40px;
+      margin-top: 16px;
       color: var(--muted);
       font-size: 0.85em;
+    }
+    .main-hero {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center !important;
+      min-height: 100%;
+      height: 100%;
+      width: 100%;
+      padding: 0 !important;
+      margin: 0 !important;
+      box-sizing: border-box;
+    }
+    .reveal .slides section.main-hero {
+      display: flex !important;
+      flex-direction: column !important;
+      justify-content: center !important;
+      align-items: center !important;
+      text-align: center !important;
+      min-height: 100% !important;
+      height: 100% !important;
+      padding: 0 !important;
+      margin: 0 !important;
+    }
+    .main-hero h1 {
+      margin: 0 0 4px 0;
+    }
+    .hero-sub {
+      font-size: 0.62em;
+      color: var(--muted);
+      margin-top: 8px;
+    }
+    .hero-chips {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+    .hero-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 8px 14px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      font-size: 0.58em;
+      letter-spacing: 0.07em;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: #e6edf3;
+      background: rgba(139, 148, 158, 0.14);
+    }
+    .hero-chip.accent {
+      background: rgba(47, 129, 247, 0.18);
+      border-color: rgba(47, 129, 247, 0.42);
+      color: #dbe8ff;
+    }
+    .hero-chip.good {
+      background: rgba(63, 185, 80, 0.18);
+      border-color: rgba(63, 185, 80, 0.42);
+      color: #b7f3bf;
     }
     .fade-in-then { animation: fadeInUp 0.6s ease forwards; }
     @keyframes fadeInUp {
@@ -288,6 +403,101 @@
     .animated-bar {
       animation: growBar 1.5s ease forwards;
       transform-origin: left;
+    }
+    .strategy-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 14px;
+      margin-top: 16px;
+    }
+    .strategy-card {
+      display: grid;
+      grid-template-columns: 112px 1fr;
+      gap: 14px;
+      align-items: center;
+      background: linear-gradient(160deg, rgba(22, 27, 34, 0.94) 0%, rgba(13, 17, 23, 0.98) 100%);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 14px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
+    }
+    .strategy-card h4 {
+      margin: 0;
+      font-size: 0.6em;
+      color: #f0f6fc;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+    }
+    .scope-badges {
+      display: flex;
+      gap: 6px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+    .scope-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 999px;
+      font-size: 0.44em;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid var(--border);
+      color: #e6edf3;
+      background: rgba(139, 148, 158, 0.14);
+    }
+    .scope-badge.local {
+      border-color: rgba(47, 129, 247, 0.45);
+      background: rgba(47, 129, 247, 0.16);
+      color: #cfe3ff;
+    }
+    .scope-badge.ci {
+      border-color: rgba(63, 185, 80, 0.45);
+      background: rgba(63, 185, 80, 0.16);
+      color: #b7f3bf;
+    }
+    .strategy-card p {
+      margin: 6px 0 0;
+      font-size: 0.55em;
+      color: var(--muted);
+      line-height: 1.5;
+    }
+    .strategy-svg {
+      width: 108px;
+      height: 108px;
+    }
+    .svg-node {
+      animation: nodePulse 2.4s ease-in-out infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+    .svg-dash {
+      stroke-dasharray: 8 6;
+      animation: dashFlow 1.4s linear infinite;
+    }
+    .svg-rocket {
+      animation: rocketBoost 2s ease-in-out infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+    .svg-cache {
+      animation: cacheSpin 3.2s linear infinite;
+      transform-origin: center;
+      transform-box: fill-box;
+    }
+    @keyframes nodePulse {
+      0%, 100% { transform: scale(1); opacity: 0.9; }
+      50% { transform: scale(1.12); opacity: 1; }
+    }
+    @keyframes dashFlow {
+      to { stroke-dashoffset: -28; }
+    }
+    @keyframes rocketBoost {
+      0%, 100% { transform: translateX(0); }
+      50% { transform: translateX(6px); }
+    }
+    @keyframes cacheSpin {
+      to { transform: rotate(360deg); }
     }
     @keyframes growBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
     @media (max-width: 900px) {
@@ -319,250 +529,18 @@
         width: auto;
         text-align: left;
       }
-      .story-track {
-        grid-template-columns: repeat(4, 1fr);
-        row-gap: 10px;
+      .estimator-shell {
+        grid-template-columns: 1fr;
       }
-      .story-grid {
-        grid-template-columns: repeat(2, 1fr);
+      .estimate-grid {
+        grid-template-columns: 1fr;
       }
-      .story-dot .dot-label {
-        font-size: 0.5em;
+      .strategy-grid {
+        grid-template-columns: 1fr;
       }
-    }
-
-    /* === Story Time Slide === */
-    .story-time {
-      position: relative;
-    }
-    .story-fragments {
-      position: absolute;
-      width: 1px;
-      height: 1px;
-      overflow: hidden;
-      pointer-events: none;
-    }
-    .story-track {
-      position: relative;
-      display: grid;
-      grid-template-columns: repeat(8, 1fr);
-      gap: 8px;
-      margin: 18px 0 16px;
-      align-items: center;
-    }
-    .story-track::before {
-      content: '';
-      position: absolute;
-      top: 15px;
-      left: 14px;
-      right: 14px;
-      height: 2px;
-      background: rgba(139, 148, 158, 0.35);
-      z-index: 0;
-    }
-    .story-progress {
-      position: absolute;
-      top: 15px;
-      left: 14px;
-      height: 2px;
-      width: var(--story-progress, 0%);
-      background: linear-gradient(90deg, var(--accent), var(--good));
-      transition: width 0.45s ease;
-      z-index: 1;
-    }
-    .story-dot {
-      width: 30px;
-      margin: 0 auto;
-      text-align: center;
-      position: relative;
-      z-index: 2;
-      transition: filter 0.35s ease, opacity 0.35s ease;
-      opacity: 0.45;
-      filter: blur(0.5px);
-    }
-    .story-dot::before {
-      content: '';
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      margin: 0 auto 6px;
-      display: block;
-      background: #6e7681;
-      border: 2px solid rgba(13, 17, 23, 0.9);
-      box-shadow: 0 0 0 2px rgba(110, 118, 129, 0.35);
-      transition: all 0.35s ease;
-    }
-    .story-dot .dot-label {
-      font-size: 0.55em;
-      color: var(--muted);
-      font-family: 'JetBrains Mono', monospace;
-    }
-    .story-dot.story-dot-past {
-      opacity: 0.5;
-      filter: blur(1.2px) saturate(0.6);
-    }
-    .story-dot.story-dot-past::before {
-      background: #3fb950;
-      box-shadow: 0 0 0 2px rgba(63, 185, 80, 0.2);
-    }
-    .story-dot.story-dot-current {
-      opacity: 1;
-      filter: blur(0);
-    }
-    .story-dot.story-dot-current::before {
-      background: #2f81f7;
-      box-shadow: 0 0 0 4px rgba(47, 129, 247, 0.25);
-      transform: scale(1.12);
-    }
-    .story-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 10px;
-    }
-    .story-slot {
-      background: var(--bg-card-soft);
-      border: 1px solid var(--border);
-      border-top: 3px solid var(--sc, var(--accent));
-      border-radius: 10px;
-      padding: 12px 10px 10px;
-      text-align: center;
-      font-size: 0.65em;
-      opacity: 0;
-      transform: translateX(14px) scale(0.93);
-      filter: blur(10px) saturate(0.65);
-      transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
-      pointer-events: none;
-    }
-    .story-slot.story-stage-current {
-      opacity: 1;
-      transform: translateX(0) scale(1);
-      filter: blur(0);
-      pointer-events: auto;
-      box-shadow: 0 10px 28px rgba(47, 129, 247, 0.16);
-    }
-    .story-slot.story-stage-past {
-      opacity: 0.55;
-      transform: translateX(-8px) scale(0.96);
-      filter: blur(2.8px) saturate(0.55);
-    }
-    .story-slot.story-stage-future {
-      opacity: 0;
-      transform: translateX(14px) scale(0.93);
-      filter: blur(10px) saturate(0.65);
-    }
-    .sicon {
-      width: 36px;
-      height: 36px;
-      display: block;
-      margin: 0 auto 7px;
-      transition: transform 0.35s ease;
-    }
-    .story-slot.story-stage-current .sicon {
-      animation: iconPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
-    }
-    @keyframes iconPop {
-      from { transform: scale(0.2); opacity: 0; }
-      to   { transform: scale(1); opacity: 1; }
-    }
-    .stime {
-      font-weight: 700;
-      color: var(--sc, var(--accent));
-      font-family: 'JetBrains Mono', monospace;
-      font-size: 1.05em;
-      margin-bottom: 4px;
-    }
-    .sdesc {
-      color: var(--text);
-      line-height: 1.45;
-      font-size: 0.95em;
-    }
-    .story-hint {
-      margin-top: 14px;
-      text-align: center;
-      color: var(--muted);
-      font-size: 0.68em;
-      letter-spacing: 0.03em;
-    }
-    /* Clickable benchmark numbers */
-    .stat-number a {
-      background: linear-gradient(125deg, var(--accent), var(--good));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      text-decoration: none;
-      display: inline-block;
-      cursor: pointer;
-    }
-    .stat-number a:hover, .stat-number a:focus-visible {
-      filter: brightness(1.2);
-      text-decoration: underline;
-      text-decoration-color: rgba(47, 129, 247, 0.45);
-      text-underline-offset: 0.12em;
-    }
-    .before-card .time a, .after-card .time a {
-      color: inherit;
-      -webkit-text-fill-color: inherit;
-      background: none;
-      text-decoration: none;
-      display: inline-block;
-    }
-    .before-card .time a:hover, .before-card .time a:focus-visible,
-    .after-card .time a:hover, .after-card .time a:focus-visible {
-      opacity: 0.8;
-      text-decoration: underline;
-      text-decoration-color: rgba(255, 255, 255, 0.35);
-      text-underline-offset: 0.1em;
-    }
-    /* Compact issue-list for slides with many items */
-    .issue-list-compact li {
-      padding: 9px 18px;
-      margin: 6px 0;
-      font-size: 0.88em;
-    }
-
-    /* Tight layout for content-heavy slides that can clip on shorter displays */
-    .reveal .slides section.fit-slide h2 {
-      font-size: 1.7em;
-      margin: 0 0 0.25em;
-    }
-    .reveal .slides section.fit-slide h3 {
-      font-size: 1.1em;
-      margin: 0 0 0.45em;
-    }
-    .reveal .slides section.fit-slide .comparison {
-      gap: 16px;
-      margin: 18px 0;
-    }
-    .reveal .slides section.fit-slide .before-card,
-    .reveal .slides section.fit-slide .after-card {
-      padding: 20px;
-    }
-    .reveal .slides section.fit-slide .before-card .time,
-    .reveal .slides section.fit-slide .after-card .time {
-      font-size: 2.8em;
-    }
-    .reveal .slides section.fit-slide .stat-grid {
-      gap: 14px;
-      margin: 18px 0;
-    }
-    .reveal .slides section.fit-slide .stat-card {
-      padding: 20px 16px;
-    }
-    .reveal .slides section.fit-slide .stat-number {
-      font-size: 2.35em;
-    }
-    .reveal .slides section.fit-slide .stat-label {
-      font-size: 0.78em;
-      margin-top: 6px;
-    }
-    .reveal .slides section.fit-slide .issue-list li {
-      margin: 6px 0;
-      padding: 10px 14px;
-      font-size: 0.78em;
-    }
-    .reveal .slides section.fit-slide .cmd {
-      margin: 8px 0;
-      padding: 8px 14px;
-      font-size: 0.72em;
+      .hero-sub {
+        font-size: 0.56em;
+      }
     }
   </style>
 </head>
@@ -571,157 +549,21 @@
 <div class="slides">
 
 <!-- ========== TITLE ========== -->
-<section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
-  <h1 style="text-align:center">
+<section class="main-hero" id="mainHero" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
+  <h1>
     <span class="gradient-text">Flutter CI</span><br>
-    <span style="font-size:0.6em; color:var(--muted)">A Live Optimization Story</span>
+    <span style="font-size:0.6em; color:var(--muted)">let's cut some costs and speed up some flows</span>
   </h1>
-  <div style="text-align:center; margin-top: 28px;">
-    <span class="workflow-chip">GitHub Actions Pipeline</span>
+  <div class="hero-chips">
+    <span class="hero-chip accent">GitHub Actions Pipeline</span>
+    <span class="hero-chip good">Flutter London meetup</span>
   </div>
 </section>
 
-<!-- ========== STORY TIME ========== -->
-<section class="story-time" data-background-gradient="linear-gradient(135deg, #060c14 0%, #0d1117 100%)">
-  <div style="text-align:center; margin-bottom:14px">
-    <h2 style="margin:0; font-size:1.6em; color:#f0f6fc">Story Time</h2>
-
-  </div>
-
-  <div class="story-fragments" aria-hidden="true">
-    <span class="fragment story-step" data-fragment-index="1" data-stage="1"></span>
-    <span class="fragment story-step" data-fragment-index="2" data-stage="2"></span>
-    <span class="fragment story-step" data-fragment-index="3" data-stage="3"></span>
-    <span class="fragment story-step" data-fragment-index="4" data-stage="4"></span>
-    <span class="fragment story-step" data-fragment-index="5" data-stage="5"></span>
-    <span class="fragment story-step" data-fragment-index="6" data-stage="6"></span>
-    <span class="fragment story-step" data-fragment-index="7" data-stage="7"></span>
-    <span class="fragment story-step" data-fragment-index="8" data-stage="8"></span>
-  </div>
-
-  <div class="story-track">
-    <div class="story-progress"></div>
-    <div class="story-dot" data-stage="1"><span class="dot-label">THU</span></div>
-    <div class="story-dot" data-stage="2"><span class="dot-label">1:00</span></div>
-    <div class="story-dot" data-stage="3"><span class="dot-label">3:30</span></div>
-    <div class="story-dot" data-stage="4"><span class="dot-label">4:00</span></div>
-    <div class="story-dot" data-stage="5"><span class="dot-label">4:33</span></div>
-    <div class="story-dot" data-stage="6"><span class="dot-label">4:53</span></div>
-    <div class="story-dot" data-stage="7"><span class="dot-label">5:33</span></div>
-    <div class="story-dot" data-stage="8"><span class="dot-label">MON</span></div>
-  </div>
-
-  <div class="story-grid">
-
-    <!-- Stage 1: Thursday setup -->
-    <div class="story-slot" data-stage="1" style="--sc:#2f81f7">
-      <svg class="sicon" viewBox="0 0 44 44" fill="none">
-        <rect x="5" y="9" width="34" height="30" rx="4" stroke="#2f81f7" stroke-width="2.5"/>
-        <line x1="5" y1="18" x2="39" y2="18" stroke="#2f81f7" stroke-width="2.5"/>
-        <line x1="14" y1="5" x2="14" y2="13" stroke="#2f81f7" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="30" y1="5" x2="30" y2="13" stroke="#2f81f7" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="15" cy="27" r="2" fill="#2f81f7"/><circle cx="22" cy="27" r="2" fill="#2f81f7"/>
-        <circle cx="29" cy="27" r="2" fill="#2f81f7"/><circle cx="15" cy="34" r="2" fill="#2f81f7"/>
-        <circle cx="22" cy="34" r="2" fill="#2f81f7"/>
-        <circle cx="29" cy="34" r="2" fill="none" stroke="#f85149" stroke-width="1.5"/>
-      </svg>
-      <div class="stime">Thursday</div>
-      <div class="sdesc">Team of 20. Last day before Friday RC cut. Life is good &#x2600;&#xFE0F;</div>
-    </div>
-
-    <!-- Stage 2: 1pm PM arrives -->
-    <div class="story-slot" data-stage="2" style="--sc:#d29922">
-      <svg class="sicon" viewBox="0 0 44 44" fill="none">
-        <circle cx="22" cy="22" r="16" stroke="#d29922" stroke-width="2.5"/>
-        <polyline points="22,11 22,22 31,26" stroke="#d29922" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-        <circle cx="22" cy="22" r="2" fill="#d29922"/>
-      </svg>
-      <div class="stime">1:00 PM</div>
-      <div class="sdesc">PM: &ldquo;Urgent bug! RC is tomorrow!&rdquo; &#x1F62C; Seems fixable &mdash; let&rsquo;s go.</div>
-    </div>
-
-    <!-- Stage 3: 3:30pm fix found -->
-    <div class="story-slot" data-stage="3" style="--sc:#3fb950">
-      <svg class="sicon" viewBox="0 0 44 44" fill="none">
-        <circle cx="22" cy="22" r="16" stroke="#3fb950" stroke-width="2.5"/>
-        <polyline points="14,22 20,28 30,15" stroke="#3fb950" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-      <div class="stime">3:30 PM</div>
-      <div class="sdesc">Fix found after 2.5&nbsp;hrs! &#x2713; PR created &amp; submitted for review.</div>
-    </div>
-
-    <!-- Stage 4: 4pm waiting for CI -->
-    <div class="story-slot" data-stage="4" style="--sc:#8b949e">
-      <svg class="sicon" viewBox="0 0 44 44" fill="none">
-        <path d="M13 8 H31 L22 22 L31 36 H13 L22 22 Z" stroke="#8b949e" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
-        <path d="M22 22 L30 35 H14 Z" fill="rgba(47,129,247,0.18)"/>
-        <circle cx="22" cy="31" r="2.5" fill="#2f81f7" opacity="0.85"/>
-        <circle cx="20" cy="34" r="1.5" fill="#2f81f7" opacity="0.4"/>
-      </svg>
-      <div class="stime">4:00 PM</div>
-      <div class="sdesc">Team approved &#x26A1; CI running&hellip; 30&ndash;40&nbsp;min. Please be 30. &#x1F91E;</div>
-    </div>
-
-    <!-- Stage 5: 4:33pm CI fails -->
-    <div class="story-slot" data-stage="5" style="--sc:#f85149">
-      <svg class="sicon" viewBox="0 0 44 44" fill="none">
-        <circle cx="22" cy="22" r="16" stroke="#f85149" stroke-width="2.5"/>
-        <line x1="15" y1="15" x2="29" y2="29" stroke="#f85149" stroke-width="2.5" stroke-linecap="round"/>
-        <line x1="29" y1="15" x2="15" y2="29" stroke="#f85149" stroke-width="2.5" stroke-linecap="round"/>
-      </svg>
-      <div class="stime">4:33 PM</div>
-      <div class="sdesc">&#x274C; CI FAIL: code coverage below threshold. Need to write tests now.</div>
-    </div>
-
-    <!-- Stage 6: ~4:53pm AI writes tests -->
-    <div class="story-slot" data-stage="6" style="--sc:#bc8cff">
-      <svg class="sicon" viewBox="0 0 44 44" fill="none">
-        <rect x="11" y="17" width="22" height="16" rx="4" stroke="#bc8cff" stroke-width="2.5"/>
-        <rect x="16" y="8" width="12" height="8" rx="2" stroke="#bc8cff" stroke-width="2.5"/>
-        <line x1="22" y1="16" x2="22" y2="17" stroke="#bc8cff" stroke-width="2"/>
-        <circle cx="18" cy="25" r="2" fill="#bc8cff"/>
-        <circle cx="26" cy="25" r="2" fill="#bc8cff"/>
-        <path d="M18 29 q4 2.5 8 0" stroke="#bc8cff" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-        <line x1="7" y1="25" x2="11" y2="25" stroke="#bc8cff" stroke-width="2" stroke-linecap="round"/>
-        <line x1="33" y1="25" x2="37" y2="25" stroke="#bc8cff" stroke-width="2" stroke-linecap="round"/>
-        <path d="M36 10 l1.5-3 l1.5 3" stroke="#d29922" stroke-width="1.5" stroke-linecap="round" fill="none"/>
-        <circle cx="37.5" cy="13" r="1" fill="#d29922"/>
-      </svg>
-      <div class="stime">~4:53 PM</div>
-      <div class="sdesc">20&nbsp;min with AI &#x2728; &rarr; tests written &amp; pushed. &ldquo;RC team, please wait!&rdquo;</div>
-    </div>
-
-    <!-- Stage 7: 5:33pm CI fails again -->
-    <div class="story-slot" data-stage="7" style="--sc:#f85149; box-shadow:0 0 22px rgba(248,81,73,0.22)">
-      <svg class="sicon" viewBox="0 0 44 44" fill="none">
-        <path d="M22 6 L40 36 H4 Z" stroke="#f85149" stroke-width="2.5" stroke-linejoin="round"/>
-        <line x1="22" y1="18" x2="22" y2="28" stroke="#f85149" stroke-width="2.5" stroke-linecap="round"/>
-        <circle cx="22" cy="32" r="1.5" fill="#f85149"/>
-      </svg>
-      <div class="stime">5:33 PM</div>
-      <div class="sdesc">&#x274C; AGAIN. 40&nbsp;min CI. Testable refactor &rarr; new uncovered lines. &#x1F480;</div>
-    </div>
-
-    <!-- Stage 8: Monday aftermath -->
-    <div class="story-slot" data-stage="8" style="--sc:#3fb950; background:rgba(63,185,80,0.07)">
-      <svg class="sicon" viewBox="0 0 44 44" fill="none">
-        <circle cx="22" cy="17" r="10" stroke="#6e7681" stroke-width="2.5"/>
-        <circle cx="18" cy="15" r="1.5" fill="#6e7681"/>
-        <circle cx="26" cy="15" r="1.5" fill="#6e7681"/>
-        <path d="M17 21 q5-3 10 0" stroke="#6e7681" stroke-width="2" stroke-linecap="round" fill="none"/>
-        <line x1="6" y1="38" x2="38" y2="38" stroke="#3fb950" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
-        <text x="22" y="44" text-anchor="middle" fill="#3fb950" font-size="7" font-family="JetBrains Mono" font-weight="700">THAT&apos;S WHY!</text>
-      </svg>
-      <div class="stime" style="color:#3fb950">Monday &#x1F605;</div>
-      <div class="sdesc">Fixed Fri. PM tested in prod on Mon. <strong style="color:var(--accent)">That&rsquo;s why I&rsquo;m here.</strong></div>
-    </div>
-
-  </div>
-</section>
-
-<!-- ========== DEMO PROJECT OVERVIEW ========== -->
+<!-- ========== LIVE DEMO START ========== -->
 <section>
-  <h2>Demo Project overview</h2>
+  <h2>Live Demo</h2>
+  <h3>Repo shape + one copy/paste command</h3>
   <pre><code class="language-text">flutter_ci_talk/
   packages/
     app/
@@ -732,7 +574,7 @@
   tool/
   slides/
   BENCHMARKS.md</code></pre>
-  <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/bench/baseline-20260411-150040" target="_blank" rel="noopener noreferrer">git checkout bench/baseline-20260411-150040 && make demo-slow</a></div>
+  <div class="cmd">git checkout main && make demo-slow</div>
 
 </section>
 
@@ -750,7 +592,7 @@
     </div>
     <div class="stat-card">
       <div class="stat-number" style="-webkit-text-fill-color: var(--warn)">?</div>
-      <div class="stat-label">Total Time (Reveal Later)</div>
+      <div class="stat-label">Total Time</div>
     </div>
   </div>
   <p style="text-align:center; color:var(--muted); font-size:0.9em">
@@ -765,31 +607,75 @@
     <canvas id="timeBreakdown"></canvas>
   </div>
   <p style="text-align:center; font-size:0.8em; color:var(--muted)">
-    Latest GitHub Actions Benchmark Dispatch wall times (2026-04-11)
+    Output of <code>dart run tool/find_slow_tests.dart</code>
   </p>
 </section>
 
-<!-- ========== TIMELINE ========== -->
 <section>
-  <h2>The Optimization Journey</h2>
-  <div class="timeline">
-    <div class="timeline-step active">
-      <div class="step-num">1</div><br>Fix Tests
+  <h2>How We Speed It Up</h2>
+  <h3>Local first. CI second.</h3>
+  <div class="strategy-grid">
+    <div class="strategy-card">
+      <svg class="strategy-svg" viewBox="0 0 72 72" aria-hidden="true">
+        <circle cx="24" cy="36" r="16" fill="rgba(47,129,247,0.18)" stroke="#2f81f7" stroke-width="2"></circle>
+        <path class="svg-rocket" d="M40 29 L55 36 L40 43 L43 36 Z" fill="#3fb950"></path>
+        <path d="M10 36 H40" stroke="#79c0ff" stroke-width="3" stroke-linecap="round"></path>
+        <path d="M46 32 L52 36 L46 40" stroke="#9be9a8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <div>
+        <div class="scope-badges">
+          <span class="scope-badge local">Local</span>
+          <span class="scope-badge ci">CI</span>
+        </div>
+        <h4>Make Every Job Faster</h4>
+      </div>
     </div>
-    <div class="timeline-step">
-      <div class="step-num">2</div><br>Parallel Pkgs
+
+    <div class="strategy-card">
+      <svg class="strategy-svg" viewBox="0 0 72 72" aria-hidden="true">
+        <rect x="10" y="14" width="52" height="44" rx="10" fill="rgba(63,185,80,0.12)" stroke="#3fb950" stroke-width="2"></rect>
+        <circle class="svg-node" cx="22" cy="28" r="5" fill="#9be9a8"></circle>
+        <circle class="svg-node" cx="36" cy="36" r="5" fill="#79c0ff" style="animation-delay:0.2s"></circle>
+        <circle class="svg-node" cx="50" cy="24" r="5" fill="#2f81f7" style="animation-delay:0.4s"></circle>
+        <path class="svg-dash" d="M22 28 L36 36 L50 24" stroke="#c9d1d9" stroke-width="2" fill="none" stroke-linecap="round"></path>
+      </svg>
+      <div>
+        <div class="scope-badges">
+          <span class="scope-badge ci">CI</span>
+        </div>
+        <h4>Run Only What Changed</h4>
+      </div>
     </div>
-    <div class="timeline-step">
-      <div class="step-num">3</div><br>Bundle Tests
+
+    <div class="strategy-card">
+      <svg class="strategy-svg" viewBox="0 0 72 72" aria-hidden="true">
+        <rect x="12" y="18" width="48" height="36" rx="8" fill="rgba(210,153,34,0.12)" stroke="#d29922" stroke-width="2"></rect>
+        <circle class="svg-cache" cx="36" cy="36" r="12" fill="none" stroke="#e3b341" stroke-width="3" stroke-dasharray="40 18"></circle>
+        <path d="M36 29 V38 L42 42" stroke="#f0f6fc" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
+      <div>
+        <div class="scope-badges">
+          <span class="scope-badge ci">CI</span>
+        </div>
+        <h4>Reuse Compute With Caching</h4>
+      </div>
     </div>
-    <div class="timeline-step">
-      <div class="step-num">4</div><br>Cache &amp; Select
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">5</div><br>Diff Coverage
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">6</div><br>All Combined
+
+    <div class="strategy-card">
+      <svg class="strategy-svg" viewBox="0 0 72 72" aria-hidden="true">
+        <rect x="9" y="12" width="20" height="20" rx="5" fill="rgba(47,129,247,0.2)" stroke="#2f81f7"></rect>
+        <rect x="43" y="12" width="20" height="20" rx="5" fill="rgba(63,185,80,0.2)" stroke="#3fb950"></rect>
+        <rect x="9" y="40" width="20" height="20" rx="5" fill="rgba(210,153,34,0.2)" stroke="#d29922"></rect>
+        <rect x="43" y="40" width="20" height="20" rx="5" fill="rgba(47,129,247,0.2)" stroke="#79c0ff"></rect>
+        <path class="svg-dash" d="M29 22 H43 M19 32 V40 M53 32 V40 M29 50 H43" stroke="#8b949e" stroke-width="2" fill="none"></path>
+      </svg>
+      <div>
+        <div class="scope-badges">
+          <span class="scope-badge local">Local</span>
+          <span class="scope-badge ci">CI</span>
+        </div>
+        <h4>Parallelize Independent Work</h4>
+      </div>
     </div>
   </div>
 </section>
@@ -797,15 +683,14 @@
 <!-- ========== ACT 1: BAD TESTS ========== -->
 <section>
   <section>
-    <h2>Act 1 Run</h2>
+    <h2>Act 1 : let's run the tests</h2>
     <h3>Start from the slow baseline</h3>
-    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/bench/baseline-20260411-150040" target="_blank" rel="noopener noreferrer">git checkout bench/baseline-20260411-150040 && make demo-slow</a></div>
-
+    <div class="cmd">git checkout main && make demo-slow</div>
   </section>
-  <section class="fit-slide">
+  <section>
     <h2>Act 1: Bad Test Patterns</h2>
     <h3>The hidden time sinks</h3>
-    <ul class="issue-list issue-list-compact">
+    <ul class="issue-list">
       <li><span class="pill pill-bad">Delay</span> Real async delays &mdash; <code>Future.delayed(seconds: 3)</code></li>
       <li><span class="pill pill-bad">Setup</span> Heavy setUp &mdash; <code>setUp(() async { await Future.delayed(500ms) })</code></li>
       <li><span class="pill pill-bad">Parallelism</span> Mega test files &mdash; 30+ tests in one file</li>
@@ -824,35 +709,23 @@ test('should debounce search input', () async {
 
 // x 198 tests across 4 packages = 594 seconds of waiting</code></pre>
   </section>
-  <section class="fit-slide">
+  <section>
     <h2>Act 1 Result Reveal</h2>
-    <div class="stat-grid">
-      <div class="stat-card">
-        <div class="stat-number" style="background:none; -webkit-text-fill-color: var(--bad);"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24289431723" target="_blank" rel="noopener noreferrer" style="background:none; -webkit-text-fill-color: var(--bad);">8:31</a></div>
-        <div class="stat-label">Latest GitHub Actions baseline</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24289431723" target="_blank" rel="noopener noreferrer">511s</a></div>
-        <div class="stat-label">Benchmark Dispatch wall time</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number">239</div>
-        <div class="stat-label">Test files on the slow path</div>
-      </div>
-    </div>
-    <p style="text-align:center; color:var(--muted); font-size:0.82em">
-      Latest successful baseline retry on GitHub Actions from 2026-04-11.
-    </p>
-
+    <pre><code class="language-dart">// Just await the action directly
+test('should debounce search input', () async {
+  await cubit.search('query');
+  expect(cubit.state, isA&lt;SearchSuccess&gt;());
+});</code></pre>
+    <div class="cmd">Benchmark result: main baseline = 15m 21s on GitHub Actions (sequential, with coverage, 344 test files)</div>
   </section>
 </section>
 
 <!-- ========== ACT 2: PARALLEL ========== -->
 <section>
   <section>
-    <h2>Act 2 Run</h2>
+    <h2>Act 2 Run Slide</h2>
     <h3>Fix bad tests, then rerun same script</h3>
-    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-1/fix-bad-tests" target="_blank" rel="noopener noreferrer">git checkout step-1/fix-bad-tests && make demo-slow</a></div>
+    <div class="cmd">git checkout step-1/fix-bad-tests && make demo-slow</div>
   </section>
   <section>
     <h2>Act 2: Parallel Packages</h2>
@@ -869,45 +742,32 @@ test('should debounce search input', () async {
     </div>
     <div class="cmd">sh/check-ci.sh  # 4 packages in parallel</div>
   </section>
-  <section class="fit-slide">
+  <section>
     <h2>Act 2 Result Reveal</h2>
-    <div class="comparison" style="max-width: 760px; margin: 32px auto;">
-      <div class="before-card">
-        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24289431723" target="_blank" rel="noopener noreferrer">8:31</a></div>
-        <div style="color:var(--muted); margin-top:8px">Baseline</div>
-      </div>
-      <div class="arrow">&rarr;</div>
-      <div class="after-card">
-        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087150" target="_blank" rel="noopener noreferrer">5:38</a></div>
-        <div style="color:var(--muted); margin-top:8px">After fixing bad tests</div>
-      </div>
-    </div>
-    <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 20px 0 10px;">
-      <div class="stat-card">
-        <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087150" target="_blank" rel="noopener noreferrer">34%</a></div>
-        <div class="stat-label">Faster than baseline</div>
-      </div>
-      <div class="stat-card" style="padding-top: 24px; padding-bottom: 24px;">
-        <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087150" target="_blank" rel="noopener noreferrer">173s</a></div>
-        <div class="stat-label">Wall time removed</div>
-      </div>
-    </div>
+    <div class="cmd">Benchmark result: step-1/fix-bad-tests = 5m 38s on GitHub Actions</div>
+    <h3>Parallel Script</h3>
+    <pre><code class="language-bash">for pkg in packages/*/; do
+  (cd "$pkg" && flutter test) &   # background job
+done
+wait  # wait for all to finish
+
+# Total = max(package_time) instead of sum(package_times)</code></pre>
   </section>
 </section>
 
 <!-- ========== ACT 3: BUNDLER ========== -->
 <section>
   <section>
-    <h2>Act 3 Run</h2>
+    <h2>Act 3 Run Slide</h2>
     <h3>Parallel package execution</h3>
-    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-2/parallel-packages" target="_blank" rel="noopener noreferrer">git checkout step-2/parallel-packages && sh/check-ci.sh</a></div>
+    <div class="cmd">git checkout step-2/parallel-packages && sh/check-ci.sh</div>
   </section>
   <section>
     <h2>Act 3: Isolate Cold Starts</h2>
-    <h3>239 files = 239 cold starts</h3>
+    <h3>344 files = 344 cold starts</h3>
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-number">239</div>
+        <div class="stat-number">344</div>
         <div class="stat-label">Isolates Spawned</div>
       </div>
       <div class="stat-card">
@@ -915,34 +775,14 @@ test('should debounce search input', () async {
         <div class="stat-label">Per Isolate Startup</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number" style="-webkit-text-fill-color: var(--bad)">~72s</div>
+        <div class="stat-number" style="-webkit-text-fill-color: var(--bad)">~103s</div>
         <div class="stat-label">Just Starting Up</div>
       </div>
     </div>
   </section>
-  <section class="fit-slide">
+  <section>
     <h2>Act 3 Result Reveal</h2>
-    <div class="comparison" style="max-width: 760px; margin: 32px auto;">
-      <div class="before-card">
-        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087193" target="_blank" rel="noopener noreferrer">4:29</a></div>
-        <div style="color:var(--muted); margin-top:8px">After package-level parallelism</div>
-      </div>
-      <div class="arrow">&rarr;</div>
-      <div class="after-card">
-        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087380" target="_blank" rel="noopener noreferrer">4:37</a></div>
-        <div style="color:var(--muted); margin-top:8px">After test bundler</div>
-      </div>
-    </div>
-    <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr);">
-      <div class="stat-card">
-        <div class="stat-number" style="-webkit-text-fill-color: var(--warn)"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087380" target="_blank" rel="noopener noreferrer" style="background:none; -webkit-text-fill-color: var(--warn);">+8s</a></div>
-        <div class="stat-label">vs Step 2 wall time</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number" style="-webkit-text-fill-color: var(--warn)"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087380" target="_blank" rel="noopener noreferrer" style="background:none; -webkit-text-fill-color: var(--warn);">+3%</a></div>
-        <div class="stat-label">CI variance (still same range)</div>
-      </div>
-    </div>
+    <div class="cmd">Benchmark result: baseline + concurrent packages = 8m 39s on GitHub Actions (parallel packages, with coverage, 344 test files)</div>
   </section>
   <section>
     <h2>The Bundler Solution</h2>
@@ -963,9 +803,9 @@ void main() {
 <!-- ========== ACT 4: CI CACHING ========== -->
 <section>
   <section>
-    <h2>Act 4 Run</h2>
+    <h2>Act 4 Run Slide</h2>
     <h3>Bundle tests to reduce isolate startup overhead</h3>
-    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-3/test-bundler" target="_blank" rel="noopener noreferrer">git checkout step-3/test-bundler && sh/demo_isolate.sh</a></div>
+    <div class="cmd">git checkout step-3/test-bundler && sh/demo_isolate.sh</div>
   </section>
   <section>
     <h2>Act 4: CI-Level Optimizations</h2>
@@ -977,22 +817,57 @@ void main() {
       <li><span class="pill pill-bad">WASTE</span> Testing all packages when one changed</li>
     </ul>
   </section>
-  <section class="fit-slide">
-    <h2>Act 4 Result Reveal</h2>
-    <div class="comparison" style="max-width: 760px; margin: 32px auto;">
-      <div class="before-card">
-        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087193" target="_blank" rel="noopener noreferrer">4:29</a></div>
-        <div style="color:var(--muted); margin-top:8px">Step 2 parallel packages</div>
+  <section>
+    <h2>Selective Mobile Builds = Huge Cost Win</h2>
+    <h3>Most PRs are Dart-only, but full native builds still run</h3>
+    <div class="comparison" style="margin-top: 18px;">
+      <div class="before-card" style="border-color: var(--bad)">
+        <div style="font-size:0.8em; color:var(--muted)">Every commit</div>
+        <div style="font-size:1.7em; font-weight:800; color:var(--bad); margin-top:8px">Android ~20 min</div>
+        <div style="font-size:1.7em; font-weight:800; color:var(--bad)">iOS ~20 min</div>
+        <div style="color:#6e7681; font-size:0.7em; margin-top:12px">~40 native build minutes per commit</div>
       </div>
       <div class="arrow">&rarr;</div>
-      <div class="after-card">
-        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087380" target="_blank" rel="noopener noreferrer">4:37</a></div>
-        <div style="color:var(--muted); margin-top:8px">Latest bundled CI benchmark</div>
+      <div class="after-card" style="border-color: var(--good)">
+        <div style="font-size:0.8em; color:var(--muted)">Dart-only PRs</div>
+        <div style="font-size:1.8em; font-weight:800; color:var(--good); margin-top:8px">Use dart snapshot path</div>
+        <div style="font-size:1.15em; color:#9be9a8; margin-top:8px">Skip full Android + iOS rebuilds</div>
+        <div style="color:#6e7681; font-size:0.7em; margin-top:12px">Build native only when inputs require it</div>
       </div>
     </div>
-    <ul class="issue-list">
-      <li class="fixed"><span class="pill pill-good">CI</span> The bundler keeps GitHub Actions in the same wall-time range as Step 2. At this point, workflow setup and cache behavior dominate more than isolate startup.</li>
-    </ul>
+    <pre><code class="language-yaml"># Decision gate
+if: pubspec.lock changed OR android/ changed OR ios/ changed
+  -> run full mobile builds
+else
+  -> run flutter build bundle (fast Dart snapshot path)</code></pre>
+    <p style="text-align:center; color:var(--muted); font-size:0.75em; margin-top:10px">
+      Example impact: with 30 PRs/day and 80% Dart-only changes, skipping ~40 min/PR saves about 16 runner-hours/day.
+    </p>
+  </section>
+  <section>
+    <h2>Act 4 Result Reveal</h2>
+    <div class="cmd">Benchmark result (with coverage, 344 files):</div>
+    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-top:14px">
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--bad)">15m 21s</div>
+        <div class="stat-label" style="font-size:0.7em">Baseline sequential</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--warn)">8m 39s</div>
+        <div class="stat-label" style="font-size:0.7em">+ Concurrency</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--warn)">8m 08s</div>
+        <div class="stat-label" style="font-size:0.7em">+ Bundler</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--good)">2m 48s</div>
+        <div class="stat-label" style="font-size:0.7em">+ Both combined</div>
+      </div>
+    </div>
+    <p style="text-align:center; color:var(--muted); font-size:0.72em; margin-top:10px">
+      Bundler + concurrency together: <strong style="color:var(--good)">81.7% faster</strong> than baseline. Super-additive: fewer isolates &times; parallel execution.
+    </p>
   </section>
   <section>
     <h2>The Fix: Workspace-Level Resolution</h2>
@@ -1022,15 +897,15 @@ test:
 <!-- ========== ACT 5: DIFF COVERAGE ========== -->
 <section>
   <section>
-    <h2>Act 5 Run</h2>
+    <h2>Act 5 Run Slide</h2>
     <h3>Selective workflows and dependency-aware checks</h3>
-    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-4/selective-builds" target="_blank" rel="noopener noreferrer">git checkout step-4/selective-builds && cat .github/workflows/pr_check.yml</a></div>
+    <div class="cmd">git checkout step-4/selective-builds && cat .github/workflows/pr_check.yml</div>
   </section>
   <section>
     <h2>Act 5: Dependency Graph Testing</h2>
     <h3>Test what matters</h3>
-    <div style="text-align:center; margin: 40px 0;">
-      <svg width="500" height="280" viewBox="0 0 500 280">
+    <div style="text-align:center; margin: 8px 0;">
+      <svg width="500" height="260" viewBox="0 0 500 280">
         <defs>
           <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
             <polygon points="0 0, 10 3.5, 0 7" fill="#2f81f7"/>
@@ -1064,8 +939,8 @@ test:
     </div>
   </section>
   <section>
-    <h2>Act 5 Run (continued)</h2>
-    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-5/diff-coverage" target="_blank" rel="noopener noreferrer">git checkout step-5/diff-coverage && sh/diff_coverage.sh bench/baseline-20260411-150040 && sh/affected_packages.sh bench/baseline-20260411-150040</a></div>
+    <h2>Act 5 Run Slide (continued)</h2>
+    <div class="cmd">git checkout step-5/diff-coverage && sh/diff_coverage.sh main && sh/affected_packages.sh main</div>
   </section>
   <section>
     <h2>Diff Coverage</h2>
@@ -1081,63 +956,232 @@ test:
         <div style="color:var(--muted)">Changed files to cover</div>
       </div>
     </div>
-    <div class="cmd">sh/diff_coverage.sh bench/baseline-20260411-150040</div>
+    <div class="cmd">sh/diff_coverage.sh main</div>
   </section>
 </section>
 
+<!-- ========== TIMELINE ========== -->
+<section>
+  <h2>The Optimization Journey</h2>
+  <div class="timeline">
+    <div class="timeline-step active">
+      <div class="step-num">1</div><br>Fix Tests
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">2</div><br>Parallel Pkgs
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">3</div><br>Bundle Tests
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">4</div><br>Cache &amp; Select
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">5</div><br>Diff Coverage
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">6</div><br>All Combined
+    </div>
+  </div>
+
+</section>
+
 <!-- ========== FINAL RESULTS ========== -->
-<section class="fit-slide">
+<section>
   <h2>The Full Picture</h2>
-  <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-6/all-optimizations" target="_blank" rel="noopener noreferrer">git checkout step-6/all-optimizations && make demo-fast</a></div>
-  <div class="chart-container" style="height: 310px; margin: 14px auto; padding: 14px 16px;">
+  <div class="cmd">Benchmark Updated Tests &middot; GitHub Actions run 24317309884 &middot; 344 test files &middot; coverage enabled</div>
+  <div class="chart-container" style="height: 320px;">
     <canvas id="finalChart"></canvas>
   </div>
-  <p style="text-align:center; color:var(--muted); font-size:0.76em; margin-top:18px">
-    Latest GitHub Actions Benchmark Dispatch wall times from 2026-04-11. The Step 4 cache + select benchmark run ended in failure after 4:56.
+  <p style="text-align:center; color:var(--muted); font-size:0.7em; margin-top:12px;">
+    Coverage + Concurrency Matrix &mdash; GitHub Actions Ubuntu (April 12, 2026).
+  </p>
+  <p style="text-align:center; color:#6e7681; font-size:0.62em; margin-top:8px;">
+    All variants collect coverage reports. Bundler + Concurrent is super-additive: 81.7% faster than the sequential baseline.
   </p>
 </section>
 
-<section class="fit-slide" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
+<section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
   <h2 style="text-align:center">Before &amp; After</h2>
-  <div class="comparison" style="max-width: 700px; margin: 20px auto;">
-    <div class="before-card" style="padding: 20px 24px;">
-      <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24289431723" target="_blank" rel="noopener noreferrer">8:31</a></div>
-      <div style="color:var(--muted); margin-top:8px">Latest successful baseline benchmark</div>
-      <div style="color:#6e7681; font-size:0.7em; margin-top:12px">
+  <div class="comparison" style="max-width: 700px; margin: 14px auto;">
+    <div class="before-card">
+      <div class="time">15:21</div>
+      <div style="color:var(--muted); margin-top:8px">main branch</div>
+      <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Sequential &middot; Per-file isolates<br>
-        Real delays &middot; Heavy setUp<br>
+        Coverage enabled &middot; 344 test files<br>
         No caching &middot; Full builds
       </div>
     </div>
     <div class="arrow">&rarr;</div>
-    <div class="after-card" style="padding: 20px 24px;">
-      <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087924" target="_blank" rel="noopener noreferrer">2:15</a></div>
-      <div style="color:var(--muted); margin-top:8px">Latest all-optimizations benchmark</div>
-      <div style="color:#6e7681; font-size:0.7em; margin-top:12px">
+    <div class="after-card">
+      <div class="time">2:48</div>
+      <div style="color:var(--muted); margin-top:8px">bundler + concurrent</div>
+      <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Parallel &middot; Bundled isolates<br>
-        Fixed tests &middot; Cached deps<br>
+        Coverage enabled &middot; 344 test files<br>
         Selective builds &middot; Diff coverage
       </div>
     </div>
   </div>
   <div style="text-align:center">
-    <span class="stat-number" style="font-size:3.2em"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087924" target="_blank" rel="noopener noreferrer">74%</a></span>
-    <div class="stat-label" style="font-size:1.2em">Faster</div>
+    <span class="stat-number" style="font-size:4em">82%</span>
+    <div class="stat-label" style="font-size:1.2em">Faster on the GitHub Actions benchmark</div>
+  </div>
+  <div style="text-align:center; color:var(--muted); font-size:0.78em; margin-top:18px">
+    Measured with coverage on 344 test files: GitHub Actions 15:21 &rarr; 2:48 (run 24317309884)
+  </div>
+</section>
+
+<!-- ========== COST SAVINGS ========== -->
+<section data-background-gradient="linear-gradient(145deg, #0a1020 0%, #0d1117 100%)">
+  <h2 style="text-align:center">What This Saves, In Practice</h2>
+  <div style="text-align:center; color:var(--muted); font-size:0.8em; margin-top:-4px; margin-bottom:24px;">
+    Measured on GitHub Actions &nbsp;&mdash;&nbsp; 15:21 baseline &rarr; 2:48 optimized (82% reduction, with coverage, 344 test files)
+  </div>
+  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; max-width:940px; margin:0 auto;">
+    <div class="stat-card" style="border: 2px solid var(--good);">
+      <div class="stat-number" style="-webkit-text-fill-color:var(--good); font-size:2.6em;">12m 33s</div>
+      <div class="stat-label">saved per CI run</div>
+      <div style="color:#6e7681; font-size:0.65em; margin-top:12px; line-height:1.6;">
+        15m 21s &rarr; 2m 48s<br>per GitHub Actions run
+      </div>
+    </div>
+    <div class="stat-card" style="border: 2px solid var(--accent);">
+      <div class="stat-number" style="-webkit-text-fill-color:var(--accent); font-size:2.6em;">275h</div>
+      <div class="stat-label">dev time back / month</div>
+      <div style="color:#6e7681; font-size:0.65em; margin-top:12px; line-height:1.6;">
+        30 PRs/day &times; 2 engineers<br>&times; 12.5 min &times; 22 days<br>&asymp; 34 working days recovered
+      </div>
+    </div>
+    <div class="stat-card" style="border: 2px solid var(--warn);">
+      <div class="stat-number" style="-webkit-text-fill-color:var(--warn); font-size:2.6em;">$66</div>
+      <div class="stat-label">Actions cost saved / month</div>
+      <div style="color:#6e7681; font-size:0.65em; margin-top:12px; line-height:1.6;">
+        12.5 min &times; 30 PRs/day<br>&times; $0.008/min<br>&times; 22 working days
+      </div>
+    </div>
+  </div>
+  <p style="text-align:center; color:#6e7681; font-size:0.6em; margin-top:22px;">
+    Assumptions: 30 PRs/day &nbsp;&middot;&nbsp; 2 engineers per PR (author + reviewer) &nbsp;&middot;&nbsp; $0.008/min Ubuntu runner &nbsp;&middot;&nbsp; 22 working days/month
+  </p>
+</section>
+
+<section data-background-gradient="linear-gradient(145deg, #111926 0%, #0d1117 100%)">
+  <h2 style="text-align:center">The Mobile Build Cost Bomb</h2>
+  <h3 style="text-align:center; color:var(--muted)">Why selective native builds matter in real CI budgets</h3>
+  <div class="comparison" style="max-width: 900px; margin: 20px auto 10px auto; grid-template-columns: 1fr 1fr; gap: 14px;">
+    <div class="before-card" style="border-color: var(--bad)">
+      <div style="font-size:0.75em; color:var(--muted)">Without selective builds</div>
+      <div style="font-size:1.45em; font-weight:800; color:var(--bad); margin-top:10px">Android build: ~20 min</div>
+      <div style="font-size:1.45em; font-weight:800; color:var(--bad)">iOS build: ~20 min</div>
+      <div style="font-size:0.8em; color:#ffb1ab; margin-top:10px">~40 build minutes on every commit</div>
+    </div>
+    <div class="after-card" style="border-color: var(--good)">
+      <div style="font-size:0.75em; color:var(--muted)">With selective builds</div>
+      <div style="font-size:1.05em; color:#9be9a8; margin-top:10px">Only run native builds when:</div>
+      <div style="font-size:0.95em; color:#c9d1d9; margin-top:6px">1) pubspec.lock changed</div>
+      <div style="font-size:0.95em; color:#c9d1d9">2) android/ changed</div>
+      <div style="font-size:0.95em; color:#c9d1d9">3) ios/ changed</div>
+      <div style="font-size:0.8em; color:#9be9a8; margin-top:10px">Otherwise: use dart snapshot bundle path</div>
+    </div>
+  </div>
+  <div class="stat-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 10px;">
+    <div class="stat-card">
+      <div class="stat-number">30</div>
+      <div class="stat-label">PRs per day</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">80%</div>
+      <div class="stat-label">Dart-only PRs</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">16h</div>
+      <div class="stat-label">Runner hours saved/day</div>
+    </div>
+  </div>
+  <p style="text-align:center; color:var(--muted); font-size:0.72em; margin-top:10px">
+    Back-of-envelope: $30 x 0.8 x 40$ minutes skipped/day = $960$ minutes/day = $16$ hours/day.
+  </p>
+</section>
+
+<section data-background-gradient="linear-gradient(145deg, #0c121a 0%, #101b2b 100%)">
+  <h2 style="text-align:center">Interactive CI Cost Calculator</h2>
+  <div style="text-align:center; color: var(--muted); font-size: 0.8em; margin-top: -6px;">
+    Tune repo size + PR volume and estimate waiting time and GitHub Actions spend.
+  </div>
+  <div class="estimator-shell">
+    <div class="estimator-panel">
+      <div class="slider-row">
+        <div class="slider-head">
+          <span>Number of Test Files</span>
+          <span class="slider-value" id="filesVal">239</span>
+        </div>
+        <input id="filesSlider" class="ci-slider" type="range" min="20" max="1000" step="1" value="239">
+      </div>
+      <div class="slider-row">
+        <div class="slider-head">
+          <span>Number of Packages</span>
+          <span class="slider-value" id="packagesVal">4</span>
+        </div>
+        <input id="packagesSlider" class="ci-slider" type="range" min="1" max="20" step="1" value="4">
+      </div>
+      <div class="slider-row" style="margin-bottom:0;">
+        <div class="slider-head">
+          <span>Daily PRs</span>
+          <span class="slider-value" id="prsVal">30</span>
+        </div>
+        <input id="prsSlider" class="ci-slider" type="range" min="1" max="300" step="1" value="30">
+      </div>
+      <div class="assumption-note">
+        Model assumptions: 2 engineers waiting per PR (author + reviewer), Linux hosted runner price at $0.008/min,
+        22 working days/month. Baseline and optimized runtime are derived from this talk's measured progression.
+      </div>
+    </div>
+    <div class="estimator-panel">
+      <div class="estimate-grid">
+        <div class="estimate-card">
+          <div class="estimate-title">CI Time / PR (Baseline)</div>
+          <div class="estimate-value bad" id="baseCiPerPr">-</div>
+        </div>
+        <div class="estimate-card">
+          <div class="estimate-title">CI Time / PR (Optimized)</div>
+          <div class="estimate-value good" id="optCiPerPr">-</div>
+        </div>
+        <div class="estimate-card">
+          <div class="estimate-title">Engineer Wait / Day</div>
+          <div class="estimate-value" id="engWaitDay">-</div>
+        </div>
+        <div class="estimate-card">
+          <div class="estimate-title">Engineer Wait Saved / Month</div>
+          <div class="estimate-value good" id="engWaitSavedMonth">-</div>
+        </div>
+        <div class="estimate-card">
+          <div class="estimate-title">Actions Cost / Day</div>
+          <div class="estimate-value" id="ghaCostDay">-</div>
+        </div>
+        <div class="estimate-card">
+          <div class="estimate-title">Actions Cost Saved / Month</div>
+          <div class="estimate-value good" id="ghaSavedMonth">-</div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ========== TAKEAWAYS ========== -->
-<section class="fit-slide" data-background-gradient="linear-gradient(135deg, #111926 0%, #0d1117 100%)">
+<section data-background-gradient="linear-gradient(135deg, #111926 0%, #0d1117 100%)">
   <h2 style="text-align:center">Key Takeaways</h2>
-  <div style="max-width: 680px; margin: 10px auto 0;">
-    <ul class="issue-list issue-list-compact">
+  <div style="max-width: 600px; margin: 14px auto;">
+    <ul class="issue-list">
       <li class="fixed"><span class="pill pill-good">1</span> Fix your tests first &mdash; async delays, heavy setUp, real I/O</li>
       <li class="fixed"><span class="pill pill-good">2</span> Parallelize across packages &mdash; simple shell script</li>
       <li class="fixed"><span class="pill pill-good">3</span> Bundle tests &mdash; reduce isolate cold start overhead</li>
       <li class="fixed"><span class="pill pill-good">4</span> Cache pub get at workspace level</li>
       <li class="fixed"><span class="pill pill-good">5</span> Analyze once at workspace root</li>
       <li class="fixed"><span class="pill pill-good">6</span> Test selectively using dependency graph</li>
-      <li class="fixed"><span class="pill pill-good">7</span> Diff coverage &mdash; measure only what changed</li>
+      <li class="fixed"><span class="pill pill-good">7</span> Build selectively &mdash; skip Android/iOS rebuilds for Dart-only PRs</li>
+      <li class="fixed"><span class="pill pill-good">8</span> Diff coverage &mdash; measure only what changed</li>
     </ul>
   </div>
 </section>
@@ -1167,8 +1211,8 @@ Total estimated waste: 548.4s</code></pre>
   </h1>
   <div style="text-align:center; color:var(--muted); margin-top:40px; font-size:0.9em">
     All code: <code>github.com/your-repo/flutter_ci_talk</code><br><br>
-    <a class="branch-link" href="https://github.com/Rahiche/flutter_ci_talk/tree/bench/baseline-20260411-150040" target="_blank" rel="noopener noreferrer"><code>git checkout bench/baseline-20260411-150040</code></a> &rarr; slow<br>
-    <a class="branch-link" href="https://github.com/Rahiche/flutter_ci_talk/tree/step-6/all-optimizations" target="_blank" rel="noopener noreferrer"><code>git checkout step-6/all-optimizations</code></a> &rarr; fast
+    <code>git checkout main</code> &rarr; slow<br>
+    <code>git checkout step-6/all-optimizations</code> &rarr; fast
   </div>
 </section>
 
@@ -1185,116 +1229,94 @@ Reveal.initialize({
   backgroundTransition: 'fade',
   center: false,
   width: 1200,
-  height: 700,
-  margin: 0.08,
+  height: 780,
+  margin: 0.03,
 });
 
-function updateStorySlide(section) {
-  if (!section || !section.classList.contains('story-time')) return;
-
-  const steps = Array.from(section.querySelectorAll('.story-step'));
-  const slots = Array.from(section.querySelectorAll('.story-slot'));
-  const dots = Array.from(section.querySelectorAll('.story-dot'));
-  const progress = section.querySelector('.story-progress');
-  const total = steps.length;
-
-  let activeStage = 0;
-  steps.forEach(step => {
-    if (step.classList.contains('visible')) {
-      activeStage = Math.max(activeStage, Number(step.dataset.stage));
-    }
-  });
-
-  slots.forEach(slot => {
-    const stage = Number(slot.dataset.stage);
-    slot.classList.remove('story-stage-past', 'story-stage-current', 'story-stage-future');
-    if (activeStage === 0 || stage > activeStage) {
-      slot.classList.add('story-stage-future');
-      return;
-    }
-    if (stage < activeStage) {
-      slot.classList.add('story-stage-past');
-      return;
-    }
-    slot.classList.add('story-stage-current');
-  });
-
-  dots.forEach(dot => {
-    const stage = Number(dot.dataset.stage);
-    dot.classList.remove('story-dot-past', 'story-dot-current');
-    if (stage < activeStage) {
-      dot.classList.add('story-dot-past');
-    } else if (stage === activeStage) {
-      dot.classList.add('story-dot-current');
-    }
-  });
-
-  if (progress) {
-    const ratio = activeStage <= 1 ? 0 : ((activeStage - 1) / (total - 1)) * 100;
-    progress.style.setProperty('--story-progress', ratio + '%');
-  }
+function formatMinutesToClock(minutes) {
+  const totalSeconds = Math.round(minutes * 60);
+  const mins = Math.floor(totalSeconds / 60);
+  const secs = totalSeconds % 60;
+  return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
 }
 
-Reveal.on('ready', event => {
-  updateStorySlide(event.currentSlide);
+function formatHours(hours) {
+  if (hours >= 100) return `${Math.round(hours)}h`;
+  return `${hours.toFixed(1)}h`;
+}
+
+function formatCurrency(value) {
+  return `$${value.toFixed(2)}`;
+}
+
+function updateCiEstimator() {
+  const files = Number(document.getElementById('filesSlider')?.value || 239);
+  const packages = Number(document.getElementById('packagesSlider')?.value || 4);
+  const prs = Number(document.getElementById('prsSlider')?.value || 30);
+
+  // Baseline model is calibrated around the talk dataset (~239 tests, 4 packages ~= 7m12s).
+  const baseCiMin = 1.3 + (files * 0.017) + (packages * 0.45);
+
+  // Combined optimization ratio observed in this repo (step-6): test fixes + parallel + bundling + selective CI.
+  const optimizedRatio = 0.018 + (0.06 / Math.max(packages, 1));
+  const optCiMin = Math.max(0.12, baseCiMin * optimizedRatio);
+
+  const engineersPerPr = 2;
+  const ghaCostPerMinute = 0.008;
+  const workDaysPerMonth = 22;
+
+  const baseEngWaitDay = (baseCiMin * prs * engineersPerPr) / 60;
+  const optEngWaitDay = (optCiMin * prs * engineersPerPr) / 60;
+  const savedEngWaitMonth = (baseEngWaitDay - optEngWaitDay) * workDaysPerMonth;
+
+  const baseCostDay = baseCiMin * prs * ghaCostPerMinute;
+  const optCostDay = optCiMin * prs * ghaCostPerMinute;
+  const savedCostMonth = (baseCostDay - optCostDay) * workDaysPerMonth;
+
+  document.getElementById('filesVal').textContent = String(files);
+  document.getElementById('packagesVal').textContent = String(packages);
+  document.getElementById('prsVal').textContent = String(prs);
+
+  document.getElementById('baseCiPerPr').textContent = formatMinutesToClock(baseCiMin);
+  document.getElementById('optCiPerPr').textContent = formatMinutesToClock(optCiMin);
+  document.getElementById('engWaitDay').textContent = `${formatHours(baseEngWaitDay)} -> ${formatHours(optEngWaitDay)}`;
+  document.getElementById('engWaitSavedMonth').textContent = formatHours(savedEngWaitMonth);
+  document.getElementById('ghaCostDay').textContent = `${formatCurrency(baseCostDay)} -> ${formatCurrency(optCostDay)}`;
+  document.getElementById('ghaSavedMonth').textContent = formatCurrency(savedCostMonth);
+}
+
+['filesSlider', 'packagesSlider', 'prsSlider'].forEach(id => {
+  const el = document.getElementById(id);
+  if (el) {
+    el.addEventListener('input', updateCiEstimator);
+    el.addEventListener('change', updateCiEstimator);
+  }
 });
 
-Reveal.on('slidechanged', event => {
-  updateStorySlide(event.currentSlide);
-});
+updateCiEstimator();
 
-Reveal.on('fragmentshown', event => {
-  updateStorySlide(event.fragment.closest('section'));
-});
-
-Reveal.on('fragmenthidden', event => {
-  updateStorySlide(event.fragment.closest('section'));
-});
-
-// Chart: GitHub Actions benchmark wall times
+// Chart: Time Breakdown (donut)
 Reveal.on('slidechanged', event => {
   if (event.currentSlide.querySelector('#timeBreakdown')) {
     const ctx = document.getElementById('timeBreakdown');
     if (!ctx._chart) {
       ctx._chart = new Chart(ctx, {
-        type: 'bar',
+        type: 'doughnut',
         data: {
-          labels: ['Baseline', 'Fix Tests', 'Parallel Pkgs', 'Test Bundler', 'Cache+Select', 'Diff Coverage', 'All Opts'],
+          labels: ['Async Delays', 'Heavy setUp', 'Mega Files', 'Excessive Pump', 'Real I/O'],
           datasets: [{
-            label: 'Wall time (seconds)',
-            data: [511, 338, 269, 277, 296, 76, 135],
-            backgroundColor: ['#f85149', '#d29922', '#e3b341', '#2f81f7', '#d29922', '#58a6ff', '#3fb950'],
+            data: [58, 21, 12, 5, 4],
+            backgroundColor: ['#f85149', '#d29922', '#e3b341', '#2f81f7', '#79c0ff'],
             borderWidth: 0,
-            borderRadius: 6,
-            borderSkipped: false,
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: item => {
-                  const v = item.raw;
-                  return v >= 60 ? Math.floor(v / 60) + 'm ' + (v % 60) + 's' : v + 's';
-                }
-              }
-            }
+            legend: { position: 'right', labels: { color: '#8b949e', font: { size: 13 } } }
           },
-          scales: {
-            y: {
-              beginAtZero: true,
-              grid: { color: 'rgba(255,255,255,0.05)' },
-              ticks: { color: '#8b949e', callback: v => v >= 60 ? Math.floor(v/60) + 'm' : v + 's' }
-            },
-            x: {
-              grid: { display: false },
-              ticks: { color: '#c9d1d9', maxRotation: 0, minRotation: 0 }
-            }
-          },
-          animation: { duration: 1400, easing: 'easeOutQuart' }
+          animation: { animateScale: true, duration: 1500 }
         }
       });
     }
@@ -1308,19 +1330,16 @@ Reveal.on('slidechanged', event => {
         type: 'bar',
         data: {
           labels: [
-            'Baseline',
-            'Step 1: Fix Tests',
-            'Step 2: Parallel',
-            'Step 3: Bundler',
-            'Step 4: Cache + Select',
-            'Step 5: Diff Coverage',
-            'Step 6: All Combined'
+            'Baseline (sequential)',
+            'Baseline + Concurrent',
+            'Test Bundler',
+            'Bundler + Concurrent'
           ],
           datasets: [{
-            label: 'Time (seconds)',
-            data: [511, 338, 269, 277, 296, 76, 135],
+            label: 'GitHub Actions time (seconds)',
+            data: [921, 519, 488, 168],
             backgroundColor: [
-              '#f85149', '#d29922', '#e3b341', '#2f81f7', '#d29922', '#58a6ff', '#3fb950'
+              '#f85149', '#d29922', '#2f81f7', '#3fb950'
             ],
             borderRadius: 6,
             borderSkipped: false,

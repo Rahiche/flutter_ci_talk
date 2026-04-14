@@ -1,11 +1,8 @@
+# Dart / Flutter build outputs
 .dart_tool/
 build/
-.packages
 pubspec.lock
-coverage/
-all_tests.dart
-all_tests_shard_*.dart
 *.iml
+
+# IntelliJ / Android Studio
 .idea/
-.vscode/
-pubspec_overrides.yaml
