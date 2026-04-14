@@ -3,7 +3,7 @@
 ## Setup
 - Open terminal in `~/flutter_ci_talk`
 - Ensure on `main` branch
-- Have BENCHMARKS.md open in split view with the GitHub Actions reference column visible
+- Have BENCHMARKS.md open in split view
 
 ---
 
@@ -21,7 +21,8 @@ git checkout main && make demo-slow
 ```
 
 ### Reveal Slide
-- Call out the benchmarked baseline: `15m 21s` sequential + coverage on GitHub Actions for `main` (344 test files, run 24317309884)
+- Read from terminal: `=== Sequential total: Xm Ys ===`
+- Do not pre-announce the final number
 
 ### What to Show on Screen
 - Terminal running tests — the progress bar crawling
@@ -60,7 +61,7 @@ make demo-slow
 ```
 
 ### Reveal Slide
-- Call out the benchmarked result: `5m 38s` sequential on GitHub Actions for `step-1/fix-bad-tests`
+- Read from terminal: `=== Sequential total: Xm Ys ===`
 
 ### Quick Fix (if short on time)
 ```bash
@@ -86,7 +87,7 @@ git checkout step-2/parallel-packages && sh/check-ci.sh
 ```
 
 ### Reveal Slide
-- Call out the benchmarked result: `8m 39s` on GitHub Actions for baseline + concurrent packages (with coverage, 344 test files)
+- Read from terminal: `=== Parallel total: Xm Ys ===`
 
 ---
 
@@ -106,12 +107,7 @@ git checkout step-3/test-bundler && sh/demo_isolate.sh
 ```
 
 ### Reveal Slide
-- Show the 4-variant coverage matrix (run 24317309884):
-  - Baseline sequential: **15m 21s**
-  - + Concurrency: **8m 39s** (43.6% faster)
-  - + Bundler: **8m 08s** (47% faster)
-  - + Bundler + Concurrency: **2m 48s** (81.7% faster)
-- Key talking point: bundler + concurrency is super-additive — fewer isolates × parallel execution
+- Read from terminal: `Normal run`, `Bundled run`, and `% faster`
 
 ---
 
@@ -136,18 +132,6 @@ git checkout step-3/test-bundler && sh/demo_isolate.sh
 - "If only `.dart` files changed, `flutter build bundle` is 10x faster"
 - "Detect native file changes (`.swift`, `.kt`, `.gradle`, etc.)"
 - Show the conditional build logic in the workflow
-
-#### 5d: The hidden mobile build tax
-- "Running Android and iOS builds on every commit burns money fast"
-- "Android build is often ~20 minutes, iOS build is often ~20 minutes"
-- "That's ~40 build minutes per commit even when code is Dart-only"
-- "Use a decision gate: full native builds only when `pubspec.lock` or `android/` or `ios/` changes"
-- "For most PRs, run `flutter build bundle` and skip native rebuilds"
-- "At 30 PRs/day with 80% Dart-only changes, that's about 16 runner-hours saved per day"
-
-#### 5e: Cost spotlight slide
-- "Show one back-of-envelope equation live: `30 PR/day * 0.8 Dart-only * 40 min skipped = 16 runner-hours/day`"
-- "This lands the business case: selective builds are not only faster, they're dramatically cheaper"
 
 ### Run Slide Command
 ```bash
@@ -204,8 +188,8 @@ sh/arch_guard.sh --base main
 
 ### Talking Points
 - "Let's combine everything and see the total improvement"
-- Use GitHub Actions as the single reference benchmark because it is the slowest environment in the repo
-- "GitHub Actions: 15m 21s to 2m 48s (with coverage on 344 test files)"
+- Show BENCHMARKS.md with all results
+- "From 7+ minutes to under 30 seconds"
 - Walk through the optimization stack:
   1. Fix bad tests (remove artificial delays)
   2. Parallelize packages (background jobs)
@@ -223,9 +207,8 @@ git checkout step-6/all-optimizations && make demo-fast
 ```
 
 ### The Big Reveal
-- Show the GitHub Actions reference benchmark column
+- Show the benchmark table side-by-side
 - "Your CI doesn't have to be slow"
-- Final numbers: 15m 21s → 2m 48s = **82% improvement** (with coverage, 344 test files, GitHub Actions run 24317309884)
 
 ---
 

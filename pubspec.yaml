@@ -1,0 +1,16 @@
+name: flutter_ci_talk
+description: Demo project for Flutter CI optimization talk.
+publish_to: 'none'
+
+environment:
+  sdk: ^3.9.0
+
+workspace:
+  - packages/app
+  - packages/core
+  - packages/payments
+  - packages/analytics
+  - packages/test_bundler
+
+dev_dependencies:
+  melos: ^7.3.0

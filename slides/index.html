@@ -39,9 +39,9 @@
       text-transform: none;
       letter-spacing: -0.02em;
     }
-    .reveal h1 { font-size: 2.2em; color: #f0f6fc; }
-    .reveal h2 { font-size: 1.65em; color: var(--accent); }
-    .reveal h3 { font-size: 1.1em; color: var(--muted); }
+    .reveal h1 { font-size: 2.8em; color: #f0f6fc; }
+    .reveal h2 { font-size: 2em; color: var(--accent); }
+    .reveal h3 { font-size: 1.4em; color: var(--muted); }
     .reveal .slides section { text-align: left; }
     .reveal code {
       background: rgba(47, 129, 247, 0.15);
@@ -65,19 +65,19 @@
     .stat-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
-      gap: 14px;
-      margin: 14px 0;
+      gap: 24px;
+      margin: 40px 0;
     }
     .stat-card {
       background: linear-gradient(160deg, rgba(22, 27, 34, 0.92) 0%, rgba(13, 17, 23, 0.96) 100%);
       border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 18px 14px;
+      border-radius: 16px;
+      padding: 32px 24px;
       text-align: center;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
     }
     .stat-number {
-      font-size: 2.4em;
+      font-size: 3em;
       font-weight: 800;
       background: linear-gradient(125deg, var(--accent), var(--good));
       -webkit-background-clip: text;
@@ -92,34 +92,34 @@
     .comparison {
       display: grid;
       grid-template-columns: 1fr auto 1fr;
-      gap: 14px;
+      gap: 24px;
       align-items: center;
-      margin: 14px 0;
+      margin: 40px 0;
     }
     .before-card, .after-card {
       background: var(--bg-card-soft);
-      border-radius: 14px;
-      padding: 18px;
+      border-radius: 16px;
+      padding: 32px;
       text-align: center;
       border: 1px solid var(--border);
     }
     .before-card { border: 2px solid var(--bad); }
     .after-card { border: 2px solid var(--good); }
-    .before-card .time { color: var(--bad); font-size: 2.6em; font-weight: 800; }
-    .after-card .time { color: var(--good); font-size: 2.6em; font-weight: 800; }
-    .arrow { font-size: 2em; color: var(--accent); }
+    .before-card .time { color: var(--bad); font-size: 3.5em; font-weight: 800; }
+    .after-card .time { color: var(--good); font-size: 3.5em; font-weight: 800; }
+    .arrow { font-size: 3em; color: var(--accent); }
     .chart-container {
       max-width: 800px;
-      margin: 10px auto;
+      margin: 30px auto;
       background: rgba(13, 17, 23, 0.82);
       border-radius: 16px;
-      padding: 16px;
+      padding: 24px;
       border: 1px solid var(--border);
     }
     .timeline {
       display: flex;
       gap: 0;
-      margin: 14px 0;
+      margin: 40px 0;
     }
     .timeline-step {
       flex: 1;
@@ -248,148 +248,11 @@
       background: var(--good);
       box-shadow: 0 0 0 6px rgba(63, 185, 80, 0.15);
     }
-    .estimator-shell {
-      margin-top: 10px;
-      display: grid;
-      grid-template-columns: 1.1fr 1fr;
-      gap: 14px;
-      align-items: start;
-    }
-    .estimator-panel {
-      background: linear-gradient(155deg, rgba(22, 27, 34, 0.95) 0%, rgba(13, 17, 23, 0.96) 100%);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.24);
-    }
-    .slider-row {
-      margin-bottom: 16px;
-    }
-    .slider-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: baseline;
-      font-size: 0.62em;
-      color: var(--muted);
-      margin-bottom: 8px;
-      letter-spacing: 0.02em;
-      text-transform: uppercase;
-      font-weight: 700;
-    }
-    .slider-value {
-      font-size: 1.5em;
-      color: #f0f6fc;
-      letter-spacing: 0;
-    }
-    input[type='range'].ci-slider {
-      width: 100%;
-      accent-color: var(--accent);
-      height: 6px;
-      cursor: pointer;
-    }
-    .estimate-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 10px;
-    }
-    .estimate-card {
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 12px;
-      background: rgba(9, 13, 19, 0.6);
-    }
-    .estimate-title {
-      color: var(--muted);
-      font-size: 0.55em;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-    .estimate-value {
-      color: #f0f6fc;
-      font-size: 1.05em;
-      font-weight: 800;
-      margin-top: 8px;
-    }
-    .estimate-value.good {
-      color: var(--good);
-    }
-    .estimate-value.bad {
-      color: #ffb1ab;
-    }
-    .assumption-note {
-      margin-top: 12px;
-      color: var(--muted);
-      font-size: 0.52em;
-      line-height: 1.45;
-    }
     .hero-meta {
       text-align: center;
-      margin-top: 16px;
+      margin-top: 40px;
       color: var(--muted);
       font-size: 0.85em;
-    }
-    .main-hero {
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center !important;
-      min-height: 100%;
-      height: 100%;
-      width: 100%;
-      padding: 0 !important;
-      margin: 0 !important;
-      box-sizing: border-box;
-    }
-    .reveal .slides section.main-hero {
-      display: flex !important;
-      flex-direction: column !important;
-      justify-content: center !important;
-      align-items: center !important;
-      text-align: center !important;
-      min-height: 100% !important;
-      height: 100% !important;
-      padding: 0 !important;
-      margin: 0 !important;
-    }
-    .main-hero h1 {
-      margin: 0 0 4px 0;
-    }
-    .hero-sub {
-      font-size: 0.62em;
-      color: var(--muted);
-      margin-top: 8px;
-    }
-    .hero-chips {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-      margin-top: 18px;
-    }
-    .hero-chip {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 8px 14px;
-      border-radius: 999px;
-      border: 1px solid var(--border);
-      font-size: 0.58em;
-      letter-spacing: 0.07em;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: #e6edf3;
-      background: rgba(139, 148, 158, 0.14);
-    }
-    .hero-chip.accent {
-      background: rgba(47, 129, 247, 0.18);
-      border-color: rgba(47, 129, 247, 0.42);
-      color: #dbe8ff;
-    }
-    .hero-chip.good {
-      background: rgba(63, 185, 80, 0.18);
-      border-color: rgba(63, 185, 80, 0.42);
-      color: #b7f3bf;
     }
     .fade-in-then { animation: fadeInUp 0.6s ease forwards; }
     @keyframes fadeInUp {
@@ -403,101 +266,6 @@
     .animated-bar {
       animation: growBar 1.5s ease forwards;
       transform-origin: left;
-    }
-    .strategy-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 14px;
-      margin-top: 16px;
-    }
-    .strategy-card {
-      display: grid;
-      grid-template-columns: 112px 1fr;
-      gap: 14px;
-      align-items: center;
-      background: linear-gradient(160deg, rgba(22, 27, 34, 0.94) 0%, rgba(13, 17, 23, 0.98) 100%);
-      border: 1px solid var(--border);
-      border-radius: 14px;
-      padding: 14px;
-      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.22);
-    }
-    .strategy-card h4 {
-      margin: 0;
-      font-size: 0.6em;
-      color: #f0f6fc;
-      letter-spacing: 0.03em;
-      text-transform: uppercase;
-    }
-    .scope-badges {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 8px;
-      flex-wrap: wrap;
-    }
-    .scope-badge {
-      display: inline-block;
-      padding: 2px 8px;
-      border-radius: 999px;
-      font-size: 0.44em;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      border: 1px solid var(--border);
-      color: #e6edf3;
-      background: rgba(139, 148, 158, 0.14);
-    }
-    .scope-badge.local {
-      border-color: rgba(47, 129, 247, 0.45);
-      background: rgba(47, 129, 247, 0.16);
-      color: #cfe3ff;
-    }
-    .scope-badge.ci {
-      border-color: rgba(63, 185, 80, 0.45);
-      background: rgba(63, 185, 80, 0.16);
-      color: #b7f3bf;
-    }
-    .strategy-card p {
-      margin: 6px 0 0;
-      font-size: 0.55em;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-    .strategy-svg {
-      width: 108px;
-      height: 108px;
-    }
-    .svg-node {
-      animation: nodePulse 2.4s ease-in-out infinite;
-      transform-origin: center;
-      transform-box: fill-box;
-    }
-    .svg-dash {
-      stroke-dasharray: 8 6;
-      animation: dashFlow 1.4s linear infinite;
-    }
-    .svg-rocket {
-      animation: rocketBoost 2s ease-in-out infinite;
-      transform-origin: center;
-      transform-box: fill-box;
-    }
-    .svg-cache {
-      animation: cacheSpin 3.2s linear infinite;
-      transform-origin: center;
-      transform-box: fill-box;
-    }
-    @keyframes nodePulse {
-      0%, 100% { transform: scale(1); opacity: 0.9; }
-      50% { transform: scale(1.12); opacity: 1; }
-    }
-    @keyframes dashFlow {
-      to { stroke-dashoffset: -28; }
-    }
-    @keyframes rocketBoost {
-      0%, 100% { transform: translateX(0); }
-      50% { transform: translateX(6px); }
-    }
-    @keyframes cacheSpin {
-      to { transform: rotate(360deg); }
     }
     @keyframes growBar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
     @media (max-width: 900px) {
@@ -529,18 +297,6 @@
         width: auto;
         text-align: left;
       }
-      .estimator-shell {
-        grid-template-columns: 1fr;
-      }
-      .estimate-grid {
-        grid-template-columns: 1fr;
-      }
-      .strategy-grid {
-        grid-template-columns: 1fr;
-      }
-      .hero-sub {
-        font-size: 0.56em;
-      }
     }
   </style>
 </head>
@@ -549,20 +305,22 @@
 <div class="slides">
 
 <!-- ========== TITLE ========== -->
-<section class="main-hero" id="mainHero" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
-  <h1>
+<section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
+  <h1 style="text-align:center">
     <span class="gradient-text">Flutter CI</span><br>
-    <span style="font-size:0.6em; color:var(--muted)">let's cut some costs and speed up some flows</span>
+    <span style="font-size:0.6em; color:var(--muted)">A Live Optimization Story</span>
   </h1>
-  <div class="hero-chips">
-    <span class="hero-chip accent">GitHub Actions Pipeline</span>
-    <span class="hero-chip good">Flutter London meetup</span>
+  <div style="text-align:center; margin-top: 28px;">
+    <span class="workflow-chip">GitHub Actions Pipeline</span>
+  </div>
+  <div class="hero-meta">
+    239 test files &middot; 4 packages &middot; 6 optimization steps
   </div>
 </section>
 
 <!-- ========== LIVE DEMO START ========== -->
 <section>
-  <h2>Live Demo</h2>
+  <h2>Live Demo Start</h2>
   <h3>Repo shape + one copy/paste command</h3>
   <pre><code class="language-text">flutter_ci_talk/
   packages/
@@ -575,7 +333,9 @@
   slides/
   BENCHMARKS.md</code></pre>
   <div class="cmd">git checkout main && make demo-slow</div>
-
+  <p style="color:var(--muted); font-size:0.82em; margin-top:14px">
+    Script prints total runtime at the end as: <code>=== Sequential total: Xm Ys ===</code>
+  </p>
 </section>
 
 <!-- ========== THE PROBLEM ========== -->
@@ -592,7 +352,7 @@
     </div>
     <div class="stat-card">
       <div class="stat-number" style="-webkit-text-fill-color: var(--warn)">?</div>
-      <div class="stat-label">Total Time</div>
+      <div class="stat-label">Total Time (Reveal Later)</div>
     </div>
   </div>
   <p style="text-align:center; color:var(--muted); font-size:0.9em">
@@ -611,81 +371,43 @@
   </p>
 </section>
 
+<!-- ========== TIMELINE ========== -->
 <section>
-  <h2>How We Speed It Up</h2>
-  <h3>Local first. CI second.</h3>
-  <div class="strategy-grid">
-    <div class="strategy-card">
-      <svg class="strategy-svg" viewBox="0 0 72 72" aria-hidden="true">
-        <circle cx="24" cy="36" r="16" fill="rgba(47,129,247,0.18)" stroke="#2f81f7" stroke-width="2"></circle>
-        <path class="svg-rocket" d="M40 29 L55 36 L40 43 L43 36 Z" fill="#3fb950"></path>
-        <path d="M10 36 H40" stroke="#79c0ff" stroke-width="3" stroke-linecap="round"></path>
-        <path d="M46 32 L52 36 L46 40" stroke="#9be9a8" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
-      <div>
-        <div class="scope-badges">
-          <span class="scope-badge local">Local</span>
-          <span class="scope-badge ci">CI</span>
-        </div>
-        <h4>Make Every Job Faster</h4>
-      </div>
+  <h2>The Optimization Journey</h2>
+  <div class="timeline">
+    <div class="timeline-step active">
+      <div class="step-num">1</div><br>Fix Tests
     </div>
-
-    <div class="strategy-card">
-      <svg class="strategy-svg" viewBox="0 0 72 72" aria-hidden="true">
-        <rect x="10" y="14" width="52" height="44" rx="10" fill="rgba(63,185,80,0.12)" stroke="#3fb950" stroke-width="2"></rect>
-        <circle class="svg-node" cx="22" cy="28" r="5" fill="#9be9a8"></circle>
-        <circle class="svg-node" cx="36" cy="36" r="5" fill="#79c0ff" style="animation-delay:0.2s"></circle>
-        <circle class="svg-node" cx="50" cy="24" r="5" fill="#2f81f7" style="animation-delay:0.4s"></circle>
-        <path class="svg-dash" d="M22 28 L36 36 L50 24" stroke="#c9d1d9" stroke-width="2" fill="none" stroke-linecap="round"></path>
-      </svg>
-      <div>
-        <div class="scope-badges">
-          <span class="scope-badge ci">CI</span>
-        </div>
-        <h4>Run Only What Changed</h4>
-      </div>
+    <div class="timeline-step">
+      <div class="step-num">2</div><br>Parallel Pkgs
     </div>
-
-    <div class="strategy-card">
-      <svg class="strategy-svg" viewBox="0 0 72 72" aria-hidden="true">
-        <rect x="12" y="18" width="48" height="36" rx="8" fill="rgba(210,153,34,0.12)" stroke="#d29922" stroke-width="2"></rect>
-        <circle class="svg-cache" cx="36" cy="36" r="12" fill="none" stroke="#e3b341" stroke-width="3" stroke-dasharray="40 18"></circle>
-        <path d="M36 29 V38 L42 42" stroke="#f0f6fc" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"></path>
-      </svg>
-      <div>
-        <div class="scope-badges">
-          <span class="scope-badge ci">CI</span>
-        </div>
-        <h4>Reuse Compute With Caching</h4>
-      </div>
+    <div class="timeline-step">
+      <div class="step-num">3</div><br>Bundle Tests
     </div>
-
-    <div class="strategy-card">
-      <svg class="strategy-svg" viewBox="0 0 72 72" aria-hidden="true">
-        <rect x="9" y="12" width="20" height="20" rx="5" fill="rgba(47,129,247,0.2)" stroke="#2f81f7"></rect>
-        <rect x="43" y="12" width="20" height="20" rx="5" fill="rgba(63,185,80,0.2)" stroke="#3fb950"></rect>
-        <rect x="9" y="40" width="20" height="20" rx="5" fill="rgba(210,153,34,0.2)" stroke="#d29922"></rect>
-        <rect x="43" y="40" width="20" height="20" rx="5" fill="rgba(47,129,247,0.2)" stroke="#79c0ff"></rect>
-        <path class="svg-dash" d="M29 22 H43 M19 32 V40 M53 32 V40 M29 50 H43" stroke="#8b949e" stroke-width="2" fill="none"></path>
-      </svg>
-      <div>
-        <div class="scope-badges">
-          <span class="scope-badge local">Local</span>
-          <span class="scope-badge ci">CI</span>
-        </div>
-        <h4>Parallelize Independent Work</h4>
-      </div>
+    <div class="timeline-step">
+      <div class="step-num">4</div><br>Cache &amp; Select
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">5</div><br>Diff Coverage
+    </div>
+    <div class="timeline-step">
+      <div class="step-num">6</div><br>All Combined
     </div>
   </div>
+  <p style="text-align:center; color:var(--muted); margin-top:28px">
+    Rule for this talk: no final numbers until each run finishes.
+  </p>
 </section>
 
 <!-- ========== ACT 1: BAD TESTS ========== -->
 <section>
   <section>
-    <h2>Act 1 : let's run the tests</h2>
+    <h2>Act 1 Run Slide</h2>
     <h3>Start from the slow baseline</h3>
     <div class="cmd">git checkout main && make demo-slow</div>
+    <p style="color:var(--muted); font-size:0.82em; margin-top:14px">
+      Keep this running while you explain why slow CI hurts team flow.
+    </p>
   </section>
   <section>
     <h2>Act 1: Bad Test Patterns</h2>
@@ -716,7 +438,8 @@ test('should debounce search input', () async {
   await cubit.search('query');
   expect(cubit.state, isA&lt;SearchSuccess&gt;());
 });</code></pre>
-    <div class="cmd">Benchmark result: main baseline = 15m 21s on GitHub Actions (sequential, with coverage, 344 test files)</div>
+    <div class="cmd">Look at terminal output: === Sequential total: Xm Ys ===</div>
+    <p style="color:var(--muted); font-size:0.82em">Now transition: "Let's improve one bottleneck at a time."</p>
   </section>
 </section>
 
@@ -744,7 +467,8 @@ test('should debounce search input', () async {
   </section>
   <section>
     <h2>Act 2 Result Reveal</h2>
-    <div class="cmd">Benchmark result: step-1/fix-bad-tests = 5m 38s on GitHub Actions</div>
+    <div class="cmd">Terminal should show: === Sequential total: Xm Ys ===</div>
+    <p style="color:var(--muted); font-size:0.82em">After showing the number, move to package-level parallelism.</p>
     <h3>Parallel Script</h3>
     <pre><code class="language-bash">for pkg in packages/*/; do
   (cd "$pkg" && flutter test) &   # background job
@@ -764,10 +488,10 @@ wait  # wait for all to finish
   </section>
   <section>
     <h2>Act 3: Isolate Cold Starts</h2>
-    <h3>344 files = 344 cold starts</h3>
+    <h3>239 files = 239 cold starts</h3>
     <div class="stat-grid">
       <div class="stat-card">
-        <div class="stat-number">344</div>
+        <div class="stat-number">239</div>
         <div class="stat-label">Isolates Spawned</div>
       </div>
       <div class="stat-card">
@@ -775,14 +499,15 @@ wait  # wait for all to finish
         <div class="stat-label">Per Isolate Startup</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number" style="-webkit-text-fill-color: var(--bad)">~103s</div>
+        <div class="stat-number" style="-webkit-text-fill-color: var(--bad)">~72s</div>
         <div class="stat-label">Just Starting Up</div>
       </div>
     </div>
   </section>
   <section>
     <h2>Act 3 Result Reveal</h2>
-    <div class="cmd">Benchmark result: baseline + concurrent packages = 8m 39s on GitHub Actions (parallel packages, with coverage, 344 test files)</div>
+    <div class="cmd">Terminal should show: === Parallel total: Xm Ys ===</div>
+    <p style="color:var(--muted); font-size:0.82em">Next transition: same idea inside each package, not just across packages.</p>
   </section>
   <section>
     <h2>The Bundler Solution</h2>
@@ -818,56 +543,9 @@ void main() {
     </ul>
   </section>
   <section>
-    <h2>Selective Mobile Builds = Huge Cost Win</h2>
-    <h3>Most PRs are Dart-only, but full native builds still run</h3>
-    <div class="comparison" style="margin-top: 18px;">
-      <div class="before-card" style="border-color: var(--bad)">
-        <div style="font-size:0.8em; color:var(--muted)">Every commit</div>
-        <div style="font-size:1.7em; font-weight:800; color:var(--bad); margin-top:8px">Android ~20 min</div>
-        <div style="font-size:1.7em; font-weight:800; color:var(--bad)">iOS ~20 min</div>
-        <div style="color:#6e7681; font-size:0.7em; margin-top:12px">~40 native build minutes per commit</div>
-      </div>
-      <div class="arrow">&rarr;</div>
-      <div class="after-card" style="border-color: var(--good)">
-        <div style="font-size:0.8em; color:var(--muted)">Dart-only PRs</div>
-        <div style="font-size:1.8em; font-weight:800; color:var(--good); margin-top:8px">Use dart snapshot path</div>
-        <div style="font-size:1.15em; color:#9be9a8; margin-top:8px">Skip full Android + iOS rebuilds</div>
-        <div style="color:#6e7681; font-size:0.7em; margin-top:12px">Build native only when inputs require it</div>
-      </div>
-    </div>
-    <pre><code class="language-yaml"># Decision gate
-if: pubspec.lock changed OR android/ changed OR ios/ changed
-  -> run full mobile builds
-else
-  -> run flutter build bundle (fast Dart snapshot path)</code></pre>
-    <p style="text-align:center; color:var(--muted); font-size:0.75em; margin-top:10px">
-      Example impact: with 30 PRs/day and 80% Dart-only changes, skipping ~40 min/PR saves about 16 runner-hours/day.
-    </p>
-  </section>
-  <section>
     <h2>Act 4 Result Reveal</h2>
-    <div class="cmd">Benchmark result (with coverage, 344 files):</div>
-    <div style="display:grid; grid-template-columns:1fr 1fr 1fr 1fr; gap:10px; margin-top:14px">
-      <div class="stat-card">
-        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--bad)">15m 21s</div>
-        <div class="stat-label" style="font-size:0.7em">Baseline sequential</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--warn)">8m 39s</div>
-        <div class="stat-label" style="font-size:0.7em">+ Concurrency</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--warn)">8m 08s</div>
-        <div class="stat-label" style="font-size:0.7em">+ Bundler</div>
-      </div>
-      <div class="stat-card">
-        <div class="stat-number" style="font-size:1.4em; -webkit-text-fill-color:var(--good)">2m 48s</div>
-        <div class="stat-label" style="font-size:0.7em">+ Both combined</div>
-      </div>
-    </div>
-    <p style="text-align:center; color:var(--muted); font-size:0.72em; margin-top:10px">
-      Bundler + concurrency together: <strong style="color:var(--good)">81.7% faster</strong> than baseline. Super-additive: fewer isolates &times; parallel execution.
-    </p>
+    <div class="cmd">Terminal should show: Normal vs Bundled and % faster</div>
+    <p style="color:var(--muted); font-size:0.82em">Then move to CI workflow-level wins.</p>
   </section>
   <section>
     <h2>The Fix: Workspace-Level Resolution</h2>
@@ -904,8 +582,8 @@ test:
   <section>
     <h2>Act 5: Dependency Graph Testing</h2>
     <h3>Test what matters</h3>
-    <div style="text-align:center; margin: 8px 0;">
-      <svg width="500" height="260" viewBox="0 0 500 280">
+    <div style="text-align:center; margin: 40px 0;">
+      <svg width="500" height="280" viewBox="0 0 500 280">
         <defs>
           <marker id="arrowhead" markerWidth="10" markerHeight="7" refX="10" refY="3.5" orient="auto">
             <polygon points="0 0, 10 3.5, 0 7" fill="#2f81f7"/>
@@ -960,219 +638,48 @@ test:
   </section>
 </section>
 
-<!-- ========== TIMELINE ========== -->
-<section>
-  <h2>The Optimization Journey</h2>
-  <div class="timeline">
-    <div class="timeline-step active">
-      <div class="step-num">1</div><br>Fix Tests
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">2</div><br>Parallel Pkgs
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">3</div><br>Bundle Tests
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">4</div><br>Cache &amp; Select
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">5</div><br>Diff Coverage
-    </div>
-    <div class="timeline-step">
-      <div class="step-num">6</div><br>All Combined
-    </div>
-  </div>
-
-</section>
-
 <!-- ========== FINAL RESULTS ========== -->
 <section>
   <h2>The Full Picture</h2>
-  <div class="cmd">Benchmark Updated Tests &middot; GitHub Actions run 24317309884 &middot; 344 test files &middot; coverage enabled</div>
-  <div class="chart-container" style="height: 320px;">
+  <div class="cmd">git checkout step-6/all-optimizations && make demo-fast</div>
+  <div class="chart-container" style="height: 400px;">
     <canvas id="finalChart"></canvas>
   </div>
-  <p style="text-align:center; color:var(--muted); font-size:0.7em; margin-top:12px;">
-    Coverage + Concurrency Matrix &mdash; GitHub Actions Ubuntu (April 12, 2026).
-  </p>
-  <p style="text-align:center; color:#6e7681; font-size:0.62em; margin-top:8px;">
-    All variants collect coverage reports. Bundler + Concurrent is super-additive: 81.7% faster than the sequential baseline.
-  </p>
 </section>
 
 <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
   <h2 style="text-align:center">Before &amp; After</h2>
-  <div class="comparison" style="max-width: 700px; margin: 14px auto;">
+  <div class="comparison" style="max-width: 700px; margin: 40px auto;">
     <div class="before-card">
-      <div class="time">15:21</div>
+      <div class="time">7:12</div>
       <div style="color:var(--muted); margin-top:8px">main branch</div>
       <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Sequential &middot; Per-file isolates<br>
-        Coverage enabled &middot; 344 test files<br>
+        Real delays &middot; Heavy setUp<br>
         No caching &middot; Full builds
       </div>
     </div>
     <div class="arrow">&rarr;</div>
     <div class="after-card">
-      <div class="time">2:48</div>
-      <div style="color:var(--muted); margin-top:8px">bundler + concurrent</div>
+      <div class="time">0:14</div>
+      <div style="color:var(--muted); margin-top:8px">step-6 branch</div>
       <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Parallel &middot; Bundled isolates<br>
-        Coverage enabled &middot; 344 test files<br>
+        Fixed tests &middot; Cached deps<br>
         Selective builds &middot; Diff coverage
       </div>
     </div>
   </div>
   <div style="text-align:center">
-    <span class="stat-number" style="font-size:4em">82%</span>
-    <div class="stat-label" style="font-size:1.2em">Faster on the GitHub Actions benchmark</div>
-  </div>
-  <div style="text-align:center; color:var(--muted); font-size:0.78em; margin-top:18px">
-    Measured with coverage on 344 test files: GitHub Actions 15:21 &rarr; 2:48 (run 24317309884)
-  </div>
-</section>
-
-<!-- ========== COST SAVINGS ========== -->
-<section data-background-gradient="linear-gradient(145deg, #0a1020 0%, #0d1117 100%)">
-  <h2 style="text-align:center">What This Saves, In Practice</h2>
-  <div style="text-align:center; color:var(--muted); font-size:0.8em; margin-top:-4px; margin-bottom:24px;">
-    Measured on GitHub Actions &nbsp;&mdash;&nbsp; 15:21 baseline &rarr; 2:48 optimized (82% reduction, with coverage, 344 test files)
-  </div>
-  <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:20px; max-width:940px; margin:0 auto;">
-    <div class="stat-card" style="border: 2px solid var(--good);">
-      <div class="stat-number" style="-webkit-text-fill-color:var(--good); font-size:2.6em;">12m 33s</div>
-      <div class="stat-label">saved per CI run</div>
-      <div style="color:#6e7681; font-size:0.65em; margin-top:12px; line-height:1.6;">
-        15m 21s &rarr; 2m 48s<br>per GitHub Actions run
-      </div>
-    </div>
-    <div class="stat-card" style="border: 2px solid var(--accent);">
-      <div class="stat-number" style="-webkit-text-fill-color:var(--accent); font-size:2.6em;">275h</div>
-      <div class="stat-label">dev time back / month</div>
-      <div style="color:#6e7681; font-size:0.65em; margin-top:12px; line-height:1.6;">
-        30 PRs/day &times; 2 engineers<br>&times; 12.5 min &times; 22 days<br>&asymp; 34 working days recovered
-      </div>
-    </div>
-    <div class="stat-card" style="border: 2px solid var(--warn);">
-      <div class="stat-number" style="-webkit-text-fill-color:var(--warn); font-size:2.6em;">$66</div>
-      <div class="stat-label">Actions cost saved / month</div>
-      <div style="color:#6e7681; font-size:0.65em; margin-top:12px; line-height:1.6;">
-        12.5 min &times; 30 PRs/day<br>&times; $0.008/min<br>&times; 22 working days
-      </div>
-    </div>
-  </div>
-  <p style="text-align:center; color:#6e7681; font-size:0.6em; margin-top:22px;">
-    Assumptions: 30 PRs/day &nbsp;&middot;&nbsp; 2 engineers per PR (author + reviewer) &nbsp;&middot;&nbsp; $0.008/min Ubuntu runner &nbsp;&middot;&nbsp; 22 working days/month
-  </p>
-</section>
-
-<section data-background-gradient="linear-gradient(145deg, #111926 0%, #0d1117 100%)">
-  <h2 style="text-align:center">The Mobile Build Cost Bomb</h2>
-  <h3 style="text-align:center; color:var(--muted)">Why selective native builds matter in real CI budgets</h3>
-  <div class="comparison" style="max-width: 900px; margin: 20px auto 10px auto; grid-template-columns: 1fr 1fr; gap: 14px;">
-    <div class="before-card" style="border-color: var(--bad)">
-      <div style="font-size:0.75em; color:var(--muted)">Without selective builds</div>
-      <div style="font-size:1.45em; font-weight:800; color:var(--bad); margin-top:10px">Android build: ~20 min</div>
-      <div style="font-size:1.45em; font-weight:800; color:var(--bad)">iOS build: ~20 min</div>
-      <div style="font-size:0.8em; color:#ffb1ab; margin-top:10px">~40 build minutes on every commit</div>
-    </div>
-    <div class="after-card" style="border-color: var(--good)">
-      <div style="font-size:0.75em; color:var(--muted)">With selective builds</div>
-      <div style="font-size:1.05em; color:#9be9a8; margin-top:10px">Only run native builds when:</div>
-      <div style="font-size:0.95em; color:#c9d1d9; margin-top:6px">1) pubspec.lock changed</div>
-      <div style="font-size:0.95em; color:#c9d1d9">2) android/ changed</div>
-      <div style="font-size:0.95em; color:#c9d1d9">3) ios/ changed</div>
-      <div style="font-size:0.8em; color:#9be9a8; margin-top:10px">Otherwise: use dart snapshot bundle path</div>
-    </div>
-  </div>
-  <div class="stat-grid" style="grid-template-columns: repeat(3, 1fr); margin-top: 10px;">
-    <div class="stat-card">
-      <div class="stat-number">30</div>
-      <div class="stat-label">PRs per day</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number">80%</div>
-      <div class="stat-label">Dart-only PRs</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-number">16h</div>
-      <div class="stat-label">Runner hours saved/day</div>
-    </div>
-  </div>
-  <p style="text-align:center; color:var(--muted); font-size:0.72em; margin-top:10px">
-    Back-of-envelope: $30 x 0.8 x 40$ minutes skipped/day = $960$ minutes/day = $16$ hours/day.
-  </p>
-</section>
-
-<section data-background-gradient="linear-gradient(145deg, #0c121a 0%, #101b2b 100%)">
-  <h2 style="text-align:center">Interactive CI Cost Calculator</h2>
-  <div style="text-align:center; color: var(--muted); font-size: 0.8em; margin-top: -6px;">
-    Tune repo size + PR volume and estimate waiting time and GitHub Actions spend.
-  </div>
-  <div class="estimator-shell">
-    <div class="estimator-panel">
-      <div class="slider-row">
-        <div class="slider-head">
-          <span>Number of Test Files</span>
-          <span class="slider-value" id="filesVal">239</span>
-        </div>
-        <input id="filesSlider" class="ci-slider" type="range" min="20" max="1000" step="1" value="239">
-      </div>
-      <div class="slider-row">
-        <div class="slider-head">
-          <span>Number of Packages</span>
-          <span class="slider-value" id="packagesVal">4</span>
-        </div>
-        <input id="packagesSlider" class="ci-slider" type="range" min="1" max="20" step="1" value="4">
-      </div>
-      <div class="slider-row" style="margin-bottom:0;">
-        <div class="slider-head">
-          <span>Daily PRs</span>
-          <span class="slider-value" id="prsVal">30</span>
-        </div>
-        <input id="prsSlider" class="ci-slider" type="range" min="1" max="300" step="1" value="30">
-      </div>
-      <div class="assumption-note">
-        Model assumptions: 2 engineers waiting per PR (author + reviewer), Linux hosted runner price at $0.008/min,
-        22 working days/month. Baseline and optimized runtime are derived from this talk's measured progression.
-      </div>
-    </div>
-    <div class="estimator-panel">
-      <div class="estimate-grid">
-        <div class="estimate-card">
-          <div class="estimate-title">CI Time / PR (Baseline)</div>
-          <div class="estimate-value bad" id="baseCiPerPr">-</div>
-        </div>
-        <div class="estimate-card">
-          <div class="estimate-title">CI Time / PR (Optimized)</div>
-          <div class="estimate-value good" id="optCiPerPr">-</div>
-        </div>
-        <div class="estimate-card">
-          <div class="estimate-title">Engineer Wait / Day</div>
-          <div class="estimate-value" id="engWaitDay">-</div>
-        </div>
-        <div class="estimate-card">
-          <div class="estimate-title">Engineer Wait Saved / Month</div>
-          <div class="estimate-value good" id="engWaitSavedMonth">-</div>
-        </div>
-        <div class="estimate-card">
-          <div class="estimate-title">Actions Cost / Day</div>
-          <div class="estimate-value" id="ghaCostDay">-</div>
-        </div>
-        <div class="estimate-card">
-          <div class="estimate-title">Actions Cost Saved / Month</div>
-          <div class="estimate-value good" id="ghaSavedMonth">-</div>
-        </div>
-      </div>
-    </div>
+    <span class="stat-number" style="font-size:4em">97%</span>
+    <div class="stat-label" style="font-size:1.2em">Faster</div>
   </div>
 </section>
 
 <!-- ========== TAKEAWAYS ========== -->
 <section data-background-gradient="linear-gradient(135deg, #111926 0%, #0d1117 100%)">
   <h2 style="text-align:center">Key Takeaways</h2>
-  <div style="max-width: 600px; margin: 14px auto;">
+  <div style="max-width: 600px; margin: 40px auto;">
     <ul class="issue-list">
       <li class="fixed"><span class="pill pill-good">1</span> Fix your tests first &mdash; async delays, heavy setUp, real I/O</li>
       <li class="fixed"><span class="pill pill-good">2</span> Parallelize across packages &mdash; simple shell script</li>
@@ -1180,8 +687,7 @@ test:
       <li class="fixed"><span class="pill pill-good">4</span> Cache pub get at workspace level</li>
       <li class="fixed"><span class="pill pill-good">5</span> Analyze once at workspace root</li>
       <li class="fixed"><span class="pill pill-good">6</span> Test selectively using dependency graph</li>
-      <li class="fixed"><span class="pill pill-good">7</span> Build selectively &mdash; skip Android/iOS rebuilds for Dart-only PRs</li>
-      <li class="fixed"><span class="pill pill-good">8</span> Diff coverage &mdash; measure only what changed</li>
+      <li class="fixed"><span class="pill pill-good">7</span> Diff coverage &mdash; measure only what changed</li>
     </ul>
   </div>
 </section>
@@ -1229,71 +735,9 @@ Reveal.initialize({
   backgroundTransition: 'fade',
   center: false,
   width: 1200,
-  height: 780,
-  margin: 0.03,
+  height: 700,
+  margin: 0.08,
 });
-
-function formatMinutesToClock(minutes) {
-  const totalSeconds = Math.round(minutes * 60);
-  const mins = Math.floor(totalSeconds / 60);
-  const secs = totalSeconds % 60;
-  return mins > 0 ? `${mins}m ${secs}s` : `${secs}s`;
-}
-
-function formatHours(hours) {
-  if (hours >= 100) return `${Math.round(hours)}h`;
-  return `${hours.toFixed(1)}h`;
-}
-
-function formatCurrency(value) {
-  return `$${value.toFixed(2)}`;
-}
-
-function updateCiEstimator() {
-  const files = Number(document.getElementById('filesSlider')?.value || 239);
-  const packages = Number(document.getElementById('packagesSlider')?.value || 4);
-  const prs = Number(document.getElementById('prsSlider')?.value || 30);
-
-  // Baseline model is calibrated around the talk dataset (~239 tests, 4 packages ~= 7m12s).
-  const baseCiMin = 1.3 + (files * 0.017) + (packages * 0.45);
-
-  // Combined optimization ratio observed in this repo (step-6): test fixes + parallel + bundling + selective CI.
-  const optimizedRatio = 0.018 + (0.06 / Math.max(packages, 1));
-  const optCiMin = Math.max(0.12, baseCiMin * optimizedRatio);
-
-  const engineersPerPr = 2;
-  const ghaCostPerMinute = 0.008;
-  const workDaysPerMonth = 22;
-
-  const baseEngWaitDay = (baseCiMin * prs * engineersPerPr) / 60;
-  const optEngWaitDay = (optCiMin * prs * engineersPerPr) / 60;
-  const savedEngWaitMonth = (baseEngWaitDay - optEngWaitDay) * workDaysPerMonth;
-
-  const baseCostDay = baseCiMin * prs * ghaCostPerMinute;
-  const optCostDay = optCiMin * prs * ghaCostPerMinute;
-  const savedCostMonth = (baseCostDay - optCostDay) * workDaysPerMonth;
-
-  document.getElementById('filesVal').textContent = String(files);
-  document.getElementById('packagesVal').textContent = String(packages);
-  document.getElementById('prsVal').textContent = String(prs);
-
-  document.getElementById('baseCiPerPr').textContent = formatMinutesToClock(baseCiMin);
-  document.getElementById('optCiPerPr').textContent = formatMinutesToClock(optCiMin);
-  document.getElementById('engWaitDay').textContent = `${formatHours(baseEngWaitDay)} -> ${formatHours(optEngWaitDay)}`;
-  document.getElementById('engWaitSavedMonth').textContent = formatHours(savedEngWaitMonth);
-  document.getElementById('ghaCostDay').textContent = `${formatCurrency(baseCostDay)} -> ${formatCurrency(optCostDay)}`;
-  document.getElementById('ghaSavedMonth').textContent = formatCurrency(savedCostMonth);
-}
-
-['filesSlider', 'packagesSlider', 'prsSlider'].forEach(id => {
-  const el = document.getElementById(id);
-  if (el) {
-    el.addEventListener('input', updateCiEstimator);
-    el.addEventListener('change', updateCiEstimator);
-  }
-});
-
-updateCiEstimator();
 
 // Chart: Time Breakdown (donut)
 Reveal.on('slidechanged', event => {
@@ -1330,16 +774,19 @@ Reveal.on('slidechanged', event => {
         type: 'bar',
         data: {
           labels: [
-            'Baseline (sequential)',
-            'Baseline + Concurrent',
-            'Test Bundler',
-            'Bundler + Concurrent'
+            'main (baseline)',
+            'Step 1: Fix Tests',
+            'Step 2: Parallel',
+            'Step 3: Bundler',
+            'Step 4: CI Cache',
+            'Step 5: Selective',
+            'Step 6: Combined'
           ],
           datasets: [{
-            label: 'GitHub Actions time (seconds)',
-            data: [921, 519, 488, 168],
+            label: 'Time (seconds)',
+            data: [432, 34, 17, 14, null, null, 14],
             backgroundColor: [
-              '#f85149', '#d29922', '#2f81f7', '#3fb950'
+              '#f85149', '#d29922', '#e3b341', '#2f81f7', '#6e7681', '#6e7681', '#3fb950'
             ],
             borderRadius: 6,
             borderSkipped: false,
@@ -1355,6 +802,7 @@ Reveal.on('slidechanged', event => {
               callbacks: {
                 label: item => {
                   const v = item.raw;
+                  if (!v) return 'CI-level (not measurable locally)';
                   return v >= 60 ? Math.floor(v/60) + 'm ' + (v%60) + 's' : v + 's';
                 }
               }

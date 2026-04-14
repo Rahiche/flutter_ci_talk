@@ -1,0 +1,229 @@
+name: PR Check
+
+on:
+  pull_request:
+    branches: [main]
+
+# Key insight: pub get resolves dependencies at the workspace level.
+# Running it per-package per-job duplicates work. Instead, run it ONCE
+# at the root, cache the result, and share it across all jobs.
+
+jobs:
+  # ──────────────────────────────────────────────────
+  # Job 1: Resolve deps once, detect changes, cache
+  # ──────────────────────────────────────────────────
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      dart_only: ${{ steps.changes.outputs.dart_only }}
+      affected_packages: ${{ steps.changes.outputs.affected_packages }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      # Cache pub dependencies at the workspace level
+      - name: Cache pub dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+            packages/*/\.dart_tool
+            packages/*/.packages
+          key: pub-${{ runner.os }}-${{ hashFiles('**/pubspec.yaml', '**/pubspec.lock') }}
+          restore-keys: |
+            pub-${{ runner.os }}-
+
+      # Single pub get for the entire workspace — not per package
+      - name: Install dependencies (workspace-level)
+        run: dart pub get
+
+      - name: Enforce package architecture guard
+        run: |
+          # Fail fast on circular dependencies and keep module blast radius bounded.
+          sh sh/arch_guard.sh --base origin/main --max-blast-radius 3
+
+      - name: Detect changes
+        id: changes
+        run: |
+          CHANGED=$(git diff --name-only origin/main...HEAD)
+          echo "Changed files:"
+          echo "$CHANGED"
+
+          # Check if only Dart files changed (no native code)
+          NATIVE_CHANGES=$(echo "$CHANGED" | grep -E '\.(swift|kt|java|m|h|gradle|pbxproj|plist|xml)$' || true)
+          if [ -z "$NATIVE_CHANGES" ]; then
+            echo "dart_only=true" >> $GITHUB_OUTPUT
+          else
+            echo "dart_only=false" >> $GITHUB_OUTPUT
+          fi
+
+          # Detect directly changed packages
+          DIRECT_PKGS=$(echo "$CHANGED" | sed -n 's|packages/\([^/]*\)/.*|\1|p' | sort -u)
+
+          if [ -z "$DIRECT_PKGS" ]; then
+            echo "affected_packages=" >> $GITHUB_OUTPUT
+            echo "Affected packages: none"
+            exit 0
+          fi
+
+          # Build reverse dependency graph: dependency -> dependents
+          declare -A DEPENDENTS
+          for pkg_dir in packages/*/; do
+            pkg_name=$(basename "$pkg_dir")
+            for other_dir in packages/*/; do
+              dep_name=$(basename "$other_dir")
+              if [ "$pkg_name" != "$dep_name" ]; then
+                if grep -q "^\s*$dep_name:" "$pkg_dir/pubspec.yaml" 2>/dev/null; then
+                  DEPENDENTS[$dep_name]="${DEPENDENTS[$dep_name]:-} $pkg_name"
+                fi
+              fi
+            done
+          done
+
+          # Expand transitively: if A depends on B and B depends on C,
+          # then changing C should test both B and A.
+          AFFECTED="$DIRECT_PKGS"
+          PREV=""
+          while [ "$AFFECTED" != "$PREV" ]; do
+            PREV="$AFFECTED"
+            for pkg in $PREV; do
+              deps="${DEPENDENTS[$pkg]:-}"
+              if [ -n "$deps" ]; then
+                AFFECTED="$AFFECTED $deps"
+              fi
+            done
+            AFFECTED=$(echo "$AFFECTED" | tr ' ' '\n' | sed '/^$/d' | sort -u | tr '\n' ' ')
+          done
+
+          AFFECTED_CSV=$(echo "$AFFECTED" | tr ' ' '\n' | sed '/^$/d' | sort -u | tr '\n' ',')
+          echo "affected_packages=$AFFECTED_CSV" >> $GITHUB_OUTPUT
+          echo "Affected packages: $AFFECTED_CSV"
+
+  # ──────────────────────────────────────────────────
+  # Job 2: dart analyze — runs once for entire workspace
+  # ──────────────────────────────────────────────────
+  # Key insight: dart analyze works at the workspace level.
+  # Running it per-package is wasteful — it re-parses shared deps.
+  analyze:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      # Restore cached dependencies — no pub get needed
+      - name: Restore pub cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+            packages/*/\.dart_tool
+            packages/*/.packages
+          key: pub-${{ runner.os }}-${{ hashFiles('**/pubspec.yaml', '**/pubspec.lock') }}
+
+      - name: Install dependencies
+        run: dart pub get
+
+      # Analyze the ENTIRE workspace in one shot
+      - name: dart analyze (workspace)
+        run: dart analyze .
+
+  # ──────────────────────────────────────────────────
+  # Job 3: Test — per package, in parallel, only affected
+  # ──────────────────────────────────────────────────
+  test:
+    needs: setup
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        package: [app, core, payments, analytics]
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check if package is affected
+        id: check
+        run: |
+          AFFECTED="${{ needs.setup.outputs.affected_packages }}"
+          if echo "$AFFECTED" | grep -q "${{ matrix.package }}"; then
+            echo "should_test=true" >> $GITHUB_OUTPUT
+          else
+            echo "should_test=false" >> $GITHUB_OUTPUT
+            echo "⏭ Skipping ${{ matrix.package }} — not affected by this change"
+          fi
+
+      - uses: subosito/flutter-action@v2
+        if: steps.check.outputs.should_test == 'true'
+        with:
+          channel: stable
+
+      # Restore cached deps — avoids running pub get per package
+      - name: Restore pub cache
+        if: steps.check.outputs.should_test == 'true'
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+            packages/*/\.dart_tool
+            packages/*/.packages
+          key: pub-${{ runner.os }}-${{ hashFiles('**/pubspec.yaml', '**/pubspec.lock') }}
+
+      - name: Install dependencies
+        if: steps.check.outputs.should_test == 'true'
+        run: dart pub get
+
+      - name: Run tests
+        if: steps.check.outputs.should_test == 'true'
+        working-directory: packages/${{ matrix.package }}
+        run: flutter test --coverage
+
+  # ──────────────────────────────────────────────────
+  # Job 4: Build — skip native build for Dart-only changes
+  # ──────────────────────────────────────────────────
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: Restore pub cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+            packages/*/\.dart_tool
+            packages/*/.packages
+          key: pub-${{ runner.os }}-${{ hashFiles('**/pubspec.yaml', '**/pubspec.lock') }}
+
+      - name: Install dependencies
+        run: dart pub get
+
+      - name: Build (Dart-only fast path)
+        if: needs.setup.outputs.dart_only == 'true'
+        working-directory: packages/app
+        run: |
+          echo "Only Dart files changed — using flutter build bundle (skips native compilation)"
+          flutter build bundle
+
+      - name: Build (Full native build)
+        if: needs.setup.outputs.dart_only == 'false'
+        working-directory: packages/app
+        run: |
+          echo "Native files changed — full build required"
+          flutter build apk --debug

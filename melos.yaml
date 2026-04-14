@@ -1,0 +1,21 @@
+name: flutter_ci_talk
+packages:
+  - packages/*
+
+command:
+  bootstrap:
+    usePubspecOverrides: true
+
+scripts:
+  test:
+    run: melos exec -- flutter test
+    packageFilters:
+      dirExists: test
+  test:coverage:
+    run: melos exec -- flutter test --coverage
+    packageFilters:
+      dirExists: test
+  analyze:
+    run: melos exec -- dart analyze .
+  arch:check:
+    run: dart run tool/check_package_structure.dart --base main
