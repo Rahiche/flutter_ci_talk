@@ -226,6 +226,28 @@
       border-bottom: 1px solid var(--border);
     }
     .cmd::before { content: '$ '; color: var(--accent); }
+    .cmd a {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: rgba(47, 129, 247, 0.65);
+      text-underline-offset: 0.16em;
+    }
+    .cmd a:hover,
+    .cmd a:focus-visible {
+      color: #f0f6fc;
+      text-decoration-color: var(--good);
+    }
+    .branch-link {
+      color: inherit;
+      text-decoration: underline;
+      text-decoration-color: rgba(47, 129, 247, 0.65);
+      text-underline-offset: 0.16em;
+    }
+    .branch-link:hover,
+    .branch-link:focus-visible {
+      color: #f0f6fc;
+      text-decoration-color: var(--good);
+    }
     .workflow-chip {
       display: inline-flex;
       align-items: center;
@@ -476,9 +498,6 @@
   <div style="text-align:center; margin-top: 28px;">
     <span class="workflow-chip">GitHub Actions Pipeline</span>
   </div>
-  <div class="hero-meta">
-    239 test files &middot; 4 packages &middot; 6 optimization steps
-  </div>
 </section>
 
 <!-- ========== STORY TIME ========== -->
@@ -617,13 +636,11 @@
     </div>
 
   </div>
-  <div class="story-hint">Press next to advance one slot at a time.</div>
 </section>
 
 <!-- ========== LIVE DEMO START ========== -->
 <section>
   <h2>Live Demo Start</h2>
-  <h3>Repo shape + one copy/paste command</h3>
   <pre><code class="language-text">flutter_ci_talk/
   packages/
     app/
@@ -634,7 +651,7 @@
   tool/
   slides/
   BENCHMARKS.md</code></pre>
-  <div class="cmd">git checkout bench/baseline-20260411-150040 && make demo-slow</div>
+  <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/bench/baseline-20260411-150040" target="_blank" rel="noopener noreferrer">git checkout bench/baseline-20260411-150040 && make demo-slow</a></div>
 
 </section>
 
@@ -694,9 +711,6 @@
       <div class="step-num">6</div><br>All Combined
     </div>
   </div>
-  <p style="text-align:center; color:var(--muted); margin-top:28px">
-    Rule for this talk: no final numbers until each run finishes.
-  </p>
 </section>
 
 <!-- ========== ACT 1: BAD TESTS ========== -->
@@ -704,7 +718,7 @@
   <section>
     <h2>Act 1 Run Slide</h2>
     <h3>Start from the slow baseline</h3>
-    <div class="cmd">git checkout bench/baseline-20260411-150040 && make demo-slow</div>
+    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/bench/baseline-20260411-150040" target="_blank" rel="noopener noreferrer">git checkout bench/baseline-20260411-150040 && make demo-slow</a></div>
 
   </section>
   <section>
@@ -731,12 +745,23 @@ test('should debounce search input', () async {
   </section>
   <section>
     <h2>Act 1 Result Reveal</h2>
-    <pre><code class="language-dart">// Just await the action directly
-test('should debounce search input', () async {
-  await cubit.search('query');
-  expect(cubit.state, isA&lt;SearchSuccess&gt;());
-});</code></pre>
-    <div class="cmd">Look at terminal output: === Sequential total: Xm Ys ===</div>
+    <div class="stat-grid">
+      <div class="stat-card">
+        <div class="stat-number" style="background:none; -webkit-text-fill-color: var(--bad);">8:31</div>
+        <div class="stat-label">Latest GitHub Actions baseline</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">511s</div>
+        <div class="stat-label">Benchmark Dispatch wall time</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">239</div>
+        <div class="stat-label">Test files on the slow path</div>
+      </div>
+    </div>
+    <p style="text-align:center; color:var(--muted); font-size:0.82em">
+      Latest successful baseline retry on GitHub Actions from 2026-04-11.
+    </p>
 
   </section>
 </section>
@@ -746,7 +771,7 @@ test('should debounce search input', () async {
   <section>
     <h2>Act 2 Run Slide</h2>
     <h3>Fix bad tests, then rerun same script</h3>
-    <div class="cmd">git checkout step-1/fix-bad-tests && make demo-slow</div>
+    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-1/fix-bad-tests" target="_blank" rel="noopener noreferrer">git checkout step-1/fix-bad-tests && make demo-slow</a></div>
   </section>
   <section>
     <h2>Act 2: Parallel Packages</h2>
@@ -765,15 +790,27 @@ test('should debounce search input', () async {
   </section>
   <section>
     <h2>Act 2 Result Reveal</h2>
-    <div class="cmd">Terminal should show: === Sequential total: Xm Ys ===</div>
-    <p style="color:var(--muted); font-size:0.82em">After showing the number, move to package-level parallelism.</p>
-    <h3>Parallel Script</h3>
-    <pre><code class="language-bash">for pkg in packages/*/; do
-  (cd "$pkg" && flutter test) &   # background job
-done
-wait  # wait for all to finish
-
-# Total = max(package_time) instead of sum(package_times)</code></pre>
+    <div class="comparison" style="max-width: 760px; margin: 32px auto;">
+      <div class="before-card">
+        <div class="time">8:31</div>
+        <div style="color:var(--muted); margin-top:8px">Baseline</div>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="after-card">
+        <div class="time">5:38</div>
+        <div style="color:var(--muted); margin-top:8px">After fixing bad tests</div>
+      </div>
+    </div>
+    <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="stat-card">
+        <div class="stat-number">34%</div>
+        <div class="stat-label">Faster than baseline</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">173s</div>
+        <div class="stat-label">Wall time removed</div>
+      </div>
+    </div>
   </section>
 </section>
 
@@ -782,7 +819,7 @@ wait  # wait for all to finish
   <section>
     <h2>Act 3 Run Slide</h2>
     <h3>Parallel package execution</h3>
-    <div class="cmd">git checkout step-2/parallel-packages && sh/check-ci.sh</div>
+    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-2/parallel-packages" target="_blank" rel="noopener noreferrer">git checkout step-2/parallel-packages && sh/check-ci.sh</a></div>
   </section>
   <section>
     <h2>Act 3: Isolate Cold Starts</h2>
@@ -804,8 +841,27 @@ wait  # wait for all to finish
   </section>
   <section>
     <h2>Act 3 Result Reveal</h2>
-    <div class="cmd">Terminal should show: === Parallel total: Xm Ys ===</div>
-
+    <div class="comparison" style="max-width: 760px; margin: 32px auto;">
+      <div class="before-card">
+        <div class="time">5:38</div>
+        <div style="color:var(--muted); margin-top:8px">After fixing bad tests</div>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="after-card">
+        <div class="time">4:29</div>
+        <div style="color:var(--muted); margin-top:8px">After package-level parallelism</div>
+      </div>
+    </div>
+    <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr);">
+      <div class="stat-card">
+        <div class="stat-number">20%</div>
+        <div class="stat-label">Faster than Step 1</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-number">47%</div>
+        <div class="stat-label">Faster than the baseline</div>
+      </div>
+    </div>
   </section>
   <section>
     <h2>The Bundler Solution</h2>
@@ -828,7 +884,7 @@ void main() {
   <section>
     <h2>Act 4 Run Slide</h2>
     <h3>Bundle tests to reduce isolate startup overhead</h3>
-    <div class="cmd">git checkout step-3/test-bundler && sh/demo_isolate.sh</div>
+    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-3/test-bundler" target="_blank" rel="noopener noreferrer">git checkout step-3/test-bundler && sh/demo_isolate.sh</a></div>
   </section>
   <section>
     <h2>Act 4: CI-Level Optimizations</h2>
@@ -842,8 +898,20 @@ void main() {
   </section>
   <section>
     <h2>Act 4 Result Reveal</h2>
-    <div class="cmd">Terminal should show: Normal vs Bundled and % faster</div>
-
+    <div class="comparison" style="max-width: 760px; margin: 32px auto;">
+      <div class="before-card">
+        <div class="time">4:29</div>
+        <div style="color:var(--muted); margin-top:8px">Step 2 parallel packages</div>
+      </div>
+      <div class="arrow">&rarr;</div>
+      <div class="after-card">
+        <div class="time">4:37</div>
+        <div style="color:var(--muted); margin-top:8px">Latest bundled CI benchmark</div>
+      </div>
+    </div>
+    <ul class="issue-list">
+      <li class="fixed"><span class="pill pill-good">CI</span> The bundler keeps GitHub Actions in the same wall-time range as Step 2. At this point, workflow setup and cache behavior dominate more than isolate startup.</li>
+    </ul>
   </section>
   <section>
     <h2>The Fix: Workspace-Level Resolution</h2>
@@ -875,7 +943,7 @@ test:
   <section>
     <h2>Act 5 Run Slide</h2>
     <h3>Selective workflows and dependency-aware checks</h3>
-    <div class="cmd">git checkout step-4/selective-builds && cat .github/workflows/pr_check.yml</div>
+    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-4/selective-builds" target="_blank" rel="noopener noreferrer">git checkout step-4/selective-builds && cat .github/workflows/pr_check.yml</a></div>
   </section>
   <section>
     <h2>Act 5: Dependency Graph Testing</h2>
@@ -916,7 +984,7 @@ test:
   </section>
   <section>
     <h2>Act 5 Run Slide (continued)</h2>
-    <div class="cmd">git checkout step-5/diff-coverage && sh/diff_coverage.sh bench/baseline-20260411-150040 && sh/affected_packages.sh bench/baseline-20260411-150040</div>
+    <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-5/diff-coverage" target="_blank" rel="noopener noreferrer">git checkout step-5/diff-coverage && sh/diff_coverage.sh bench/baseline-20260411-150040 && sh/affected_packages.sh bench/baseline-20260411-150040</a></div>
   </section>
   <section>
     <h2>Diff Coverage</h2>
@@ -939,18 +1007,21 @@ test:
 <!-- ========== FINAL RESULTS ========== -->
 <section>
   <h2>The Full Picture</h2>
-  <div class="cmd">git checkout step-6/all-optimizations && make demo-fast</div>
+  <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-6/all-optimizations" target="_blank" rel="noopener noreferrer">git checkout step-6/all-optimizations && make demo-fast</a></div>
   <div class="chart-container" style="height: 400px;">
     <canvas id="finalChart"></canvas>
   </div>
+  <p style="text-align:center; color:var(--muted); font-size:0.76em; margin-top:18px">
+    Latest GitHub Actions Benchmark Dispatch wall times from 2026-04-11. The Step 4 cache + select benchmark run ended in failure after 4:56.
+  </p>
 </section>
 
 <section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
   <h2 style="text-align:center">Before &amp; After</h2>
   <div class="comparison" style="max-width: 700px; margin: 40px auto;">
     <div class="before-card">
-      <div class="time">7:12</div>
-      <div style="color:var(--muted); margin-top:8px">bench/baseline-20260411-150040</div>
+      <div class="time">8:31</div>
+      <div style="color:var(--muted); margin-top:8px">Latest successful baseline benchmark</div>
       <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Sequential &middot; Per-file isolates<br>
         Real delays &middot; Heavy setUp<br>
@@ -959,8 +1030,8 @@ test:
     </div>
     <div class="arrow">&rarr;</div>
     <div class="after-card">
-      <div class="time">0:14</div>
-      <div style="color:var(--muted); margin-top:8px">step-6 branch</div>
+      <div class="time">2:15</div>
+      <div style="color:var(--muted); margin-top:8px">Latest all-optimizations benchmark</div>
       <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Parallel &middot; Bundled isolates<br>
         Fixed tests &middot; Cached deps<br>
@@ -969,7 +1040,7 @@ test:
     </div>
   </div>
   <div style="text-align:center">
-    <span class="stat-number" style="font-size:4em">97%</span>
+    <span class="stat-number" style="font-size:4em">74%</span>
     <div class="stat-label" style="font-size:1.2em">Faster</div>
   </div>
 </section>
@@ -1015,8 +1086,8 @@ Total estimated waste: 548.4s</code></pre>
   </h1>
   <div style="text-align:center; color:var(--muted); margin-top:40px; font-size:0.9em">
     All code: <code>github.com/your-repo/flutter_ci_talk</code><br><br>
-    <code>git checkout bench/baseline-20260411-150040</code> &rarr; slow<br>
-    <code>git checkout step-6/all-optimizations</code> &rarr; fast
+    <a class="branch-link" href="https://github.com/Rahiche/flutter_ci_talk/tree/bench/baseline-20260411-150040" target="_blank" rel="noopener noreferrer"><code>git checkout bench/baseline-20260411-150040</code></a> &rarr; slow<br>
+    <a class="branch-link" href="https://github.com/Rahiche/flutter_ci_talk/tree/step-6/all-optimizations" target="_blank" rel="noopener noreferrer"><code>git checkout step-6/all-optimizations</code></a> &rarr; fast
   </div>
 </section>
 
@@ -1134,19 +1205,19 @@ Reveal.on('slidechanged', event => {
         type: 'bar',
         data: {
           labels: [
-            'main (baseline)',
+            'Baseline',
             'Step 1: Fix Tests',
             'Step 2: Parallel',
             'Step 3: Bundler',
-            'Step 4: CI Cache',
-            'Step 5: Selective',
-            'Step 6: Combined'
+            'Step 4: Cache + Select',
+            'Step 5: Diff Coverage',
+            'Step 6: All Combined'
           ],
           datasets: [{
             label: 'Time (seconds)',
-            data: [432, 34, 17, 14, null, null, 14],
+            data: [511, 338, 269, 277, 296, 76, 135],
             backgroundColor: [
-              '#f85149', '#d29922', '#e3b341', '#2f81f7', '#6e7681', '#6e7681', '#3fb950'
+              '#f85149', '#d29922', '#e3b341', '#2f81f7', '#d29922', '#58a6ff', '#3fb950'
             ],
             borderRadius: 6,
             borderSkipped: false,
@@ -1162,7 +1233,6 @@ Reveal.on('slidechanged', event => {
               callbacks: {
                 label: item => {
                   const v = item.raw;
-                  if (!v) return 'CI-level (not measurable locally)';
                   return v >= 60 ? Math.floor(v/60) + 'm ' + (v%60) + 's' : v + 's';
                 }
               }

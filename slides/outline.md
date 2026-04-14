@@ -3,7 +3,7 @@
 ## Setup
 - Open terminal in `~/flutter_ci_talk`
 - Ensure on `main` branch
-- Have BENCHMARKS.md open in split view
+- Have the slide deck open full-screen
 
 ---
 
@@ -21,8 +21,8 @@ git checkout bench/baseline-20260411-150040 && make demo-slow
 ```
 
 ### Reveal Slide
-- Read from terminal: `=== Sequential total: Xm Ys ===`
-- Do not pre-announce the final number
+- Show the slide result: `8m 31s` on the latest successful GitHub Actions baseline benchmark
+- Call out that this is the cloud CI wall time, not a local terminal run
 
 ### What to Show on Screen
 - Terminal running tests — the progress bar crawling
@@ -61,7 +61,8 @@ make demo-slow
 ```
 
 ### Reveal Slide
-- Read from terminal: `=== Sequential total: Xm Ys ===`
+- Show the slide result: `5m 38s` on GitHub Actions
+- Emphasize the `34%` reduction from removing bad test patterns
 
 ### Quick Fix (if short on time)
 ```bash
@@ -87,7 +88,8 @@ git checkout step-2/parallel-packages && sh/check-ci.sh
 ```
 
 ### Reveal Slide
-- Read from terminal: `=== Parallel total: Xm Ys ===`
+- Show the slide result: `4m 29s` on GitHub Actions
+- Emphasize `20%` faster than Step 1 and `47%` faster than the baseline
 
 ---
 
@@ -107,7 +109,8 @@ git checkout step-3/test-bundler && sh/demo_isolate.sh
 ```
 
 ### Reveal Slide
-- Read from terminal: `Normal run`, `Bundled run`, and `% faster`
+- Show the slide result: `4m 37s` on the latest bundled GitHub Actions benchmark
+- Note that CI setup dominates at this point, so bundling keeps the run in the same range rather than producing a dramatic wall-time drop
 
 ---
 
@@ -188,8 +191,8 @@ sh/arch_guard.sh --base bench/baseline-20260411-150040
 
 ### Talking Points
 - "Let's combine everything and see the total improvement"
-- Show BENCHMARKS.md with all results
-- "From 7+ minutes to under 30 seconds"
+- Show the benchmark chart in the deck
+- "From 8m 31s to 2m 15s on GitHub Actions"
 - Walk through the optimization stack:
   1. Fix bad tests (remove artificial delays)
   2. Parallelize packages (background jobs)
@@ -207,7 +210,7 @@ git checkout step-6/all-optimizations && make demo-fast
 ```
 
 ### The Big Reveal
-- Show the benchmark table side-by-side
+- Show the benchmark chart and before/after slide side-by-side
 - "Your CI doesn't have to be slow"
 
 ---
