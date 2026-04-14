@@ -485,7 +485,7 @@
 <section class="story-time" data-background-gradient="linear-gradient(135deg, #060c14 0%, #0d1117 100%)">
   <div style="text-align:center; margin-bottom:14px">
     <h2 style="margin:0; font-size:1.6em; color:#f0f6fc">Story Time</h2>
-    <p style="color:var(--muted); font-size:0.72em; margin:5px 0 0; text-align:center">A Thursday I&rsquo;ll never forget &mdash; why I gave this talk</p>
+
   </div>
 
   <div class="story-fragments" aria-hidden="true">
@@ -635,9 +635,7 @@
   slides/
   BENCHMARKS.md</code></pre>
   <div class="cmd">git checkout bench/baseline-20260411-150040 && make demo-slow</div>
-  <p style="color:var(--muted); font-size:0.82em; margin-top:14px">
-    Script prints total runtime at the end as: <code>=== Sequential total: Xm Ys ===</code>
-  </p>
+
 </section>
 
 <!-- ========== THE PROBLEM ========== -->
@@ -707,9 +705,7 @@
     <h2>Act 1 Run Slide</h2>
     <h3>Start from the slow baseline</h3>
     <div class="cmd">git checkout bench/baseline-20260411-150040 && make demo-slow</div>
-    <p style="color:var(--muted); font-size:0.82em; margin-top:14px">
-      Keep this running while you explain why slow CI hurts team flow.
-    </p>
+
   </section>
   <section>
     <h2>Act 1: Bad Test Patterns</h2>
@@ -741,7 +737,7 @@ test('should debounce search input', () async {
   expect(cubit.state, isA&lt;SearchSuccess&gt;());
 });</code></pre>
     <div class="cmd">Look at terminal output: === Sequential total: Xm Ys ===</div>
-    <p style="color:var(--muted); font-size:0.82em">Now transition: "Let's improve one bottleneck at a time."</p>
+
   </section>
 </section>
 
@@ -809,7 +805,7 @@ wait  # wait for all to finish
   <section>
     <h2>Act 3 Result Reveal</h2>
     <div class="cmd">Terminal should show: === Parallel total: Xm Ys ===</div>
-    <p style="color:var(--muted); font-size:0.82em">Next transition: same idea inside each package, not just across packages.</p>
+
   </section>
   <section>
     <h2>The Bundler Solution</h2>
@@ -847,7 +843,7 @@ void main() {
   <section>
     <h2>Act 4 Result Reveal</h2>
     <div class="cmd">Terminal should show: Normal vs Bundled and % faster</div>
-    <p style="color:var(--muted); font-size:0.82em">Then move to CI workflow-level wins.</p>
+
   </section>
   <section>
     <h2>The Fix: Workspace-Level Resolution</h2>
