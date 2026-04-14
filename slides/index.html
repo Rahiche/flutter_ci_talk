@@ -297,6 +297,169 @@
         width: auto;
         text-align: left;
       }
+      .story-track {
+        grid-template-columns: repeat(4, 1fr);
+        row-gap: 10px;
+      }
+      .story-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .story-dot .dot-label {
+        font-size: 0.5em;
+      }
+    }
+
+    /* === Story Time Slide === */
+    .story-time {
+      position: relative;
+    }
+    .story-fragments {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      pointer-events: none;
+    }
+    .story-track {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(8, 1fr);
+      gap: 8px;
+      margin: 18px 0 16px;
+      align-items: center;
+    }
+    .story-track::before {
+      content: '';
+      position: absolute;
+      top: 15px;
+      left: 14px;
+      right: 14px;
+      height: 2px;
+      background: rgba(139, 148, 158, 0.35);
+      z-index: 0;
+    }
+    .story-progress {
+      position: absolute;
+      top: 15px;
+      left: 14px;
+      height: 2px;
+      width: var(--story-progress, 0%);
+      background: linear-gradient(90deg, var(--accent), var(--good));
+      transition: width 0.45s ease;
+      z-index: 1;
+    }
+    .story-dot {
+      width: 30px;
+      margin: 0 auto;
+      text-align: center;
+      position: relative;
+      z-index: 2;
+      transition: filter 0.35s ease, opacity 0.35s ease;
+      opacity: 0.45;
+      filter: blur(0.5px);
+    }
+    .story-dot::before {
+      content: '';
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      margin: 0 auto 6px;
+      display: block;
+      background: #6e7681;
+      border: 2px solid rgba(13, 17, 23, 0.9);
+      box-shadow: 0 0 0 2px rgba(110, 118, 129, 0.35);
+      transition: all 0.35s ease;
+    }
+    .story-dot .dot-label {
+      font-size: 0.55em;
+      color: var(--muted);
+      font-family: 'JetBrains Mono', monospace;
+    }
+    .story-dot.story-dot-past {
+      opacity: 0.5;
+      filter: blur(1.2px) saturate(0.6);
+    }
+    .story-dot.story-dot-past::before {
+      background: #3fb950;
+      box-shadow: 0 0 0 2px rgba(63, 185, 80, 0.2);
+    }
+    .story-dot.story-dot-current {
+      opacity: 1;
+      filter: blur(0);
+    }
+    .story-dot.story-dot-current::before {
+      background: #2f81f7;
+      box-shadow: 0 0 0 4px rgba(47, 129, 247, 0.25);
+      transform: scale(1.12);
+    }
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+    .story-slot {
+      background: var(--bg-card-soft);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--sc, var(--accent));
+      border-radius: 10px;
+      padding: 12px 10px 10px;
+      text-align: center;
+      font-size: 0.65em;
+      opacity: 0;
+      transform: translateX(14px) scale(0.93);
+      filter: blur(10px) saturate(0.65);
+      transition: opacity 0.4s ease, transform 0.45s cubic-bezier(0.34, 1.56, 0.64, 1), filter 0.4s ease;
+      pointer-events: none;
+    }
+    .story-slot.story-stage-current {
+      opacity: 1;
+      transform: translateX(0) scale(1);
+      filter: blur(0);
+      pointer-events: auto;
+      box-shadow: 0 10px 28px rgba(47, 129, 247, 0.16);
+    }
+    .story-slot.story-stage-past {
+      opacity: 0.55;
+      transform: translateX(-8px) scale(0.96);
+      filter: blur(2.8px) saturate(0.55);
+    }
+    .story-slot.story-stage-future {
+      opacity: 0;
+      transform: translateX(14px) scale(0.93);
+      filter: blur(10px) saturate(0.65);
+    }
+    .sicon {
+      width: 36px;
+      height: 36px;
+      display: block;
+      margin: 0 auto 7px;
+      transition: transform 0.35s ease;
+    }
+    .story-slot.story-stage-current .sicon {
+      animation: iconPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 0.15s both;
+    }
+    @keyframes iconPop {
+      from { transform: scale(0.2); opacity: 0; }
+      to   { transform: scale(1); opacity: 1; }
+    }
+    .stime {
+      font-weight: 700;
+      color: var(--sc, var(--accent));
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 1.05em;
+      margin-bottom: 4px;
+    }
+    .sdesc {
+      color: var(--text);
+      line-height: 1.45;
+      font-size: 0.95em;
+    }
+    .story-hint {
+      margin-top: 14px;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.68em;
+      letter-spacing: 0.03em;
     }
   </style>
 </head>
@@ -316,6 +479,145 @@
   <div class="hero-meta">
     239 test files &middot; 4 packages &middot; 6 optimization steps
   </div>
+</section>
+
+<!-- ========== STORY TIME ========== -->
+<section class="story-time" data-background-gradient="linear-gradient(135deg, #060c14 0%, #0d1117 100%)">
+  <div style="text-align:center; margin-bottom:14px">
+    <h2 style="margin:0; font-size:1.6em; color:#f0f6fc">Story Time</h2>
+    <p style="color:var(--muted); font-size:0.72em; margin:5px 0 0; text-align:center">A Thursday I&rsquo;ll never forget &mdash; why I gave this talk</p>
+  </div>
+
+  <div class="story-fragments" aria-hidden="true">
+    <span class="fragment story-step" data-fragment-index="1" data-stage="1"></span>
+    <span class="fragment story-step" data-fragment-index="2" data-stage="2"></span>
+    <span class="fragment story-step" data-fragment-index="3" data-stage="3"></span>
+    <span class="fragment story-step" data-fragment-index="4" data-stage="4"></span>
+    <span class="fragment story-step" data-fragment-index="5" data-stage="5"></span>
+    <span class="fragment story-step" data-fragment-index="6" data-stage="6"></span>
+    <span class="fragment story-step" data-fragment-index="7" data-stage="7"></span>
+    <span class="fragment story-step" data-fragment-index="8" data-stage="8"></span>
+  </div>
+
+  <div class="story-track">
+    <div class="story-progress"></div>
+    <div class="story-dot" data-stage="1"><span class="dot-label">THU</span></div>
+    <div class="story-dot" data-stage="2"><span class="dot-label">1:00</span></div>
+    <div class="story-dot" data-stage="3"><span class="dot-label">3:30</span></div>
+    <div class="story-dot" data-stage="4"><span class="dot-label">4:00</span></div>
+    <div class="story-dot" data-stage="5"><span class="dot-label">4:33</span></div>
+    <div class="story-dot" data-stage="6"><span class="dot-label">4:53</span></div>
+    <div class="story-dot" data-stage="7"><span class="dot-label">5:33</span></div>
+    <div class="story-dot" data-stage="8"><span class="dot-label">MON</span></div>
+  </div>
+
+  <div class="story-grid">
+
+    <!-- Stage 1: Thursday setup -->
+    <div class="story-slot" data-stage="1" style="--sc:#2f81f7">
+      <svg class="sicon" viewBox="0 0 44 44" fill="none">
+        <rect x="5" y="9" width="34" height="30" rx="4" stroke="#2f81f7" stroke-width="2.5"/>
+        <line x1="5" y1="18" x2="39" y2="18" stroke="#2f81f7" stroke-width="2.5"/>
+        <line x1="14" y1="5" x2="14" y2="13" stroke="#2f81f7" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="30" y1="5" x2="30" y2="13" stroke="#2f81f7" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="15" cy="27" r="2" fill="#2f81f7"/><circle cx="22" cy="27" r="2" fill="#2f81f7"/>
+        <circle cx="29" cy="27" r="2" fill="#2f81f7"/><circle cx="15" cy="34" r="2" fill="#2f81f7"/>
+        <circle cx="22" cy="34" r="2" fill="#2f81f7"/>
+        <circle cx="29" cy="34" r="2" fill="none" stroke="#f85149" stroke-width="1.5"/>
+      </svg>
+      <div class="stime">Thursday</div>
+      <div class="sdesc">Team of 20. Last day before Friday RC cut. Life is good &#x2600;&#xFE0F;</div>
+    </div>
+
+    <!-- Stage 2: 1pm PM arrives -->
+    <div class="story-slot" data-stage="2" style="--sc:#d29922">
+      <svg class="sicon" viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="22" r="16" stroke="#d29922" stroke-width="2.5"/>
+        <polyline points="22,11 22,22 31,26" stroke="#d29922" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="22" cy="22" r="2" fill="#d29922"/>
+      </svg>
+      <div class="stime">1:00 PM</div>
+      <div class="sdesc">PM: &ldquo;Urgent bug! RC is tomorrow!&rdquo; &#x1F62C; Seems fixable &mdash; let&rsquo;s go.</div>
+    </div>
+
+    <!-- Stage 3: 3:30pm fix found -->
+    <div class="story-slot" data-stage="3" style="--sc:#3fb950">
+      <svg class="sicon" viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="22" r="16" stroke="#3fb950" stroke-width="2.5"/>
+        <polyline points="14,22 20,28 30,15" stroke="#3fb950" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="stime">3:30 PM</div>
+      <div class="sdesc">Fix found after 2.5&nbsp;hrs! &#x2713; PR created &amp; submitted for review.</div>
+    </div>
+
+    <!-- Stage 4: 4pm waiting for CI -->
+    <div class="story-slot" data-stage="4" style="--sc:#8b949e">
+      <svg class="sicon" viewBox="0 0 44 44" fill="none">
+        <path d="M13 8 H31 L22 22 L31 36 H13 L22 22 Z" stroke="#8b949e" stroke-width="2.5" stroke-linejoin="round" fill="none"/>
+        <path d="M22 22 L30 35 H14 Z" fill="rgba(47,129,247,0.18)"/>
+        <circle cx="22" cy="31" r="2.5" fill="#2f81f7" opacity="0.85"/>
+        <circle cx="20" cy="34" r="1.5" fill="#2f81f7" opacity="0.4"/>
+      </svg>
+      <div class="stime">4:00 PM</div>
+      <div class="sdesc">Team approved &#x26A1; CI running&hellip; 30&ndash;40&nbsp;min. Please be 30. &#x1F91E;</div>
+    </div>
+
+    <!-- Stage 5: 4:33pm CI fails -->
+    <div class="story-slot" data-stage="5" style="--sc:#f85149">
+      <svg class="sicon" viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="22" r="16" stroke="#f85149" stroke-width="2.5"/>
+        <line x1="15" y1="15" x2="29" y2="29" stroke="#f85149" stroke-width="2.5" stroke-linecap="round"/>
+        <line x1="29" y1="15" x2="15" y2="29" stroke="#f85149" stroke-width="2.5" stroke-linecap="round"/>
+      </svg>
+      <div class="stime">4:33 PM</div>
+      <div class="sdesc">&#x274C; CI FAIL: code coverage below threshold. Need to write tests now.</div>
+    </div>
+
+    <!-- Stage 6: ~4:53pm AI writes tests -->
+    <div class="story-slot" data-stage="6" style="--sc:#bc8cff">
+      <svg class="sicon" viewBox="0 0 44 44" fill="none">
+        <rect x="11" y="17" width="22" height="16" rx="4" stroke="#bc8cff" stroke-width="2.5"/>
+        <rect x="16" y="8" width="12" height="8" rx="2" stroke="#bc8cff" stroke-width="2.5"/>
+        <line x1="22" y1="16" x2="22" y2="17" stroke="#bc8cff" stroke-width="2"/>
+        <circle cx="18" cy="25" r="2" fill="#bc8cff"/>
+        <circle cx="26" cy="25" r="2" fill="#bc8cff"/>
+        <path d="M18 29 q4 2.5 8 0" stroke="#bc8cff" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <line x1="7" y1="25" x2="11" y2="25" stroke="#bc8cff" stroke-width="2" stroke-linecap="round"/>
+        <line x1="33" y1="25" x2="37" y2="25" stroke="#bc8cff" stroke-width="2" stroke-linecap="round"/>
+        <path d="M36 10 l1.5-3 l1.5 3" stroke="#d29922" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <circle cx="37.5" cy="13" r="1" fill="#d29922"/>
+      </svg>
+      <div class="stime">~4:53 PM</div>
+      <div class="sdesc">20&nbsp;min with AI &#x2728; &rarr; tests written &amp; pushed. &ldquo;RC team, please wait!&rdquo;</div>
+    </div>
+
+    <!-- Stage 7: 5:33pm CI fails again -->
+    <div class="story-slot" data-stage="7" style="--sc:#f85149; box-shadow:0 0 22px rgba(248,81,73,0.22)">
+      <svg class="sicon" viewBox="0 0 44 44" fill="none">
+        <path d="M22 6 L40 36 H4 Z" stroke="#f85149" stroke-width="2.5" stroke-linejoin="round"/>
+        <line x1="22" y1="18" x2="22" y2="28" stroke="#f85149" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="22" cy="32" r="1.5" fill="#f85149"/>
+      </svg>
+      <div class="stime">5:33 PM</div>
+      <div class="sdesc">&#x274C; AGAIN. 40&nbsp;min CI. Testable refactor &rarr; new uncovered lines. &#x1F480;</div>
+    </div>
+
+    <!-- Stage 8: Monday aftermath -->
+    <div class="story-slot" data-stage="8" style="--sc:#3fb950; background:rgba(63,185,80,0.07)">
+      <svg class="sicon" viewBox="0 0 44 44" fill="none">
+        <circle cx="22" cy="17" r="10" stroke="#6e7681" stroke-width="2.5"/>
+        <circle cx="18" cy="15" r="1.5" fill="#6e7681"/>
+        <circle cx="26" cy="15" r="1.5" fill="#6e7681"/>
+        <path d="M17 21 q5-3 10 0" stroke="#6e7681" stroke-width="2" stroke-linecap="round" fill="none"/>
+        <line x1="6" y1="38" x2="38" y2="38" stroke="#3fb950" stroke-width="2" stroke-linecap="round" opacity="0.5"/>
+        <text x="22" y="44" text-anchor="middle" fill="#3fb950" font-size="7" font-family="JetBrains Mono" font-weight="700">THAT&apos;S WHY!</text>
+      </svg>
+      <div class="stime" style="color:#3fb950">Monday &#x1F605;</div>
+      <div class="sdesc">Fixed Fri. PM tested in prod on Mon. <strong style="color:var(--accent)">That&rsquo;s why I&rsquo;m here.</strong></div>
+    </div>
+
+  </div>
+  <div class="story-hint">Press next to advance one slot at a time.</div>
 </section>
 
 <!-- ========== LIVE DEMO START ========== -->
@@ -737,6 +1039,68 @@ Reveal.initialize({
   width: 1200,
   height: 700,
   margin: 0.08,
+});
+
+function updateStorySlide(section) {
+  if (!section || !section.classList.contains('story-time')) return;
+
+  const steps = Array.from(section.querySelectorAll('.story-step'));
+  const slots = Array.from(section.querySelectorAll('.story-slot'));
+  const dots = Array.from(section.querySelectorAll('.story-dot'));
+  const progress = section.querySelector('.story-progress');
+  const total = steps.length;
+
+  let activeStage = 0;
+  steps.forEach(step => {
+    if (step.classList.contains('visible')) {
+      activeStage = Math.max(activeStage, Number(step.dataset.stage));
+    }
+  });
+
+  slots.forEach(slot => {
+    const stage = Number(slot.dataset.stage);
+    slot.classList.remove('story-stage-past', 'story-stage-current', 'story-stage-future');
+    if (activeStage === 0 || stage > activeStage) {
+      slot.classList.add('story-stage-future');
+      return;
+    }
+    if (stage < activeStage) {
+      slot.classList.add('story-stage-past');
+      return;
+    }
+    slot.classList.add('story-stage-current');
+  });
+
+  dots.forEach(dot => {
+    const stage = Number(dot.dataset.stage);
+    dot.classList.remove('story-dot-past', 'story-dot-current');
+    if (stage < activeStage) {
+      dot.classList.add('story-dot-past');
+    } else if (stage === activeStage) {
+      dot.classList.add('story-dot-current');
+    }
+  });
+
+  if (progress) {
+    const ratio = activeStage <= 1 ? 0 : ((activeStage - 1) / (total - 1)) * 100;
+    progress.style.setProperty('--story-progress', ratio + '%');
+  }
+}
+
+Reveal.on('ready', event => {
+  updateStorySlide(event.currentSlide);
+});
+
+Reveal.on('slidechanged', event => {
+  updateStorySlide(event.currentSlide);
+});
+
+Reveal.on('fragmentshown', event => {
+  updateStorySlide(event.fragment.closest('section'));
+});
+
+Reveal.on('fragmenthidden', event => {
+  updateStorySlide(event.fragment.closest('section'));
 });
 
 // Chart: Time Breakdown (donut)

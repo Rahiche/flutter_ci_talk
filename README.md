@@ -46,6 +46,23 @@ Each branch builds on the previous one:
 | `step-5/diff-coverage` | Diff-only coverage + dependency graph testing |
 | `step-6/all-optimizations` | Everything combined |
 
+## Slides
+
+The talk slides are in `slides/index.html` and use [reveal.js](https://revealjs.com/) loaded from CDN.
+
+```bash
+# Serve with Python (no install needed)
+python3 -m http.server 8080 --directory slides
+
+# Or with Node.js (npx)
+npx serve slides
+
+# Then open in your browser
+open http://localhost:8080
+```
+
+Navigate slides with arrow keys. Press `F` for fullscreen, `S` for speaker notes, `?` for all shortcuts.
+
 ## Running the Demo
 
 ```bash
