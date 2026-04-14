@@ -518,6 +518,52 @@
       margin: 6px 0;
       font-size: 0.88em;
     }
+
+    /* Tight layout for content-heavy slides that can clip on shorter displays */
+    .reveal .slides section.fit-slide h2 {
+      font-size: 1.7em;
+      margin: 0 0 0.25em;
+    }
+    .reveal .slides section.fit-slide h3 {
+      font-size: 1.1em;
+      margin: 0 0 0.45em;
+    }
+    .reveal .slides section.fit-slide .comparison {
+      gap: 16px;
+      margin: 18px 0;
+    }
+    .reveal .slides section.fit-slide .before-card,
+    .reveal .slides section.fit-slide .after-card {
+      padding: 20px;
+    }
+    .reveal .slides section.fit-slide .before-card .time,
+    .reveal .slides section.fit-slide .after-card .time {
+      font-size: 2.8em;
+    }
+    .reveal .slides section.fit-slide .stat-grid {
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .reveal .slides section.fit-slide .stat-card {
+      padding: 20px 16px;
+    }
+    .reveal .slides section.fit-slide .stat-number {
+      font-size: 2.35em;
+    }
+    .reveal .slides section.fit-slide .stat-label {
+      font-size: 0.78em;
+      margin-top: 6px;
+    }
+    .reveal .slides section.fit-slide .issue-list li {
+      margin: 6px 0;
+      padding: 10px 14px;
+      font-size: 0.78em;
+    }
+    .reveal .slides section.fit-slide .cmd {
+      margin: 8px 0;
+      padding: 8px 14px;
+      font-size: 0.72em;
+    }
   </style>
 </head>
 <body>
@@ -673,9 +719,9 @@
   </div>
 </section>
 
-<!-- ========== LIVE DEMO START ========== -->
+<!-- ========== DEMO PROJECT OVERVIEW ========== -->
 <section>
-  <h2>Live Demo Start</h2>
+  <h2>Demo Project overview</h2>
   <pre><code class="language-text">flutter_ci_talk/
   packages/
     app/
@@ -719,7 +765,7 @@
     <canvas id="timeBreakdown"></canvas>
   </div>
   <p style="text-align:center; font-size:0.8em; color:var(--muted)">
-    Output of <code>dart run tool/find_slow_tests.dart</code>
+    Latest GitHub Actions Benchmark Dispatch wall times (2026-04-11)
   </p>
 </section>
 
@@ -751,15 +797,15 @@
 <!-- ========== ACT 1: BAD TESTS ========== -->
 <section>
   <section>
-    <h2>Act 1 Run Slide</h2>
+    <h2>Act 1 Run</h2>
     <h3>Start from the slow baseline</h3>
     <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/bench/baseline-20260411-150040" target="_blank" rel="noopener noreferrer">git checkout bench/baseline-20260411-150040 && make demo-slow</a></div>
 
   </section>
-  <section>
+  <section class="fit-slide">
     <h2>Act 1: Bad Test Patterns</h2>
     <h3>The hidden time sinks</h3>
-    <ul class="issue-list">
+    <ul class="issue-list issue-list-compact">
       <li><span class="pill pill-bad">Delay</span> Real async delays &mdash; <code>Future.delayed(seconds: 3)</code></li>
       <li><span class="pill pill-bad">Setup</span> Heavy setUp &mdash; <code>setUp(() async { await Future.delayed(500ms) })</code></li>
       <li><span class="pill pill-bad">Parallelism</span> Mega test files &mdash; 30+ tests in one file</li>
@@ -778,7 +824,7 @@ test('should debounce search input', () async {
 
 // x 198 tests across 4 packages = 594 seconds of waiting</code></pre>
   </section>
-  <section>
+  <section class="fit-slide">
     <h2>Act 1 Result Reveal</h2>
     <div class="stat-grid">
       <div class="stat-card">
@@ -804,7 +850,7 @@ test('should debounce search input', () async {
 <!-- ========== ACT 2: PARALLEL ========== -->
 <section>
   <section>
-    <h2>Act 2 Run Slide</h2>
+    <h2>Act 2 Run</h2>
     <h3>Fix bad tests, then rerun same script</h3>
     <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-1/fix-bad-tests" target="_blank" rel="noopener noreferrer">git checkout step-1/fix-bad-tests && make demo-slow</a></div>
   </section>
@@ -823,7 +869,7 @@ test('should debounce search input', () async {
     </div>
     <div class="cmd">sh/check-ci.sh  # 4 packages in parallel</div>
   </section>
-  <section>
+  <section class="fit-slide">
     <h2>Act 2 Result Reveal</h2>
     <div class="comparison" style="max-width: 760px; margin: 32px auto;">
       <div class="before-card">
@@ -836,12 +882,12 @@ test('should debounce search input', () async {
         <div style="color:var(--muted); margin-top:8px">After fixing bad tests</div>
       </div>
     </div>
-    <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr);">
+    <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr); gap: 16px; margin: 20px 0 10px;">
       <div class="stat-card">
         <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087150" target="_blank" rel="noopener noreferrer">34%</a></div>
         <div class="stat-label">Faster than baseline</div>
       </div>
-      <div class="stat-card">
+      <div class="stat-card" style="padding-top: 24px; padding-bottom: 24px;">
         <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087150" target="_blank" rel="noopener noreferrer">173s</a></div>
         <div class="stat-label">Wall time removed</div>
       </div>
@@ -852,7 +898,7 @@ test('should debounce search input', () async {
 <!-- ========== ACT 3: BUNDLER ========== -->
 <section>
   <section>
-    <h2>Act 3 Run Slide</h2>
+    <h2>Act 3 Run</h2>
     <h3>Parallel package execution</h3>
     <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-2/parallel-packages" target="_blank" rel="noopener noreferrer">git checkout step-2/parallel-packages && sh/check-ci.sh</a></div>
   </section>
@@ -874,27 +920,27 @@ test('should debounce search input', () async {
       </div>
     </div>
   </section>
-  <section>
+  <section class="fit-slide">
     <h2>Act 3 Result Reveal</h2>
     <div class="comparison" style="max-width: 760px; margin: 32px auto;">
       <div class="before-card">
-        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087150" target="_blank" rel="noopener noreferrer">5:38</a></div>
-        <div style="color:var(--muted); margin-top:8px">After fixing bad tests</div>
+        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087193" target="_blank" rel="noopener noreferrer">4:29</a></div>
+        <div style="color:var(--muted); margin-top:8px">After package-level parallelism</div>
       </div>
       <div class="arrow">&rarr;</div>
       <div class="after-card">
-        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087193" target="_blank" rel="noopener noreferrer">4:29</a></div>
-        <div style="color:var(--muted); margin-top:8px">After package-level parallelism</div>
+        <div class="time"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087380" target="_blank" rel="noopener noreferrer">4:37</a></div>
+        <div style="color:var(--muted); margin-top:8px">After test bundler</div>
       </div>
     </div>
     <div class="stat-grid" style="grid-template-columns: repeat(2, 1fr);">
       <div class="stat-card">
-        <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087193" target="_blank" rel="noopener noreferrer">20%</a></div>
-        <div class="stat-label">Faster than Step 1</div>
+        <div class="stat-number" style="-webkit-text-fill-color: var(--warn)"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087380" target="_blank" rel="noopener noreferrer" style="background:none; -webkit-text-fill-color: var(--warn);">+8s</a></div>
+        <div class="stat-label">vs Step 2 wall time</div>
       </div>
       <div class="stat-card">
-        <div class="stat-number"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087193" target="_blank" rel="noopener noreferrer">47%</a></div>
-        <div class="stat-label">Faster than the baseline</div>
+        <div class="stat-number" style="-webkit-text-fill-color: var(--warn)"><a href="https://github.com/Rahiche/flutter_ci_talk/actions/runs/24285087380" target="_blank" rel="noopener noreferrer" style="background:none; -webkit-text-fill-color: var(--warn);">+3%</a></div>
+        <div class="stat-label">CI variance (still same range)</div>
       </div>
     </div>
   </section>
@@ -917,7 +963,7 @@ void main() {
 <!-- ========== ACT 4: CI CACHING ========== -->
 <section>
   <section>
-    <h2>Act 4 Run Slide</h2>
+    <h2>Act 4 Run</h2>
     <h3>Bundle tests to reduce isolate startup overhead</h3>
     <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-3/test-bundler" target="_blank" rel="noopener noreferrer">git checkout step-3/test-bundler && sh/demo_isolate.sh</a></div>
   </section>
@@ -931,7 +977,7 @@ void main() {
       <li><span class="pill pill-bad">WASTE</span> Testing all packages when one changed</li>
     </ul>
   </section>
-  <section>
+  <section class="fit-slide">
     <h2>Act 4 Result Reveal</h2>
     <div class="comparison" style="max-width: 760px; margin: 32px auto;">
       <div class="before-card">
@@ -976,7 +1022,7 @@ test:
 <!-- ========== ACT 5: DIFF COVERAGE ========== -->
 <section>
   <section>
-    <h2>Act 5 Run Slide</h2>
+    <h2>Act 5 Run</h2>
     <h3>Selective workflows and dependency-aware checks</h3>
     <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-4/selective-builds" target="_blank" rel="noopener noreferrer">git checkout step-4/selective-builds && cat .github/workflows/pr_check.yml</a></div>
   </section>
@@ -1018,7 +1064,7 @@ test:
     </div>
   </section>
   <section>
-    <h2>Act 5 Run Slide (continued)</h2>
+    <h2>Act 5 Run (continued)</h2>
     <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-5/diff-coverage" target="_blank" rel="noopener noreferrer">git checkout step-5/diff-coverage && sh/diff_coverage.sh bench/baseline-20260411-150040 && sh/affected_packages.sh bench/baseline-20260411-150040</a></div>
   </section>
   <section>
@@ -1040,10 +1086,10 @@ test:
 </section>
 
 <!-- ========== FINAL RESULTS ========== -->
-<section>
+<section class="fit-slide">
   <h2>The Full Picture</h2>
   <div class="cmd"><a href="https://github.com/Rahiche/flutter_ci_talk/tree/step-6/all-optimizations" target="_blank" rel="noopener noreferrer">git checkout step-6/all-optimizations && make demo-fast</a></div>
-  <div class="chart-container" style="height: 400px;">
+  <div class="chart-container" style="height: 310px; margin: 14px auto; padding: 14px 16px;">
     <canvas id="finalChart"></canvas>
   </div>
   <p style="text-align:center; color:var(--muted); font-size:0.76em; margin-top:18px">
@@ -1051,7 +1097,7 @@ test:
   </p>
 </section>
 
-<section data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
+<section class="fit-slide" data-background-gradient="linear-gradient(135deg, #0d1117 0%, #121a29 100%)">
   <h2 style="text-align:center">Before &amp; After</h2>
   <div class="comparison" style="max-width: 700px; margin: 20px auto;">
     <div class="before-card" style="padding: 20px 24px;">
@@ -1081,9 +1127,9 @@ test:
 </section>
 
 <!-- ========== TAKEAWAYS ========== -->
-<section data-background-gradient="linear-gradient(135deg, #111926 0%, #0d1117 100%)">
+<section class="fit-slide" data-background-gradient="linear-gradient(135deg, #111926 0%, #0d1117 100%)">
   <h2 style="text-align:center">Key Takeaways</h2>
-  <div style="max-width: 680px; margin: 18px auto;">
+  <div style="max-width: 680px; margin: 10px auto 0;">
     <ul class="issue-list issue-list-compact">
       <li class="fixed"><span class="pill pill-good">1</span> Fix your tests first &mdash; async delays, heavy setUp, real I/O</li>
       <li class="fixed"><span class="pill pill-good">2</span> Parallelize across packages &mdash; simple shell script</li>
@@ -1205,28 +1251,50 @@ Reveal.on('fragmenthidden', event => {
   updateStorySlide(event.fragment.closest('section'));
 });
 
-// Chart: Time Breakdown (donut)
+// Chart: GitHub Actions benchmark wall times
 Reveal.on('slidechanged', event => {
   if (event.currentSlide.querySelector('#timeBreakdown')) {
     const ctx = document.getElementById('timeBreakdown');
     if (!ctx._chart) {
       ctx._chart = new Chart(ctx, {
-        type: 'doughnut',
+        type: 'bar',
         data: {
-          labels: ['Async Delays', 'Heavy setUp', 'Mega Files', 'Excessive Pump', 'Real I/O'],
+          labels: ['Baseline', 'Fix Tests', 'Parallel Pkgs', 'Test Bundler', 'Cache+Select', 'Diff Coverage', 'All Opts'],
           datasets: [{
-            data: [58, 21, 12, 5, 4],
-            backgroundColor: ['#f85149', '#d29922', '#e3b341', '#2f81f7', '#79c0ff'],
+            label: 'Wall time (seconds)',
+            data: [511, 338, 269, 277, 296, 76, 135],
+            backgroundColor: ['#f85149', '#d29922', '#e3b341', '#2f81f7', '#d29922', '#58a6ff', '#3fb950'],
             borderWidth: 0,
+            borderRadius: 6,
+            borderSkipped: false,
           }]
         },
         options: {
           responsive: true,
           maintainAspectRatio: false,
           plugins: {
-            legend: { position: 'right', labels: { color: '#8b949e', font: { size: 13 } } }
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: item => {
+                  const v = item.raw;
+                  return v >= 60 ? Math.floor(v / 60) + 'm ' + (v % 60) + 's' : v + 's';
+                }
+              }
+            }
           },
-          animation: { animateScale: true, duration: 1500 }
+          scales: {
+            y: {
+              beginAtZero: true,
+              grid: { color: 'rgba(255,255,255,0.05)' },
+              ticks: { color: '#8b949e', callback: v => v >= 60 ? Math.floor(v/60) + 'm' : v + 's' }
+            },
+            x: {
+              grid: { display: false },
+              ticks: { color: '#c9d1d9', maxRotation: 0, minRotation: 0 }
+            }
+          },
+          animation: { duration: 1400, easing: 'easeOutQuart' }
         }
       });
     }
