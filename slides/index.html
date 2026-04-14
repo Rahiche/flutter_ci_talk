@@ -332,7 +332,7 @@
   tool/
   slides/
   BENCHMARKS.md</code></pre>
-  <div class="cmd">git checkout main && make demo-slow</div>
+  <div class="cmd">git checkout bench/baseline-20260411-150040 && make demo-slow</div>
   <p style="color:var(--muted); font-size:0.82em; margin-top:14px">
     Script prints total runtime at the end as: <code>=== Sequential total: Xm Ys ===</code>
   </p>
@@ -404,7 +404,7 @@
   <section>
     <h2>Act 1 Run Slide</h2>
     <h3>Start from the slow baseline</h3>
-    <div class="cmd">git checkout main && make demo-slow</div>
+    <div class="cmd">git checkout bench/baseline-20260411-150040 && make demo-slow</div>
     <p style="color:var(--muted); font-size:0.82em; margin-top:14px">
       Keep this running while you explain why slow CI hurts team flow.
     </p>
@@ -618,7 +618,7 @@ test:
   </section>
   <section>
     <h2>Act 5 Run Slide (continued)</h2>
-    <div class="cmd">git checkout step-5/diff-coverage && sh/diff_coverage.sh main && sh/affected_packages.sh main</div>
+    <div class="cmd">git checkout step-5/diff-coverage && sh/diff_coverage.sh bench/baseline-20260411-150040 && sh/affected_packages.sh bench/baseline-20260411-150040</div>
   </section>
   <section>
     <h2>Diff Coverage</h2>
@@ -634,7 +634,7 @@ test:
         <div style="color:var(--muted)">Changed files to cover</div>
       </div>
     </div>
-    <div class="cmd">sh/diff_coverage.sh main</div>
+    <div class="cmd">sh/diff_coverage.sh bench/baseline-20260411-150040</div>
   </section>
 </section>
 
@@ -652,7 +652,7 @@ test:
   <div class="comparison" style="max-width: 700px; margin: 40px auto;">
     <div class="before-card">
       <div class="time">7:12</div>
-      <div style="color:var(--muted); margin-top:8px">main branch</div>
+      <div style="color:var(--muted); margin-top:8px">bench/baseline-20260411-150040</div>
       <div style="color:#6e7681; font-size:0.7em; margin-top:16px">
         Sequential &middot; Per-file isolates<br>
         Real delays &middot; Heavy setUp<br>
@@ -717,7 +717,7 @@ Total estimated waste: 548.4s</code></pre>
   </h1>
   <div style="text-align:center; color:var(--muted); margin-top:40px; font-size:0.9em">
     All code: <code>github.com/your-repo/flutter_ci_talk</code><br><br>
-    <code>git checkout main</code> &rarr; slow<br>
+    <code>git checkout bench/baseline-20260411-150040</code> &rarr; slow<br>
     <code>git checkout step-6/all-optimizations</code> &rarr; fast
   </div>
 </section>

@@ -8,7 +8,7 @@
 ---
 
 ## Act 1: "Look how slow this is" (~5 min)
-**Branch:** `main`
+**Branch:** `bench/baseline-20260411-150040`
 
 ### Talking Points
 - Show project structure: 4 packages, ~235 source files, ~239 test files
@@ -17,7 +17,7 @@
 
 ### Run Slide Command
 ```bash
-git checkout main && make demo-slow
+git checkout bench/baseline-20260411-150040 && make demo-slow
 ```
 
 ### Reveal Slide
@@ -176,9 +176,9 @@ cat .github/workflows/pr_check.yml
 ### Run Slide Command
 ```bash
 git checkout step-5/diff-coverage
-sh/diff_coverage.sh main
-sh/affected_packages.sh main
-sh/arch_guard.sh --base main
+sh/diff_coverage.sh bench/baseline-20260411-150040
+sh/affected_packages.sh bench/baseline-20260411-150040
+sh/arch_guard.sh --base bench/baseline-20260411-150040
 ```
 
 ---
