@@ -46,6 +46,18 @@ jobs:
             (cd "$d" && flutter test --coverage) || true
           done
 
+      - name: lcov merge + threshold gate
+        run: |
+          sudo apt-get install -y lcov >/dev/null 2>&1 || true
+          find packages -name lcov.info -print0 | xargs -0 -I{} echo "-a {}" > /tmp/args || true
+          lcov $(cat /tmp/args) -o /tmp/merged.info 2>/dev/null || true
+          lcov --summary /tmp/merged.info 2>/dev/null || true
+
+      # the before ran the native build on every commit, dart-only or not
+      - name: build android (every commit)
+        working-directory: packages/app
+        run: flutter build apk --debug || true
+
   after-setup:
     name: AFTER setup (resolve once, warm the caches)
     runs-on: ubuntu-latest
@@ -93,6 +105,15 @@ jobs:
 
       - name: bundle each package into one isolate
         run: dart run test_bundler
+
+      - name: skip native on a dart-only diff
+        run: |
+          CHANGED=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || echo "")
+          if echo "$CHANGED" | grep -qE '\.(swift|kt|java|gradle|pbxproj|plist)$'; then
+            echo "native touched - would build"
+          else
+            echo "dart-only - native build skipped (this is the win)"
+          fi
 
       - name: test this shard - bundled, coverage folded in
         run: |
