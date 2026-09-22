@@ -1,0 +1,108 @@
+# Before/after benchmark for the talk. Runs on every push to ci-bench.
+#
+# BEFORE is one cold job in the original shape: no caches, per-file isolates,
+# coverage as a second full pass.
+# AFTER is the shape the talk arrives at: warm caches (including the analyzer
+# byte store), one bundled isolate per package, sharded across 4 runners,
+# coverage folded into the test step.
+#
+# Read the ratio as:  before job duration  vs  (setup + slowest after shard).
+name: CI Bench
+
+on:
+  push:
+    branches: [ci-bench]
+  workflow_dispatch:
+
+jobs:
+  before:
+    name: BEFORE (cold, per-file, coverage twice)
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: false                 # cold SDK on purpose
+
+      - name: pub get (cold)
+        run: flutter pub get
+
+      - name: analyze (cold byte store)
+        run: dart analyze . || true
+
+      - name: test - one isolate per file
+        run: |
+          for d in packages/*/; do
+            [ -d "$d/test" ] || continue
+            (cd "$d" && flutter test) || true
+          done
+
+      - name: coverage - the whole suite again
+        run: |
+          for d in packages/*/; do
+            [ -d "$d/test" ] || continue
+            (cd "$d" && flutter test --coverage) || true
+          done
+
+  after-setup:
+    name: AFTER setup (resolve once, warm the caches)
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      # pubspec.lock is gitignored in this repo, so key on the pubspecs.
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: bench-pub-${{ hashFiles('**/pubspec.yaml') }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.dartServer
+          key: bench-dartserver-${{ hashFiles('**/pubspec.yaml') }}-${{ github.sha }}
+          restore-keys: bench-dartserver-${{ hashFiles('**/pubspec.yaml') }}-
+      - run: flutter pub get
+      - name: analyze once, whole workspace
+        run: dart analyze . || true
+
+  after:
+    name: AFTER shard ${{ matrix.shard }}
+    needs: after-setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [0, 1, 2, 3]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: bench-pub-${{ hashFiles('**/pubspec.yaml') }}
+      - run: flutter pub get
+
+      - name: bundle each package into one isolate
+        run: dart run test_bundler
+
+      - name: test this shard - bundled, coverage folded in
+        run: |
+          i=0
+          for d in packages/*/; do
+            [ -f "$d/test/all_tests.dart" ] || continue
+            if [ $(( i % 4 )) -eq ${{ matrix.shard }} ]; then
+              echo "::group::$d"
+              (cd "$d" && flutter test test/all_tests.dart --coverage --no-dds) || true
+              echo "::endgroup::"
+            fi
+            i=$(( i + 1 ))
+          done

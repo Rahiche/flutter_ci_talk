@@ -1,0 +1,15 @@
+name: ci_lints
+description: Custom analyzer lints that guard a Flutter app's user-facing strings, so untranslated text fails review instead of shipping.
+version: 0.1.0
+repository: https://github.com/Rahiche/flutter_ci_talk/tree/main/packages/ci_lints
+issue_tracker: https://github.com/Rahiche/flutter_ci_talk/issues
+topics: [lint, localization, l10n, flutter, ci]
+resolution: workspace
+
+environment:
+  sdk: ^3.9.0
+
+dependencies:
+  analyzer: ^8.0.0
+  analyzer_plugin: ^0.13.0
+  custom_lint_builder: ^0.8.0

@@ -1,0 +1,52 @@
+#!/usr/bin/env bash
+# Live demo trigger for the talk.  ./demo before   |   ./demo after
+#
+# Dispatches .github/workflows/talk_demo.yml, prints the run URL, and then
+# watches it. Kept to two words because if the clipboard fails on stage you
+# have to be able to type it.
+set -euo pipefail
+
+MODE="${1:-}"
+case "$MODE" in
+  before|after) ;;
+  *) echo "usage: ./demo before | ./demo after" >&2; exit 2 ;;
+esac
+
+WF=talk_demo.yml
+
+command -v gh >/dev/null || { echo "gh is not installed" >&2; exit 1; }
+gh auth status >/dev/null 2>&1 || { echo "gh is not authenticated - run: gh auth login" >&2; exit 1; }
+
+# Note the newest run id BEFORE dispatching, so we can tell ours apart from
+# whatever was already there. Dispatch returns no id, which is the whole
+# annoyance this loop exists to solve.
+PREV=$(gh run list --workflow "$WF" --limit 1 --json databaseId --jq '.[0].databaseId // 0' 2>/dev/null || echo 0)
+
+echo "dispatching: $MODE"
+gh workflow run "$WF" -f mode="$MODE"
+
+printf 'waiting for the run to appear'
+ID=""
+for _ in $(seq 1 30); do
+  sleep 2
+  ID=$(gh run list --workflow "$WF" --limit 1 --json databaseId --jq '.[0].databaseId // 0' 2>/dev/null || echo 0)
+  [ "$ID" != "$PREV" ] && [ "$ID" != "0" ] && break
+  printf '.'
+done
+echo
+
+if [ -z "$ID" ] || [ "$ID" = "$PREV" ] || [ "$ID" = "0" ]; then
+  echo "could not find the new run. open it manually:"
+  gh browse --repo "$(gh repo view --json nameWithOwner --jq .nameWithOwner)" --no-browser 2>/dev/null || true
+  exit 1
+fi
+
+URL=$(gh run view "$ID" --json url --jq .url)
+echo
+echo "  $URL"
+echo
+gh run watch "$ID" --interval 5 --exit-status || true
+
+echo
+gh run view "$ID" --json displayTitle,status,conclusion,createdAt,updatedAt \
+  --jq '"  \(.displayTitle)\n  \(.status) / \(.conclusion)\n  started \(.createdAt)  ended \(.updatedAt)"'

@@ -10,6 +10,27 @@ on:
 
 jobs:
   # ──────────────────────────────────────────────────
+  # Job 0: format - deliberately has no `needs:`.
+  #
+  # `dart format` is purely syntactic. It does not read pubspec.yaml, does
+  # not need .dart_tool, and does not need a single resolved dependency -
+  # verified: 60 files formatted in 352ms with none of them present. So it
+  # must not wait for `setup`. Putting a 300ms check behind a two-minute
+  # resolve buys nothing.
+  # ──────────────────────────────────────────────────
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+
+      - name: dart format
+        run: dart format --output=none --set-exit-if-changed .
+
+  # ──────────────────────────────────────────────────
   # Job 1: Resolve deps once, detect changes, cache
   # ──────────────────────────────────────────────────
   setup:
@@ -134,9 +155,34 @@ jobs:
       - name: Install dependencies
         run: dart pub get
 
+      # The analyzer keeps a persistent byte store of resolved element
+      # models at ~/.dartServer/.analysis-driver - OUTSIDE the repo and
+      # outside ~/.pub-cache, so the usual "cache the pub deps" recipe misses
+      # it entirely and every CI run pays full cold resolution.
+      #
+      # Measured here, 843 files: 30.0s cold, 7.8s warm. 3.8x, for a 105 MB
+      # cache. Keyed on the lockfile - the element models are tied to the
+      # resolved SDK and package versions.
+      - name: Cache analyzer byte store
+        uses: actions/cache@v4
+        with:
+          path: ~/.dartServer
+          key: dartserver-${{ runner.os }}-${{ hashFiles('**/pubspec.lock') }}-${{ github.sha }}
+          restore-keys: |
+            dartserver-${{ runner.os }}-${{ hashFiles('**/pubspec.lock') }}-
+            dartserver-${{ runner.os }}-
+
       # Analyze the ENTIRE workspace in one shot
       - name: dart analyze (workspace)
         run: dart analyze .
+
+      # The project's own guard rails. `dart analyze` does not load analyzer
+      # plugins, so custom_lint needs its own step. It must run from the
+      # workspace root: custom_lint only treats a directory as an analysis
+      # root when that directory owns .dart_tool/package_config.json, and
+      # under `resolution: workspace` only the root does.
+      - name: custom_lint (project rules)
+        run: dart run custom_lint
 
   # ──────────────────────────────────────────────────
   # Job 3: Test — per package, in parallel, only affected

@@ -11,6 +11,57 @@ workspace:
   - packages/payments
   - packages/analytics
   - packages/test_bundler
+  - packages/ci_lints
+  - packages/core_ui
+  - packages/core_data
+  - packages/core_network
+  - packages/core_utils
+  - packages/l10n
+  - packages/design_system
+  - packages/analytics_events
+  - packages/app_strings
+  - packages/telemetry
+  - packages/storage
+  - packages/auth
+  - packages/session
+  - packages/billing
+  - packages/catalog
+  - packages/media
+  - packages/search_api
+  - packages/notifications_api
+  - packages/feature_flags
+  - packages/checkout
+  - packages/cart
+  - packages/search
+  - packages/profile
+  - packages/settings
+  - packages/onboarding
+  - packages/notifications
+  - packages/orders
+  - packages/wishlist
+  - packages/reviews
+  - packages/addresses
+  - packages/vouchers
+  - packages/loyalty
+  - packages/referrals
+  - packages/support
+  - packages/chat
+  - packages/maps
+  - packages/calendar
+  - packages/gallery
+  - packages/feed
+  - packages/stories
+  - packages/ratings
+  - packages/subscriptions
+  - packages/invoices
+  - packages/receipts
+  - packages/shipping
 
 dev_dependencies:
   melos: ^7.3.0
+  custom_lint: ^0.8.0
+  flutter_lints: ^5.0.0
+  ci_lints:
+    path: packages/ci_lints
+  test_bundler:
+    path: packages/test_bundler

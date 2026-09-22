@@ -27,6 +27,13 @@ void main(List<String> args) {
       help: 'Generate sharded wrappers per package.',
       defaultsTo: '1',
     )
+    ..addOption(
+      'reset',
+      help: 'Called before every test, as <import uri>#<function>.\n'
+          'One isolate means global state now leaks between test files;\n'
+          'this is where you reset it. e.g.\n'
+          'package:app/test_support.dart#resetTestEnv',
+    )
     ..addFlag(
       'dry-run',
       help: 'Print what would be generated without writing files.',
@@ -71,6 +78,7 @@ void main(List<String> args) {
     shards: shards,
     dryRun: parsed['dry-run'] as bool,
     verbose: parsed['verbose'] as bool,
+    resetHook: parsed['reset'] as String?,
   );
 
   try {

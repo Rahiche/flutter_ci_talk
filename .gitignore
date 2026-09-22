@@ -6,3 +6,7 @@ pubspec.lock
 
 # IntelliJ / Android Studio
 .idea/
+custom_lint.log
+packages/*/.flutter-plugins-dependencies
+packages/*/coverage/
+packages/*/test/all_tests*.dart

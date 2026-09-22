@@ -1,0 +1,8 @@
+include: package:flutter_lints/flutter.yaml
+
+# custom_lint resolves plugins from the directory that owns
+# .dart_tool/package_config.json. In a pub workspace that is only the root,
+# so the plugin has to be enabled here, not per package.
+analyzer:
+  plugins:
+    - custom_lint

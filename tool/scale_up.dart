@@ -1,0 +1,493 @@
+#!/usr/bin/env dart
+
+// ignore_for_file: avoid_print
+import 'dart:io';
+
+/// Grows the demo repo to the scale the talk describes: ~50 workspace packages,
+/// a realistic third-party dependency graph, and a test suite heavy enough that
+/// `flutter test` on main takes minutes rather than seconds.
+///
+///   dart run tool/scale_up.dart [--packages 50] [--files 7] [--widgets 18]
+///
+/// Re-runnable: it only writes generated packages (those carrying the
+/// GENERATED marker) and never touches app/core/payments/analytics.
+void main(List<String> args) {
+  int opt(String name, int fallback) {
+    final i = args.indexOf('--$name');
+    return i >= 0 && i + 1 < args.length ? int.parse(args[i + 1]) : fallback;
+  }
+
+  final target = opt('packages', 50);
+  final filesPer = opt('files', 7);
+  final widgetsPer = opt('widgets', 18);
+  final root = Directory.current.path;
+
+  const keep = [
+    'app',
+    'core',
+    'payments',
+    'analytics',
+    'test_bundler',
+    'ci_lints',
+  ];
+  final names = _packageNames(target - keep.length);
+
+  // wipe previously generated packages so the script is idempotent
+  for (final d in Directory(
+    '$root/packages',
+  ).listSync().whereType<Directory>()) {
+    final marker = File('${d.path}/.generated');
+    if (marker.existsSync()) d.deleteSync(recursive: true);
+  }
+
+  for (final p in names) {
+    _package(root, p, filesPer, widgetsPer);
+  }
+
+  _rootPubspec(root, [...keep, ...names.map((p) => p.name)]);
+
+  final all = [...keep, ...names.map((p) => p.name)];
+  print('packages   : ${all.length}');
+  print('generated  : ${names.length}');
+  print(
+    'test files : ${names.length * filesPer} new '
+    '($widgetsPer widget tests each)',
+  );
+  print('\nnow run:  flutter pub get  &&  flutter test');
+}
+
+// ---------------------------------------------------------------- packages
+
+class _Pkg {
+  _Pkg(this.name, this.layer, this.deps);
+  final String name;
+  final String layer; // foundation | shared | feature
+  final List<String> deps; // workspace deps
+}
+
+List<_Pkg> _packageNames(int count) {
+  const foundation = [
+    'core_ui',
+    'core_data',
+    'core_network',
+    'core_utils',
+    'l10n',
+    'design_system',
+    'analytics_events',
+    'app_strings',
+    'telemetry',
+    'storage',
+  ];
+  const shared = [
+    'auth',
+    'session',
+    'billing',
+    'catalog',
+    'media',
+    'search_api',
+    'notifications_api',
+    'feature_flags',
+  ];
+  const features = [
+    'checkout',
+    'cart',
+    'search',
+    'profile',
+    'settings',
+    'onboarding',
+    'notifications',
+    'orders',
+    'wishlist',
+    'reviews',
+    'addresses',
+    'vouchers',
+    'loyalty',
+    'referrals',
+    'support',
+    'chat',
+    'maps',
+    'calendar',
+    'gallery',
+    'feed',
+    'stories',
+    'ratings',
+    'subscriptions',
+    'invoices',
+    'receipts',
+    'shipping',
+    'returns',
+    'inventory',
+    'pricing',
+    'promotions',
+    'bundles',
+    'recommendations',
+  ];
+
+  final out = <_Pkg>[];
+  for (final f in foundation) {
+    out.add(_Pkg(f, 'foundation', const []));
+  }
+  for (final s in shared) {
+    out.add(_Pkg(s, 'shared', const ['core_data', 'core_utils']));
+  }
+  for (final f in features) {
+    out.add(
+      _Pkg(f, 'feature', const [
+        'core_ui',
+        'core_data',
+        'analytics_events',
+        'l10n',
+      ]),
+    );
+  }
+  return out.take(count).toList();
+}
+
+// ---------------------------------------------------------------- writing
+
+void _write(String path, String body) {
+  final f = File(path);
+  f.parent.createSync(recursive: true);
+  f.writeAsStringSync(body);
+}
+
+String _pascal(String snake) => snake
+    .split('_')
+    .map((w) => w.isEmpty ? w : w[0].toUpperCase() + w.substring(1))
+    .join();
+
+void _package(String root, _Pkg p, int files, int widgets) {
+  final dir = '$root/packages/${p.name}';
+  final cls = _pascal(p.name);
+
+  _write('$dir/.generated', 'written by tool/scale_up.dart\n');
+  _write('$dir/pubspec.yaml', _pubspec(p));
+  _write(
+    '$dir/analysis_options.yaml',
+    'include: package:flutter_lints/flutter.yaml\n',
+  );
+  _write('$dir/lib/${p.name}.dart', _barrel(p, cls));
+  _write('$dir/lib/src/${p.name}_models.dart', _models(cls));
+  _write('$dir/lib/src/${p.name}_service.dart', _service(cls, p.layer));
+  _write('$dir/lib/src/${p.name}_widgets.dart', _widgets(cls));
+
+  for (var i = 0; i < files; i++) {
+    _write(
+      '$dir/test/${p.name}_part${i + 1}_test.dart',
+      _testFile(p, cls, i, widgets),
+    );
+  }
+}
+
+String _pubspec(_Pkg p) {
+  final ws = p.deps.map((d) => '  $d: ^1.0.0').join('\n');
+  // The heavy third-party graph lands on the foundation packages, which every
+  // feature depends on - the same way it accumulates in a real monorepo.
+  final extra = p.layer == 'foundation' ? _heavyDeps : _lightDeps;
+  return '''
+name: ${p.name}
+description: ${p.layer} package (generated by tool/scale_up.dart)
+publish_to: 'none'
+# Workspace siblings depend on each other by name with a ^1.0.0 constraint,
+# so every generated package has to declare a version that satisfies it.
+version: 1.0.0
+resolution: workspace
+
+environment:
+  sdk: ^3.9.0
+  flutter: ">=3.35.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+$extra${ws.isEmpty ? '' : '\n$ws'}
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  bloc_test: ^10.0.0
+  flutter_lints: ^5.0.0
+''';
+}
+
+const _lightDeps = '''  equatable: ^2.0.7
+  collection: ^1.19.0
+  intl: ^0.20.2''';
+
+const _heavyDeps = '''  equatable: ^2.0.7
+  collection: ^1.19.0
+  intl: ^0.20.2
+  http: ^1.2.2
+  dio: ^5.7.0
+  path: ^1.9.0
+  crypto: ^3.0.6
+  uuid: ^4.5.1
+  logging: ^1.3.0
+  rxdart: ^0.28.0
+  decimal: ^3.0.2
+  clock: ^1.1.2
+  meta: ^1.16.0
+  async: ^2.12.0
+  characters: ^1.4.0
+  flutter_bloc: ^9.1.0
+  bloc: ^9.0.0
+  provider: ^6.1.2
+  get_it: ^8.0.3
+  go_router: ^14.6.2
+  shared_preferences: ^2.3.3
+  path_provider: ^2.1.5
+  package_info_plus: ^8.1.2
+  device_info_plus: ^11.2.0
+  connectivity_plus: ^6.1.1
+  url_launcher: ^6.3.1
+  share_plus: ^10.1.3
+  cached_network_image: ^3.4.1
+  flutter_svg: ^2.0.16
+  google_fonts: ^6.2.1
+  shimmer: ^3.0.0
+  lottie: ^3.2.0
+  fl_chart: ^0.69.2
+  table_calendar: ^3.1.3
+  flutter_slidable: ^3.1.2
+  badges: ^3.1.2
+  fluttertoast: ^8.2.10
+  image_picker: ^1.1.2
+  permission_handler: ^11.3.1
+  sqflite: ^2.4.1
+  hive: ^2.2.3
+  json_annotation: ^4.9.0
+  freezed_annotation: ^3.0.0
+  timezone: ^0.10.0''';
+
+// ---------------------------------------------------------------- sources
+
+String _barrel(_Pkg p, String cls) =>
+    '''
+library ${p.name};
+
+export 'src/${p.name}_models.dart';
+export 'src/${p.name}_service.dart';
+export 'src/${p.name}_widgets.dart';
+''';
+
+String _models(String cls) =>
+    '''
+import 'package:equatable/equatable.dart';
+
+class ${cls}Item extends Equatable {
+  const ${cls}Item({required this.id, required this.label, this.amount = 0});
+
+  final String id;
+  final String label;
+  final int amount;
+
+  ${cls}Item copyWith({String? id, String? label, int? amount}) => ${cls}Item(
+        id: id ?? this.id,
+        label: label ?? this.label,
+        amount: amount ?? this.amount,
+      );
+
+  Map<String, Object?> toJson() =>
+      {'id': id, 'label': label, 'amount': amount};
+
+  static ${cls}Item fromJson(Map<String, Object?> json) => ${cls}Item(
+        id: json['id']! as String,
+        label: json['label']! as String,
+        amount: json['amount']! as int,
+      );
+
+  @override
+  List<Object?> get props => [id, label, amount];
+}
+
+class ${cls}State extends Equatable {
+  const ${cls}State({this.items = const [], this.loading = false});
+
+  final List<${cls}Item> items;
+  final bool loading;
+
+  int get total => items.fold(0, (a, b) => a + b.amount);
+
+  @override
+  List<Object?> get props => [items, loading];
+}
+''';
+
+/// A debounce in production code is reasonable. In a test it is dead time -
+/// this is the shape `tool/find_slow_tests.dart` is built to find.
+String _service(String cls, String layer) =>
+    '''
+import '${_snakeOf(cls)}_models.dart';
+
+class ${cls}Service {
+  ${cls}Service({this.debounce = const Duration(milliseconds: 180)});
+
+  final Duration debounce;
+
+  Future<List<${cls}Item>> load({int count = 40}) async {
+    await Future<void>.delayed(debounce);
+    return List.generate(
+      count,
+      (i) => ${cls}Item(id: '\$i', label: 'item \$i', amount: i * 3),
+    );
+  }
+
+  Future<${cls}State> refresh({int count = 40}) async {
+    await Future<void>.delayed(debounce);
+    return ${cls}State(items: await load(count: count));
+  }
+
+  List<${cls}Item> sorted(List<${cls}Item> input) {
+    final copy = [...input]..sort((a, b) => a.amount.compareTo(b.amount));
+    return copy;
+  }
+}
+''';
+
+String _snakeOf(String pascal) {
+  final b = StringBuffer();
+  for (var i = 0; i < pascal.length; i++) {
+    final c = pascal[i];
+    // Digits satisfy `c.toUpperCase() == c`, so test for a letter explicitly.
+    // Without this, L10n becomes l_1_0n and the generated import misses the
+    // file the generator just wrote next to it.
+    if (RegExp(r'[A-Z]').hasMatch(c) && i > 0) b.write('_');
+    b.write(c.toLowerCase());
+  }
+  return b.toString();
+}
+
+String _widgets(String cls) =>
+    '''
+import 'package:flutter/material.dart';
+
+import '${_snakeOf(cls)}_models.dart';
+
+class ${cls}Tile extends StatelessWidget {
+  const ${cls}Tile({super.key, required this.item, this.onTap});
+
+  final ${cls}Item item;
+  final VoidCallback? onTap;
+
+  @override
+  Widget build(BuildContext context) => ListTile(
+        key: ValueKey('tile-\${item.id}'),
+        title: Text(item.label),
+        subtitle: Text('\${item.amount}'),
+        onTap: onTap,
+      );
+}
+
+class ${cls}ListView extends StatelessWidget {
+  const ${cls}ListView({super.key, required this.state});
+
+  final ${cls}State state;
+
+  @override
+  Widget build(BuildContext context) {
+    if (state.loading) {
+      return const Center(child: CircularProgressIndicator());
+    }
+    return Column(
+      children: [
+        Text('total \${state.total}', key: const Key('total')),
+        Expanded(
+          child: ListView.builder(
+            itemCount: state.items.length,
+            itemBuilder: (_, i) => ${cls}Tile(item: state.items[i]),
+          ),
+        ),
+      ],
+    );
+  }
+}
+''';
+
+// ---------------------------------------------------------------- tests
+
+String _testFile(_Pkg p, String cls, int index, int widgets) {
+  final b = StringBuffer()
+    ..writeln("import 'package:flutter/material.dart';")
+    ..writeln("import 'package:flutter_test/flutter_test.dart';")
+    ..writeln("import 'package:${p.name}/${p.name}.dart';")
+    ..writeln()
+    ..writeln('void main() {')
+    ..writeln("  group('$cls part ${index + 1}', () {")
+    ..writeln('    late ${cls}Service service;')
+    ..writeln('    late List<${cls}Item> fixture;')
+    ..writeln()
+    // a setUp that does real work before every single test
+    ..writeln('    setUp(() {')
+    ..writeln('      service = ${cls}Service();')
+    ..writeln('      fixture = List.generate(')
+    ..writeln("        400,")
+    ..writeln(
+      "        (i) => ${cls}Item(id: '\$i', label: 'row \$i', amount: i),",
+    )
+    ..writeln('      );')
+    ..writeln('      fixture = service.sorted(fixture);')
+    ..writeln('      for (final item in fixture.take(120)) {')
+    ..writeln('        ${cls}Item.fromJson(item.toJson());')
+    ..writeln('      }')
+    ..writeln('    });')
+    ..writeln();
+
+  for (var w = 0; w < widgets; w++) {
+    b
+      ..writeln("    testWidgets('renders list ${w + 1}', (tester) async {")
+      ..writeln(
+        '      final state = ${cls}State(items: fixture.take(30).toList());',
+      )
+      ..writeln('      await tester.pumpWidget(MaterialApp(')
+      ..writeln('        home: Scaffold(body: ${cls}ListView(state: state)),')
+      ..writeln('      ));')
+      ..writeln('      await tester.pumpAndSettle();')
+      ..writeln("      expect(find.byKey(const Key('total')), findsOneWidget);")
+      ..writeln('      expect(find.byType(${cls}Tile), findsWidgets);')
+      ..writeln('      await tester.tap(find.byType(${cls}Tile).first);')
+      ..writeln('      await tester.pumpAndSettle();')
+      ..writeln('    });')
+      ..writeln();
+  }
+
+  // two plain async tests that pay the real debounce
+  b
+    ..writeln("    test('service loads', () async {")
+    ..writeln('      final items = await service.load();')
+    ..writeln('      expect(items, hasLength(40));')
+    ..writeln('    });')
+    ..writeln()
+    ..writeln("    test('service refreshes', () async {")
+    ..writeln('      final state = await service.refresh();')
+    ..writeln('      expect(state.total, greaterThan(0));')
+    ..writeln('    });')
+    ..writeln('  });')
+    ..writeln('}');
+  return b.toString();
+}
+
+// ---------------------------------------------------------------- root
+
+void _rootPubspec(String root, List<String> all) {
+  final list = all.map((p) => '  - packages/$p').join('\n');
+  _write('$root/pubspec.yaml', '''
+name: flutter_ci_talk
+description: Demo project for Flutter CI optimization talk.
+publish_to: 'none'
+
+environment:
+  sdk: ^3.9.0
+
+workspace:
+$list
+
+dev_dependencies:
+  melos: ^7.3.0
+  custom_lint: ^0.8.0
+  flutter_lints: ^5.0.0
+  ci_lints:
+    path: packages/ci_lints
+  test_bundler:
+    path: packages/test_bundler
+''');
+}

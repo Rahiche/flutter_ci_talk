@@ -10,6 +10,7 @@ class BundleConfig {
     this.shards = 1,
     this.dryRun = false,
     this.verbose = false,
+    this.resetHook,
   });
 
   final String rootPath;
@@ -18,6 +19,14 @@ class BundleConfig {
   final int shards;
   final bool dryRun;
   final bool verbose;
+
+  /// `<import uri>#<function>` called before every test, inside each group.
+  ///
+  /// Bundling puts every test file in one isolate, so anything global -
+  /// a GetIt container, SharedPreferences mock values, a static cache -
+  /// now survives from one file into the next. This is the hook that wipes
+  /// it; without one, bundling trades wall time for order-dependent tests.
+  final String? resetHook;
 }
 
 class PackageBundleResult {
@@ -81,6 +90,7 @@ BundleResult generateTestBundles(BundleConfig config) {
               outputName: config.outputName,
               dryRun: config.dryRun,
               verbose: config.verbose,
+              resetHook: config.resetHook,
             ),
           ]
         : _generateShardedBundles(
@@ -91,6 +101,7 @@ BundleResult generateTestBundles(BundleConfig config) {
             outputName: config.outputName,
             dryRun: config.dryRun,
             verbose: config.verbose,
+            resetHook: config.resetHook,
           );
 
     packageResults.add(
@@ -128,6 +139,7 @@ String _generateSingleBundle({
   required String outputName,
   required bool dryRun,
   required bool verbose,
+  required String? resetHook,
 }) {
   final outputPath = p.join(packagePath, 'test', outputName);
   final content = _renderBundleContent(
@@ -135,6 +147,7 @@ String _generateSingleBundle({
     packageName: packageName,
     testFiles: testFiles,
     shardLabel: null,
+    resetHook: resetHook,
   );
 
   if (!dryRun) {
@@ -156,6 +169,7 @@ List<String> _generateShardedBundles({
   required String outputName,
   required bool dryRun,
   required bool verbose,
+  required String? resetHook,
 }) {
   final perShard = (testFiles.length / shards).ceil();
   final outputs = <String>[];
@@ -179,6 +193,7 @@ List<String> _generateShardedBundles({
       packageName: packageName,
       testFiles: shardFiles,
       shardLabel: '${shard + 1}/$shards',
+      resetHook: resetHook,
     );
 
     if (!dryRun) {
@@ -200,6 +215,7 @@ String _renderBundleContent({
   required String packageName,
   required List<File> testFiles,
   required String? shardLabel,
+  required String? resetHook,
 }) {
   final buffer = StringBuffer();
 
@@ -214,6 +230,10 @@ String _renderBundleContent({
   buffer.writeln();
   buffer.writeln("import 'package:flutter/services.dart';");
   buffer.writeln("import 'package:flutter_test/flutter_test.dart';");
+  final hook = _parseResetHook(resetHook);
+  if (hook != null) {
+    buffer.writeln("import '${hook.uri}' as _reset;");
+  }
   buffer.writeln();
 
   for (var i = 0; i < testFiles.length; i++) {
@@ -227,10 +247,14 @@ String _renderBundleContent({
 
   buffer.writeln();
   buffer.writeln('void main() {');
-  buffer.writeln('  void resetTestEnvironment() {');
+  buffer.writeln('  Future<void> resetTestEnvironment() async {');
   buffer.writeln('    TestWidgetsFlutterBinding.ensureInitialized();');
   buffer.writeln('    final binding = TestWidgetsFlutterBinding.instance;');
   buffer.writeln('    binding.platformDispatcher.clearAllTestValues();');
+  if (hook != null) {
+    // await works on a plain value too, so the hook may be sync or async.
+    buffer.writeln('    await _reset.${hook.fn}();');
+  }
   buffer.writeln('  }');
   buffer.writeln();
 
@@ -249,4 +273,23 @@ String _renderBundleContent({
 
   buffer.writeln('}');
   return buffer.toString();
+}
+
+
+class _ResetHook {
+  const _ResetHook(this.uri, this.fn);
+  final String uri;
+  final String fn;
+}
+
+/// Parses `package:app/test_support.dart#resetTestEnv`.
+_ResetHook? _parseResetHook(String? spec) {
+  if (spec == null || spec.isEmpty) return null;
+  final i = spec.lastIndexOf('#');
+  if (i <= 0 || i == spec.length - 1) {
+    throw FormatException(
+      'Expected --reset <import uri>#<function>, got: $spec',
+    );
+  }
+  return _ResetHook(spec.substring(0, i), spec.substring(i + 1));
 }

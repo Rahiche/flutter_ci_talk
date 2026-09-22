@@ -1,12 +1,15 @@
 name: test_bundler
-description: Generate single-isolate Flutter test bundle wrappers for faster CI test runs.
+description: "Two CLIs for slow Flutter monorepo suites - bundle tests into one isolate, and find the delays that make them wait."
 version: 0.1.0
-publish_to: 'none'
+repository: https://github.com/Rahiche/flutter_ci_talk/tree/main/packages/test_bundler
+issue_tracker: https://github.com/Rahiche/flutter_ci_talk/issues
+topics: [testing, ci, flutter, coverage]
 resolution: workspace
 environment:
   sdk: ^3.9.0
 executables:
   test-bundler: test_bundler
+  find-slow-tests: find_slow_tests
 dependencies:
   args: ^2.5.0
   path: ^1.9.0

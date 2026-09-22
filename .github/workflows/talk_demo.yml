@@ -1,0 +1,102 @@
+# Live demo for the talk. Two modes, dispatched from the stage:
+#
+#   ./demo before   the pipeline as it was: one job, sequential, per-file
+#                   tests, coverage as a second pass, nothing cached
+#   ./demo after    everything from the talk: warm caches, bundled tests,
+#                   sharded, coverage folded in
+#
+# Deliberately ONE job per mode so the run duration you read off the Actions
+# page is the wall clock the audience is waiting on, with no fan-out to
+# explain.
+name: Talk Demo
+
+on:
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: before | after
+        required: true
+        default: before
+        type: choice
+        options: [before, after]
+
+concurrency:
+  group: talk-demo
+  cancel-in-progress: false
+
+jobs:
+  before:
+    if: inputs.mode == 'before'
+    name: before - the 40 minute version
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: false          # cold SDK, on purpose
+
+      - name: pub get (cold, no cache)
+        run: flutter pub get
+
+      - name: analyze (cold byte store)
+        run: dart analyze . || true
+
+      - name: test - one file per isolate
+        run: |
+          for d in packages/*/; do
+            [ -d "$d/test" ] || continue
+            (cd "$d" && flutter test) || true
+          done
+
+      - name: coverage - the whole thing again
+        run: |
+          for d in packages/*/; do
+            [ -d "$d/test" ] || continue
+            (cd "$d" && flutter test --coverage) || true
+          done
+
+  after:
+    if: inputs.mode == 'after'
+    name: after - everything from the talk
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          cache: true           # warm SDK
+
+      - name: Restore pub cache
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.pub-cache
+            .dart_tool
+          key: demo-pub-${{ hashFiles('**/pubspec.lock') }}
+
+      # the cache nobody caches - see BENCH-MEMORY Result 15
+      - name: Restore analyzer byte store
+        uses: actions/cache@v4
+        with:
+          path: ~/.dartServer
+          key: demo-dartserver-${{ hashFiles('**/pubspec.lock') }}-${{ github.sha }}
+          restore-keys: demo-dartserver-${{ hashFiles('**/pubspec.lock') }}-
+
+      - name: pub get (warm)
+        run: flutter pub get
+
+      - name: analyze (warm byte store, whole workspace at once)
+        run: dart analyze . || true
+
+      - name: bundle the tests into one isolate per package
+        run: dart run test_bundler
+
+      - name: test - bundled, coverage folded in
+        run: |
+          for d in packages/*/; do
+            [ -f "$d/test/all_tests.dart" ] || continue
+            (cd "$d" && flutter test test/all_tests.dart --coverage --no-dds) || true
+          done

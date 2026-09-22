@@ -19,3 +19,6 @@ dev_dependencies:
     sdk: flutter
   bloc_test: ^10.0.0
   flutter_lints: ^5.0.0
+  custom_lint: ^0.8.0
+  ci_lints:
+    path: ../ci_lints
