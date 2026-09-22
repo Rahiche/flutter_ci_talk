@@ -79,8 +79,27 @@ jobs:
           key: bench-dartserver-${{ hashFiles('**/pubspec.yaml') }}-${{ github.sha }}
           restore-keys: bench-dartserver-${{ hashFiles('**/pubspec.yaml') }}-
       - run: flutter pub get
-      - name: analyze once, whole workspace
-        run: dart analyze . || true
+
+  # parallel with the shards, exactly as the deck draws it - not in front
+  after-analyze:
+    name: AFTER analyze (parallel, off the critical path)
+    needs: after-setup
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: subosito/flutter-action@v2
+        with: {channel: stable, cache: true}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: bench-pub-${{ hashFiles('**/pubspec.yaml') }}
+      - uses: actions/cache@v4
+        with:
+          path: ~/.dartServer
+          key: bench-dartserver-${{ hashFiles('**/pubspec.yaml') }}-${{ github.sha }}
+          restore-keys: bench-dartserver-${{ hashFiles('**/pubspec.yaml') }}-
+      - run: flutter pub get
+      - run: dart analyze . || true
 
   after:
     name: AFTER shard ${{ matrix.shard }}
@@ -90,7 +109,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        shard: [0, 1, 2, 3]
+        shard: [0, 1, 2, 3, 4, 5, 6, 7]
     steps:
       - uses: actions/checkout@v4
       - uses: subosito/flutter-action@v2
@@ -120,7 +139,7 @@ jobs:
           i=0
           for d in packages/*/; do
             [ -f "$d/test/all_tests.dart" ] || continue
-            if [ $(( i % 4 )) -eq ${{ matrix.shard }} ]; then
+            if [ $(( i % 8 )) -eq ${{ matrix.shard }} ]; then
               echo "::group::$d"
               (cd "$d" && flutter test test/all_tests.dart --coverage --no-dds) || true
               echo "::endgroup::"
